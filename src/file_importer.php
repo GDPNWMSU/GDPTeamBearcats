@@ -11,11 +11,10 @@ $helper = new Helper();
 $FileType = $helper->getFileType($MIME);
 
 if(move_uploaded_file($_FILES['Filename']['tmp_name'], $file_target_path)) {
-    echo "The file ". basename( $_FILES['Filename']['name']). " has been uploaded, and your information has been added to the directory";
     $sql = "INSERT INTO `IMPORTED_FILES` (FILE_NAME,FILE_PATH,FILE_TYPE)
     VALUES ('$Filename', '$target_path','$FileType')";
     if (mysqli_query($GLOBALS['conn'], $sql)) {
-      echo "Successfully inserted into database";
+    echo "The file ". basename( $_FILES['Filename']['name']). " has been uploaded successfully.";
       ?>
       <script type="text/javascript">
       	window.location.href="Excel_Parser.php"
@@ -23,8 +22,7 @@ if(move_uploaded_file($_FILES['Filename']['tmp_name'], $file_target_path)) {
       <?php
     }
 } else {
-    //Gives and error if its not
-    echo "Sorry, there was a problem uploading your file.";
+    echo "Sorry, there was a problem uploading your file.<br/>Please contact Admin";
 }
 
 
