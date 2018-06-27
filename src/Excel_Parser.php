@@ -1,47 +1,53 @@
 <?php
-
+/* Contribution
+  Day 1: Parsed Excel sheet using getSheetByName() method.
+  Day 2: Displayed parsed excel data into tables and also included bootstrap for styling
+*/
 require 'libraries/PhpSpreadsheet-develop/vendor/autoload.php';
-// require 'libraries/PhpSpreadsheet-develop/samples/Header.php';
+require 'Header.php';
+include 'helper.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-// $spreadsheet = new Spreadsheet();
-// $sheet = $spreadsheet->getActiveSheet();
-// $sheet->setCellValue('A1', 'Hello World !');
-
-// $writer = new Xlsx($spreadsheet);
-// if ($writer->save('hello world.xlsx')) {
-// echo "success";
-// };
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
-// require __DIR__ . '/../Header.php';
-
-$inputFileType = 'Xls';
-// $inputFileName = __DIR__ . '/sampleData/example2.xls';
-$inputFileName = 'libraries/PhpSpreadsheet-develop/samples/Reader/sampleData/example1.xls';
-
-// Create a new Reader of the type defined in $inputFileType
+$helper = new Helper();
+// $inputFileType = 'Xlsx';
+$file_details = $helper->getLastImportedFile();
+if(count($file_details)>1){
+$inputFileType = ucwords(substr($file_details[0],1));
+// $inputFileName = 'sample_data/test.xlsx';
+$inputFileName = $file_details[1].$file_details[2];
 $reader = IOFactory::createReader($inputFileType);
-// Load $inputFileName to a PhpSpreadsheet Object
 $spreadsheet = $reader->load($inputFileName);
-
-// Use the PhpSpreadsheet object's getSheetCount() method to get a count of the number of WorkSheets in the WorkBook
 $sheetCount = $spreadsheet->getSheetCount();
-// $helper->log('There ' . (($sheetCount == 1) ? 'is' : 'are') . ' ' . $sheetCount . ' WorkSheet' . (($sheetCount == 1) ? '' : 's') . ' in the WorkBook');
-echo 'There ' . (($sheetCount == 1) ? 'is' : 'are') . ' ' . $sheetCount . ' WorkSheet' . (($sheetCount == 1) ? '' : 's') . ' in the WorkBook';
-echo "<br />\n";
-// $helper->log('Reading the names of Worksheets in the WorkBook');
-// Use the PhpSpreadsheet object's getSheetNames() method to get an array listing the names/titles of the WorkSheets in the WorkBook
 $sheetNames = $spreadsheet->getSheetNames();
+?>
+<a href="../" class="btn btn-primary">Upload another file</a>
+<?php
 foreach ($sheetNames as $sheetIndex => $sheetName) {
-    // $helper->log('WorkSheet #' . $sheetIndex . ' is named "' . $sheetName . '"');
     echo "<br />\n";
-    echo 'WorkSheet #' . $sheetIndex . ' is named "' . $sheetName . '"';
+    echo '<strong>WorkSheet Name:</strong> '.$sheetName;
     echo "<br />\n";
     $sheetData = $spreadsheet->getSheetByName($sheetName)->toArray(null, true, true, true);
-    var_dump($sheetData);
+    ?>
+<table class="table table-bordered table-striped">
+      <tbody>
+  <?php
+    $count = 0;
+    foreach ($sheetData as $columnName => $columnData) {
+      echo "<tr>";
+      foreach ($columnData  as $key => $value) {
+            if ($count<count($columnData)) {
+              echo "<th>".$value."</th>";
+            }else{
+              echo "<td>".$value."</td>";
+            }
+            $count++;
+        }
+            echo "</tr>";
+        }
+          $count++;
+          echo "<br />\n";
+          echo "</tbody></table>";
+}
 }
