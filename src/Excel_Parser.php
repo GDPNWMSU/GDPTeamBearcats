@@ -1,7 +1,8 @@
 <?php
 /* Contribution
   Day 1: Parsed Excel sheet using getSheetByName() method.
-  Day 2: Displayed parsed excel data into tables and also included bootstrap for styling
+  Day 2: Displayed parsed excel data into tables and also included bootstrap for styling.
+  Day 3: Add DataTable to parsed excel tables and also added pace pre-loader.
 */
 require 'libraries/PhpSpreadsheet-develop/vendor/autoload.php';
 require 'Header.php';
