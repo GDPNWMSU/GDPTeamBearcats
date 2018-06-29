@@ -1,3 +1,4 @@
+<img src="../Images/ProgressImage.gif">
 <?php
 require 'db_config.php';
 include 'helper.php';

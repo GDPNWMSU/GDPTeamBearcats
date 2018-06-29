@@ -30,4 +30,5 @@ class Helper
       mysqli_free_result($result);
     }
   }
+
 }
