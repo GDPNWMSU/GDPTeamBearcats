@@ -3,6 +3,7 @@
   Day 1: Parsed Excel sheet using getSheetByName() method.
   Day 2: Displayed parsed excel data into tables and also included bootstrap for styling.
   Day 3: Add DataTable to parsed excel tables and also added pace pre-loader.
+  Day 4: Add code to navigate or parse previously uploaded files
 */
 require 'libraries/PhpSpreadsheet-develop/vendor/autoload.php';
 require 'Header.php';
@@ -14,11 +15,34 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 $helper = new Helper();
 // $inputFileType = 'Xlsx';
+$imported_files_list = $helper->getAllImportedFileList();
+?>
+<div class="row">
+  <div class="col-md-6">
+<label>Select from imported files</label>:
+  <select id="fileSelect">
+    <option value="0">Select previous files</option>
+<?php
+foreach ($imported_files_list as $imported_file_name) {
+?>
+    <option value="<?php echo $imported_file_name[0].'">'.$imported_file_name[1];?></option>
+<?php
+}
+?>
+</select>
+</div>
+<div class="col-md-2"><strong>(or)</strong></div>
+<div class="col-md-4">
+<?php
+if (isset($_GET['file'])) {
+  $file_details = $helper -> getImportedFileByID($_GET['file']);
+}else{
 $file_details = $helper->getLastImportedFile();
+}
 if(count($file_details)>1){
 $inputFileType = ucwords(substr($file_details[0],1));
-// $inputFileName = 'sample_data/test.xlsx';
 $inputFileName = $file_details[1].$file_details[2];
+
 $reader = IOFactory::createReader($inputFileType);
 $reader->setReadDataOnly(true);
 $spreadsheet = $reader->load($inputFileName);
@@ -26,6 +50,8 @@ $sheetCount = $spreadsheet->getSheetCount();
 $sheetNames = $spreadsheet->getSheetNames();
 ?>
 <a href="./" class="btn btn-primary">Upload another file</a>
+</div>
+</div>
 <?php
 
 foreach ($sheetNames as $sheetIndex => $sheetName) {
