@@ -6,4 +6,12 @@ Pace.on('hide', function(){
   });
 });
 }
+  document.getElementById("fileSelect").onchange = function()
+  {
+  alert(this.value);
+  if(this.selectedIndex !== 0)
+  {
+    window.location.href = "Excel_Parser.php?file="+this.value;
+  }
+  };
 </script>
