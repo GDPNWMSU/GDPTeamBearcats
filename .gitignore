@@ -1,3 +1,3 @@
-src/imported_Files/*
-src/libraries/*
-src/GDP-Node/node_modules/*
+src/PHP-App/imported_Files/
+src/PHP-App/libraries/
+src/GDP-Node/node_modules/
