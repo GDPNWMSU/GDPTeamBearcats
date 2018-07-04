@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%= title %></title>
+    <!-- add links to local vendor css installed locally -->
+    <!-- add links to icons see ref app -->
+    <!-- add local vendor script sources -->
+    <!-- add local main.js script source  -->
+    <meta http-equiv="pragma" content="no-cache" />
+    <style media="screen">
+        .overlay {
+            padding: 0px;
+            margin: 0px;
+            top: -10%;
+            left: -10%;
+            width: 150%;
+            height: 150%;
+            position: fixed;
+            display: inline-block;
+            background-color: #fff;
+            z-index: 1032;
+        }
+    </style>
+    <link rel="stylesheet" href="../../css/pace.css" />
+    <!-- <link rel="stylesheet" href="../../css/404.css"> -->
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+    <!-- <link rel="stylesheet" href="../../css/bootstrap-theme.min.css"> -->
+    <!-- <link rel="stylesheet" href="../../css/main.css"> -->
+    <!-- add links to icons see ref app 
+<link rel="apple-touch-icon" sizes="57x57" href="../../images/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="../../images/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../../images/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="../../images/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../../images/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="../../images/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="../../images/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="../../images/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../../images/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="../../images/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16.png" -->
+    <!-- <link rel="icon" type="image/jpg" sizes="108x54" href="../../images/logo.jpg"> -->
+
+    <!-- <link rel="manifest" href="../../images/manifest.json"> -->
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../../images/logo.jpg">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- add script sources -->
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/pace.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script> -->
+    <!-- <script src="../../js/main.js"></script> -->
+</head>
+
+<body>
+<div class="overlay"></div>
+    <% include header.ejs %>
+        <div class="container">
+            <div class="body">
+                <%- body %>
+            </div>
+        </div>
+        <% include footer.ejs %>
+
+</body>
+<script type="text/javascript">
+    if (typeof Pace != 'undefined') {
+        Pace.on('hide', function () {
+            $(".overlay").fadeOut(500, function () {
+                $(this).remove();
+            });
+        });
+    }
+ document.getElementById("tableSelect").onchange = function() {
+        if(this.selectedIndex !== 0) 
+        {
+            window.location.href= "/"+this.value;
+        } 
+    };
+</script>
+</html>

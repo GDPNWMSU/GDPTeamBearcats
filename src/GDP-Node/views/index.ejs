@@ -1,0 +1,51 @@
+<html>
+<h1>Welcome</h1>
+<% if(typeof status != 'undefined'){ %>
+<h3>File import status:<%= status[0].FLAG %></h3>
+<% 
+    } 
+%>
+<label>Select from imported files</label>:
+<select id="tableSelect">
+    <option value="0">Select table:</option>
+<% tables.forEach(table => { %>
+<option value="<%= table.table_name %>">
+<%= table.table_name %>
+</option>
+<% 
+    }); 
+%>
+</select>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#data").DataTable();
+    });
+</script>
+<div class="col-md-12" style="overflow-x: scroll;">
+<table class="table table-bordered table-striped" id="data">
+    <thead>
+    <tr>    
+<% if(typeof rows != 'undefined'){
+        var head = Object.keys(rows[0])
+        head.forEach(function(headValue){ %>
+             <th><%= headValue %></th>
+    <% }) %>
+    </tr>
+    </thead>
+    <tbody>
+<% rows.forEach(element => {%>
+<tr>
+ <% head.forEach(function(headValue){  %>
+
+    <td><%= element[headValue] %></td>
+
+<%   }) %>
+</tr>
+<%
+    }); 
+   }%>
+</tbody>
+
+</table>
+</div>
+</html>
