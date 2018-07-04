@@ -1,0 +1,34 @@
+{
+  "name": "gdp-node",
+  "version": "1.0.0",
+  "description": "A reporting tool which imports excel data,parses sheets,filter imported data and generete output reports as our client requries. ",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "latest",
+    "consolidate": "latest",
+    "dotenv": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "express-ejs-layouts": "latest",
+    "formidable": "^1.2.1",
+    "http": "latest",
+    "morgan": "latest",
+    "mysql": "latest",
+    "mysql2": "^1.5.3",
+    "path": "latest",
+    "xlsx": "^0.13.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gDPNWMSU/GDPTeamBearcats/"
+  },
+  "keywords": [
+    "Reporting",
+    "tool"
+  ],
+  "author": "Chinta,Raja Srikar Karthik",
+  "license": "ISC"
+}
