@@ -8,7 +8,8 @@ var connection = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'test'
+    database: 'test',
+    dateStrings: 'date'
 });
 api.get('/:table_name',function (req,res) {
     const table_name = req.params.table_name;

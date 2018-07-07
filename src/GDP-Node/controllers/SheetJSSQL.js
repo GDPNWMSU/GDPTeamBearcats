@@ -17,7 +17,7 @@ var SheetJSSQL = (function () {
         "MYSQL": {
             t: "TEXT",
             n: "REAL",
-            d: "DATETIME",
+            d: "DATE",
             b: "TINYINT"
         },
         "SQLITE": {
@@ -103,7 +103,7 @@ var SheetJSSQL = (function () {
                 })];
                 if (!cell) continue;
                 fields.push(BT + names[C - range.s.c] + BT);
-                var val = cell.v;
+                var val = cell.w;
                 switch (types[C - range.s.c]) {
                     case TYPES.n:
                         if (cell.t == 'b' || typeof val == 'boolean') val = +val;

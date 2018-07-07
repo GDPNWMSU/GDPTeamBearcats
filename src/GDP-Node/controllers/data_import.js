@@ -51,11 +51,21 @@ router.post('/',(req,res,next)=>{
       form.parse(req, function (err, fields, files) {
           var f = files[Object.keys(files)[0]];
     //       var workbook = XLSX.readFile(f.path);
-        var wb2 = XLSX.readFile(f.path)
+        var wb2 = XLSX.readFile(f.path, {
+            type:"file",
+            // parseDates:true,
+            dateNF: 'yyyy-mm-dd',
+            cellDates: true,
+            cellNF:true,
+            cellText:true
+            // cellStyles: true
+        })
     //       /* DO SOMETHING WITH workbook HERE */
         var queries =[]
     //   var updateQ = "INSERT INTO `upload_status` (`FLAG`, `TIMESTAMP`) VALUES ('success', CURRENT_TIMESTAMP)";
-        queries = SheetJSSQL.book_to_sql(wb2, "MYSQL",{cellDates: true,cellText:false,dateNF:'DD/mm/yyyy'});
+        queries = SheetJSSQL.book_to_sql(wb2, "MYSQL");
+        // queries = SheetJSSQL.book_to_sql(wb2,"MYSQL",{raw:true});
+        console.log(queries);
         queries.push("UPDATE `upload_status` SET `flag` = 'success' WHERE ID = (SELECT ID FROM (SELECT * FROM `upload_status`) AS ph WHERE FLAG='pending' ORDER BY ID DESC LIMIT 1)");
         // var updateQ = "UPDATE `upload_status` SET `flag` = 'success' WHERE ID = (SELECT ID FROM (SELECT * FROM `upload_status`) AS ph WHERE FLAG='pending' ORDER BY ID DESC LIMIT 1)";
                 // res.status(400).send(queries)
