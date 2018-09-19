@@ -3,6 +3,7 @@ const router = express.Router()
 const XLSX = require('xlsx');
 const formidable = require('formidable');
 console.log('inside routes')
+router.use('/login',require('../controllers/login.js'))
 router.use('/import', require('../controllers/data_import.js'))
 router.use('/clearDB',require('../controllers/database_clear.js'))
 router.use('/', require('../controllers/data_export.js'))
@@ -17,4 +18,6 @@ router.use('/', require('../controllers/data_export.js'))
 //         res.status(400).send(workbook.Sheets);
 //     });
 // })
+
+
 module.exports = router
