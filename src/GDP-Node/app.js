@@ -37,11 +37,27 @@ var server = require('http').createServer(app); // inject app into the server
   app.use(passport.session());
 
   passport.use(new LocalStrategy(
-    function(username, password, done) { 
+    function(email, password, done) { 
       console.log(email);
       console.log(password);
-
-        return done(null, false);
+      const db = require('./db');
+      db.query('SELECT id, password from users WHERE email = ?',[email], function(err,results,fields){
+        if(err){done(err)};
+        if(results.length ==0){
+          done(null,false);
+        }
+        //console.log(results[0].password.toString());
+        const hash = results[0].password.toString();
+        bcrypt.compare(password,hash, function(err,response){
+          if(response == true){
+            return done(null, {id: 1});
+          }
+          else{
+            return done(null,false);
+          }
+        });
+      
+      })
     }
   ));
   
@@ -58,6 +74,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 app.engine('ejs', engines.ejs)
 // Listen for an application request on port 8081
-server.listen(8081, function () {
-    console.log('GDP-Node app listening on http://127.0.0.1:8081/');
+server.listen(8080, function () {
+    console.log('GDP-Node app listening on http://127.0.0.1:8080/');
 });

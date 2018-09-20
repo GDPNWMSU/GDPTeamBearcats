@@ -36,5 +36,8 @@
     "tool"
   ],
   "author": "Chinta,Raja Srikar Karthik",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.19.1"
+  }
 }
