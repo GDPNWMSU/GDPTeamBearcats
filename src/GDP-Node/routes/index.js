@@ -7,6 +7,15 @@ router.use('/login',require('../controllers/login.js'))
 router.use('/import', require('../controllers/data_import.js'))
 router.use('/clearDB',require('../controllers/database_clear.js'))
 router.use('/', require('../controllers/data_export.js'))
+var session = require('session');
+var passport =require('passport');
+router.get('/login',function(req,res){
+    res.render('login', { title:'Login'});
+});
+router.post('/login',passport.authenticate('local',{
+    successRedirect: '/',
+    failureRedirect: '/login'
+}));
 
 // router.post('/import', (req, res, next) => {
 //     var form = new formidable.IncomingForm();

@@ -5,6 +5,17 @@ var bodyParser = require("body-parser");
 const http = require('http')
 const engines = require('consolidate')
 const expressLayouts = require('express-ejs-layouts')
+
+//Authentication Packages
+var session = require('session');
+var passport =require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var MySQLStore =require('express-mysql-session');
+ 
+var index = require('./routes/index');
+var users = require('./routes/users');
+
+
 var app = express();  // make express app
 // var router = express.Router();
 // var path = __dirname + '/views/';
@@ -21,6 +32,19 @@ var server = require('http').createServer(app); // inject app into the server
 // load routing
 
   app.use('/', routes);
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  passport.use(new LocalStrategy(
+    function(username, password, done) { 
+      console.log(email);
+      console.log(password);
+
+        return done(null, false);
+    }
+  ));
+  
 // POSTS
 // 404
 app.get('*', function (req, res) {

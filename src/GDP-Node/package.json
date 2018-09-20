@@ -10,12 +10,18 @@
     "ejs": "latest",
     "express": "latest",
     "express-ejs-layouts": "latest",
+    "express-mysql-session": "^2.0.1",
+    "express-session": "^1.15.6",
     "formidable": "^1.2.1",
     "http": "latest",
     "morgan": "latest",
     "mysql": "latest",
     "mysql2": "^1.5.3",
+    "nodemon": "^1.18.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "path": "latest",
+    "session": "^0.1.0",
     "xlsx": "^0.13.1"
   },
   "scripts": {
