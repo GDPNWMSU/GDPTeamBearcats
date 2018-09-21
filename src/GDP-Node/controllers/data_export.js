@@ -28,7 +28,7 @@ api.get('/:table_name',function (req,res) {
                         console.log('Error connecting to' + table_name);
                         console.error(error);
                     } else {
-                        res.render('index.ejs', {
+                        res.render('view_database.ejs', {
                             title: 'View data from '+table_name,
                             tables: tables,
                             rows : rows
@@ -58,7 +58,7 @@ api.get('/',function (req,res) {
                     console.log('Error in the query');
                 } else {
                     
-                    res.render('index.ejs', {
+                    res.render('view_database.ejs', {
                         title: 'View data from database',
                         tables: tables,
                         status: status

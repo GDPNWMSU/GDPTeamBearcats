@@ -24,11 +24,14 @@
             z-index: 1032;
         }
     </style>
+    <link rel="icon" type="image/png" href="../../img/logo.jpg"/>
     <link rel="stylesheet" href="../../css/pace.css" />
     <!-- <link rel="stylesheet" href="../../css/404.css"> -->
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="../../css/custom.css"/>
     <!-- <link rel="stylesheet" href="../../css/bootstrap-theme.min.css"> -->
     <!-- <link rel="stylesheet" href="../../css/main.css"> -->
     <!-- add links to icons see ref app 
@@ -91,7 +94,7 @@
  document.getElementById("tableSelect").onchange = function() {
         if(this.selectedIndex !== 0) 
         {
-            window.location.href= "/"+this.value;
+            window.location.href= "/view/"+this.value;
         } 
     };
 </script>
