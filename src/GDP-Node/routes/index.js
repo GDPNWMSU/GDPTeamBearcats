@@ -5,6 +5,7 @@ const formidable = require('formidable');
 console.log('inside routes')
 router.use('/',require('../controllers/home.js'))
 router.use('/login',require('../controllers/login.js'))
+router.use('/Profile',require('../controllers/Profile.js'))
 router.use('/import', require('../controllers/data_import.js'))
 router.use('/clearDB',require('../controllers/database_clear.js'))
 router.use('/view', require('../controllers/data_export.js'))
