@@ -1,6 +1,6 @@
 <html>
 <h1>Welcome</h1>
-<% if(typeof status != 'undefined'){ %>
+<% if(typeof status != 'undefined'&& message =="success"){ %>
 <h3>File import status:<%= status[0].FLAG %></h3>
 <% 
     } 
@@ -27,10 +27,13 @@
     });
 </script>
 <div class="col-md-12" style="overflow-x: scroll;">
+    <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
+        <center><h2>No records in table.</h2></center>
+    <% } %>
 <table class="table table-bordered table-striped" id="data">
     <thead>
     <tr>    
-<% if(typeof rows != 'undefined'){
+<% if(typeof rows != 'undefined' && message == "success"){
         var head = Object.keys(rows[0])
         head.forEach(function(headValue){ %>
              <th><%= headValue %></th>

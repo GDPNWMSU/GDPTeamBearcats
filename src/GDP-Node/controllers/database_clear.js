@@ -61,28 +61,28 @@ function createStatusTable(instconn,res) {
          // res.send(rows);
      })
 }
-api.get('/', function (req, res) {
-    connection.getConnection(function (error, instconn) {
-        if (!!error) {
-            instconn.release();
-            console.log("Problem in connecting database");
-        } else {
-            console.log("database connection successful");
-            // instconn.query("SELECT * FROM imported_files", function (error, rows, fields) {
-            instconn.query("SELECT table_name FROM information_schema.tables where table_schema='test'", function (error, tables, fields) {
-                instconn.release();
-                if (!!error) {
-                    console.log('Error in the query');
-                } else {
-                    res.render('index.ejs', {
-                        title: 'View data from database',
-                        tables: tables
-                    });
-                }
-                console.log("Inside data renderer")
-            })
-        }
-    })
+// api.get('/', function (req, res) {
+//     connection.getConnection(function (error, instconn) {
+//         if (!!error) {
+//             instconn.release();
+//             console.log("Problem in connecting database");
+//         } else {
+//             console.log("database connection successful");
+//             // instconn.query("SELECT * FROM imported_files", function (error, rows, fields) {
+//             instconn.query("SELECT table_name FROM information_schema.tables where table_schema='test'", function (error, tables, fields) {
+//                 instconn.release();
+//                 if (!!error) {
+//                     console.log('Error in the query');
+//                 } else {
+//                     res.render('index.ejs', {
+//                         title: 'View data from database',
+//                         tables: tables
+//                     });
+//                 }
+//                 console.log("Inside data renderer")
+//             })
+//         }
+//     })
 
-})
+// })
 module.exports = api

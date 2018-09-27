@@ -28,11 +28,20 @@ api.get('/:table_name',function (req,res) {
                         console.log('Error connecting to' + table_name);
                         console.error(error);
                     } else {
+                        if(rows.length>0){
                         res.render('view_database.ejs', {
                             title: 'View data from '+table_name,
                             tables: tables,
-                            rows : rows
+                            rows : rows,
+                            message: "success"
                         });
+                    }else{
+                            res.render('view_database.ejs', {
+                                title: 'View data from '+table_name,
+                                tables: tables,
+                                message: "dataNotFound"
+                            });
+                        }
                         // res.send(rows);
                     }
                     console.log("Inside /:table renderer")
@@ -61,7 +70,8 @@ api.get('/',function (req,res) {
                     res.render('view_database.ejs', {
                         title: 'View data from database',
                         tables: tables,
-                        status: status
+                        status: status,
+                        message: "success"
                     });
                 }
                     console.log("Inside data renderer")
