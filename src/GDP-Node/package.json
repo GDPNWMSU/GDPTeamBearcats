@@ -15,6 +15,7 @@
     "morgan": "latest",
     "mysql": "latest",
     "mysql2": "^1.5.3",
+    "passport": "^0.4.0",
     "path": "latest",
     "xlsx": "^0.13.1"
   },

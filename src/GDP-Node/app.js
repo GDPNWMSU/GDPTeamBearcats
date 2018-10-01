@@ -8,6 +8,7 @@ const expressLayouts = require('express-ejs-layouts')
 var app = express();  // make express app
 // var router = express.Router();
 // var path = __dirname + '/views/';
+var passport = require("passport")
   app.use(express.static(path.join(__dirname, 'public'), {
     maxAge: 31557600000
   }))
@@ -35,5 +36,6 @@ app.set('view engine', 'ejs')
 app.engine('ejs', engines.ejs)
 // Listen for an application request on port 8081
 server.listen(8081, function () {
+    console.log("Server started and currently in /app.js")
     console.log('GDP-Node app listening on http://127.0.0.1:8081/');
 });

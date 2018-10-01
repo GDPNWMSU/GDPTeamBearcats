@@ -2,7 +2,7 @@ var mysql = require("mysql");
 const express = require('express')
 const api = express.Router()
 // set up connection with database.
-console.log("inside controller")
+console.log("inside controllers/database_clear.js")
 var connection = mysql.createPool({
     connectionLimit: 50,
     host: 'localhost',

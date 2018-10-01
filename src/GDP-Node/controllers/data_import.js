@@ -20,7 +20,7 @@ var connection = sql.createPool({
     password: '',
     database: 'test'
 });
-
+console.log("Inside controllers/data_import.js")
 router.get('/', (req, res, next) => {
     res.render('data_import.ejs', {
         title: 'Import data'
@@ -65,7 +65,7 @@ router.post('/',(req,res,next)=>{
     //   var updateQ = "INSERT INTO `upload_status` (`FLAG`, `TIMESTAMP`) VALUES ('success', CURRENT_TIMESTAMP)";
         queries = SheetJSSQL.book_to_sql(wb2, "MYSQL");
         // queries = SheetJSSQL.book_to_sql(wb2,"MYSQL",{raw:true});
-        console.log(queries);
+        // console.log(queries);
         queries.push("UPDATE `upload_status` SET `flag` = 'success' WHERE ID = (SELECT ID FROM (SELECT * FROM `upload_status`) AS ph WHERE FLAG='pending' ORDER BY ID DESC LIMIT 1)");
         // var updateQ = "UPDATE `upload_status` SET `flag` = 'success' WHERE ID = (SELECT ID FROM (SELECT * FROM `upload_status`) AS ph WHERE FLAG='pending' ORDER BY ID DESC LIMIT 1)";
                 // res.status(400).send(queries)

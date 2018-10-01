@@ -2,7 +2,6 @@ var mysql = require("mysql");
 const express = require('express')
 const api = express.Router()
 // set up connection with database.
-console.log("inside controller")
 var connection = mysql.createPool({
     connectionLimit: 50,
     host: 'localhost',
@@ -11,6 +10,7 @@ var connection = mysql.createPool({
     database: 'test',
     dateStrings: 'date'
 });
+console.log("Inside controllers/data_export.js")
 api.get('/:table_name',function (req,res) {
     const table_name = req.params.table_name;
     if (typeof table_name !='undefined'&&table_name != 'favicon.ico'&& table_name != ''){
