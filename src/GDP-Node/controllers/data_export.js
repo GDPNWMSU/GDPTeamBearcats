@@ -28,18 +28,24 @@ api.get('/:table_name',function (req,res) {
                         console.log('Error connecting to' + table_name);
                         console.error(error);
                     } else {
+                        var username   = req.session.user.username;
+                        var firstName  = req.session.user.firstName;
                         if(rows.length>0){
                         res.render('view_database.ejs', {
                             title: 'View data from '+table_name,
                             tables: tables,
                             rows : rows,
-                            message: "success"
+                            message: "success",
+                            username: username, 
+                            firstName: firstName 
                         });
                     }else{
                             res.render('view_database.ejs', {
                                 title: 'View data from '+table_name,
                                 tables: tables,
-                                message: "dataNotFound"
+                                message: "dataNotFound",
+                                username: username, 
+                                firstName: firstName 
                             });
                         }
                         // res.send(rows);
@@ -66,12 +72,15 @@ api.get('/',function (req,res) {
                 if (!!error) {
                     console.log('Error in the query');
                 } else {
-                    
+                    var username   = req.session.user.username;
+                    var firstName  = req.session.user.firstName;
                     res.render('view_database.ejs', {
                         title: 'View data from database',
                         tables: tables,
                         status: status,
-                        message: "success"
+                        message: "success",
+                        username: username, 
+                        firstName: firstName 
                     });
                 }
                     console.log("Inside data renderer")

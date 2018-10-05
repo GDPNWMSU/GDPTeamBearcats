@@ -24,16 +24,22 @@ api.get('/flag',function (req,res) {
                         console.log('Error connecting to' + table_name);
                         console.error(error);
                     } else {
+                        var username   = req.session.user.username;
+                        var firstName  = req.session.user.firstName;
                         if(rows.length>0){
                             res.render('report_viewer.ejs', {
                                 title: 'Flags report',
                                 rows : rows,
-                                message: "success"
+                                message: "success",
+                                username: username, 
+                                firstName: firstName
                             });
                         }else{
                             res.render('report_viewer.ejs', {
                                 title: 'Flags report',
-                                message: "dataNotFound"
+                                message: "dataNotFound",
+                                username: username, 
+                                firstName: firstName
                             });
                             }
                         // res.send(rows);
@@ -47,7 +53,9 @@ api.get('/flag',function (req,res) {
 })
 api.get('/', (req, res, next) => {
     res.render('report.ejs', {
-        title: 'Select report'
+        title: 'Select report',
+        username: req.session.user.username, 
+        firstName: req.session.user.firstName
     })
 })
 // api.get('/',function (req,res) {

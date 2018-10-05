@@ -34,7 +34,11 @@
 <!-- <div class="col-md-offset-6 col-md-6" style="position: relative;
 -webkit-box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);
 box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);"> -->
-        <h2 align="center">Welcome User</h2>
+        <h2 align="center">Welcome <%if(typeof username!= 'undefined' && username!=null){%>
+        <%=firstName%>
+        <%}else{%>
+        User
+        <%}%></h2>
         <hr/>
         <div class="col-md-12" style="padding-bottom:10px">
         <a class="weatherwidget-io" href="https://forecast7.com/en/40d35n94d87/maryville/" data-label_1="MARYVILLE" data-label_2="WEATHER" data-theme="pure" >MARYVILLE WEATHER</a>
