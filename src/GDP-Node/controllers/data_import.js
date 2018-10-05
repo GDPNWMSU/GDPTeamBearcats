@@ -35,7 +35,7 @@ router.post('/',(req,res,next)=>{
             console.log("Problem in connecting database");
             console.log(error);
         } else {
-            console.log("database import database connection successful");
+            console.log("Database connection successful");
             // instconn.query("SELECT * FROM imported_files", function (error, rows, fields) {
             instconn.query("INSERT INTO `upload_status` (`FLAG`, `TIMESTAMP`) VALUES ('pending', CURRENT_TIMESTAMP)", function (error, tables, fields) {    
                 if (!!error) {
@@ -43,7 +43,7 @@ router.post('/',(req,res,next)=>{
                         console.error(error);
                     }
                     else{
-                        console.log(error)
+                        console.log("Upload status updated to : pending")
                     }
                 })
             }
