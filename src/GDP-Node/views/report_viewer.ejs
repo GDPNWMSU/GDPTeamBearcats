@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#data").DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
+<div class="col-md-offset-1 col-md-10" style="padding-top: 60px">
+    <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
+        <center><h2>No records in table.</h2></center>
+    <% } %>
+<table class="table table-bordered table-striped" id="data">
+    <thead>
+    <tr>    
+<% if(typeof rows != 'undefined' && message == "success"){
+        var head = Object.keys(rows[0])
+        head.forEach(function(headValue){ %>
+             <th><%= headValue %></th>
+    <% }) %>
+    </tr>
+    </thead>
+    <tbody>
+<% rows.forEach(element => {%>
+<tr>
+ <% head.forEach(function(headValue){  %>
+
+    <td><%= element[headValue] %></td>
+
+<%   }) %>
+</tr>
+<%
+    }); 
+   }%>
+</tbody>
+
+</table>
+</div>
+</html>
