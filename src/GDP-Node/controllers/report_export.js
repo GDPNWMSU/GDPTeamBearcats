@@ -10,7 +10,7 @@ var connection = mysql.createPool({
     database: 'test',
     dateStrings: 'date'
 });
-console.log("Inside controllers/report_export.js")
+console.log("Inside controllers/report_export.js");
 api.get('/flag',function (req,res) {
      connection.getConnection(function (error, instconn) {
          if (!!error) {
