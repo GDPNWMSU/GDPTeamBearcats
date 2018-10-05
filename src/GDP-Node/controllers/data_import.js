@@ -22,8 +22,10 @@ var connection = sql.createPool({
 });
 console.log("Inside controllers/data_import.js")
 router.get('/', (req, res, next) => {
+    var username   = req.session.user.username;
+    var firstName  = req.session.user.firstName;
     res.render('data_import.ejs', {
-        title: 'Import data'
+        title: 'Import data',username: username, firstName: firstName
     })
 })
 router.post('/',(req,res,next)=>{

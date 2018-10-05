@@ -13,12 +13,13 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                     <!-- <li><a href="/Home">Home</a></li> -->
-                    <li><a href="/login">Login</a></li>
-                    
-              <li><a href="/import">Import</a></li>
-              <li><a href="/view">View Database</a></li>
-              <li><a href="/Profile">Profile</a></li>
-              <li><a href="/clearDB">Clear Database</a></li>
+            <%if(typeof username!= 'undefined' && username!=null){%>
+                <li><a href="/">Home</a></li>
+                <li><a href="/logout">Logout</a></li>
+            <%} else {%>
+               <li><a href="/login">Login</a></li>
+            <%}%>
+
             </ul>
         </div>
 

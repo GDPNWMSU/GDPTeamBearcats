@@ -10,7 +10,7 @@ var connection = mysql.createPool({
     password: '',
     database: 'test'
 });
-api.get('/', function (req, res) {
+api.get('/', function (req, res) {f
     const table_name = req.params.table_name;
     connection.getConnection(function (error, instconn) {
         if (!!error) {
@@ -53,6 +53,7 @@ function createStatusTable(instconn,res) {
                     console.error(error);
                 }else{
                     console.log('insert status table');
+                    
                     res.redirect('/')
                 } 
                 // res.send(rows);

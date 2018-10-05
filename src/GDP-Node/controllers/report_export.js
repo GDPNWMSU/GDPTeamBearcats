@@ -12,8 +12,10 @@ var connection = mysql.createPool({
 });
 console.log("Inside controllers/report_export.js")
 api.get('/', (req, res, next) => {
+    var username   = req.session.user.username;
+    var firstName  = req.session.user.firstName;
     res.render('report.ejs', {
-        title: 'Select report'
+        title: 'Select report',username: username, firstName: firstName
     })
 })
 api.get('/:table_name',function (req,res) {

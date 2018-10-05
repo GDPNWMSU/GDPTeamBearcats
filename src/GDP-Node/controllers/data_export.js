@@ -29,17 +29,23 @@ api.get('/:table_name',function (req,res) {
                         console.error(error);
                     } else {
                         if(rows.length>0){
+                            var username   = req.session.user.username;
+                            var firstName  = req.session.user.firstName;
                         res.render('view_database.ejs', {
                             title: 'View data from '+table_name,
                             tables: tables,
                             rows : rows,
-                            message: "success"
+                            message: "success",
+                            username: username, 
+                            firstName: firstName
                         });
                     }else{
                             res.render('view_database.ejs', {
                                 title: 'View data from '+table_name,
                                 tables: tables,
-                                message: "dataNotFound"
+                                message: "dataNotFound",
+                                username: username, 
+                                firstName: firstName
                             });
                         }
                         // res.send(rows);

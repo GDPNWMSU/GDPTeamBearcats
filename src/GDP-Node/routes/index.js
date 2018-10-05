@@ -1,31 +1,43 @@
 const express = require('express');
-const router = express.Router()
+const app = express.Router()
 const XLSX = require('xlsx');
 const formidable = require('formidable');
 console.log('Inside routes/index')
-router.use('/',require('../controllers/home.js'))
-router.use('/login',require('../controllers/login.js'))
-router.use('/profile',require('../controllers/profile.js'))
-router.use('/import', require('../controllers/data_import.js'))
-router.use('/clearDB',require('../controllers/database_clear.js'))
-router.use('/view', require('../controllers/data_export.js'))
-router.use('/export',require('../controllers/report_export.js'))
-router.use('/report',require('../controllers/report_export.js'))
-router.use('*', (req, res, next) => {
-    res.render('../views/404.ejs', {
-        title: 'Page not found'
-    })
+// app.use('/',require('../controllers/home.js'))
+// router.use('/login',require('../controllers/login.js'))
+app.use('/profile',isAuthenticated,require('../controllers/profile.js'))
+app.use('/import',isAuthenticated, require('../controllers/data_import.js'))
+app.use('/clearDB',isAuthenticated,require('../controllers/database_clear.js'))
+app.use('/view',isAuthenticated, require('../controllers/data_export.js'))
+app.use('/export',isAuthenticated,require('../controllers/report_export.js'))
+app.use('/report',isAuthenticated,require('../controllers/report_export.js'))
+app.get('/logout', function(req, res){
+    req.session.destroy();
+    req.logout();
+    res.redirect('/login');
+});
+app.get('/', isAuthenticated, function(req, res, next) { 
+    var username   = req.session.user.username;
+    var firstName  = req.session.user.firstName;
+    
+    res.render('home', {title:'Home',username: username, firstName: firstName });
 })
-// router.post('/import', (req, res, next) => {
-//     var form = new formidable.IncomingForm();
-//     form.parse(req, function (err, fields, files) {
-//         var f = files[Object.keys(files)[0]];
-//         var workbook = XLSX.readFile(f.path);
-//         /* DO SOMETHING WITH workbook HERE */
-//         // res.send({status:400,message:'File imported'})
-//         res.status(400).send(workbook.Sheets);
-//     });
-// })
+
+function isAuthenticated(req, res, next) {
+    
+      if (req.isAuthenticated())
+    
+        return next();
+    
+      res.redirect('/login');
+    
+}
+app.get('*', function(req, res){
+    res.render('404',{title:'Page not found'});
+});
 
 
-module.exports = router
+
+
+
+module.exports = app
