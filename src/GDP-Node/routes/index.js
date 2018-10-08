@@ -11,11 +11,15 @@ app.use('/clearDB',isAuthenticated,require('../controllers/database_clear.js'))
 app.use('/view',isAuthenticated, require('../controllers/data_export.js'))
 app.use('/export',isAuthenticated,require('../controllers/report_export.js'))
 app.use('/report',isAuthenticated,require('../controllers/report_export.js'))
+app.use('/manage',isAuthenticated,require('../controllers/manage.js'))
+app.use('/add_users',isAuthenticated,require('../controllers/add_users.js'))
+
 app.get('/logout', function(req, res){
     req.session.destroy();
     req.logout();
     res.redirect('/login');
 });
+
 app.get('/', isAuthenticated, function(req, res, next) { 
     var username   = req.session.user.username;
     var firstName  = req.session.user.firstName;
