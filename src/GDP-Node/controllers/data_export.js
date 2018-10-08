@@ -35,12 +35,14 @@ api.get('/:table_name',function (req,res) {
                             var firstName  = req.session.user.firstName;
                         res.render('view_database.ejs', {
                             title: 'View data from '+table_name,
+                            message:"success",
                             tables: tables,
                             rows : rows,
                         });
                     }else{
                             res.render('view_database.ejs', {
                                 title: 'View data from '+table_name,
+                                message:"success",
                                 tables: tables,
                             });
                         }
