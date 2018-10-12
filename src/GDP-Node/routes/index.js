@@ -13,7 +13,6 @@ app.use('/export',isAuthenticated,require('../controllers/report_export.js'))
 app.use('/report',isAuthenticated,require('../controllers/report_export.js'))
 app.use('/manage',isAuthenticated,require('../controllers/manage.js'))
 app.use('/add_users',isAuthenticated,require('../controllers/add_users.js'))
-
 app.get('/logout', function(req, res){
     req.session.destroy();
     req.logout();
@@ -28,20 +27,12 @@ app.get('/', isAuthenticated, function(req, res, next) {
 })
 
 function isAuthenticated(req, res, next) {
-    
-      if (req.isAuthenticated())
-    
+    if (req.isAuthenticated())
         return next();
-    
-      res.redirect('/login');
-    
+    res.redirect('/login');
 }
 app.get('*', function(req, res){
     res.render('404',{title:'Page not found'});
 });
-
-
-
-
 
 module.exports = app

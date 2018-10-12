@@ -5,52 +5,54 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+    </head>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">&nbsp;&nbsp;&nbsp;
-                <form>
+                <form name="myForm" action="#" method="post" onsubmit="return checkForBlank()">
                     <div class="form-group row">
-                        <p><b>Here users are added by admin.<p>
-                                    <label for="username" class="col-4 col-form-label">User Name*</label>
-                                    <div class="col-8">
-                                        <input id="username" name="username" placeholder="Username" class="form-control here"
-                                            required="required" type="text">
-                                    </div>
+                        <label for="username" class="col-4 col-form-label">User Name</label>
+                        <div class="col-8">
+                            <input id="username" name="username" placeholder="Username" class="form-control here" type="text"
+                                required>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label for="name" class="col-4 col-form-label">First Name</label>
                         <div class="col-8">
-                            <input id="name" name="name" placeholder="First Name" class="form-control here" type="text">
+                            <input id="name" name="firstname" placeholder="First Name" class="form-control here" type="text"
+                                required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="lastname" class="col-4 col-form-label">Last Name</label>
                         <div class="col-8">
-                            <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" type="text">
+                            <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" type="text"
+                                required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="lastname" class="col-4 col-form-label">Role</label>
-                         <div class="col-8">
+                        <div class="col-8">
                             <!-- <input id="Role" name="Role" placeholder="Role" class="form-control here" type="text"> -->
-                            <label for = "Role" ></label>
-                            <select name="Role" style = "width:370px">
+                            <!-- <label for="Role"></label> -->
+
+                            <select name="Role" class="form-control">
                                 <option value="Admin">Admin</option>
                                 <option value="Staff">Staff</option>
                             </select>
                         </div>
-                        &nbsp;
-                        <div alignment="center-right">
-                            <button type="button" class="btn btn-primary">Add User</button>
-                        </div>
-
+                    </div>&nbsp;
+                    <div alignment="center-right">
+                        <button type="button" class="btn btn-primary">Add User</button>
                     </div>
+                </form>
             </div>
         </div>
+    </div>
 
-
+    
 </body>

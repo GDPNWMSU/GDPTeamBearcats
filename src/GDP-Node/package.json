@@ -11,7 +11,7 @@
     "crypto": "^1.0.1",
     "dotenv": "latest",
     "ejs": "latest",
-    "express": "latest",
+    "express": "^4.16.4",
     "express-ejs-layouts": "latest",
     "express-session": "^1.15.6",
     "formidable": "^1.2.1",
