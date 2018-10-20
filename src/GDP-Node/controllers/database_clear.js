@@ -10,7 +10,7 @@ var connection = mysql.createPool({
     password: '',
     database: 'test'
 });
-api.get('/', function (req, res) {f
+api.get('/', function (req, res) {
     const table_name = req.params.table_name;
     connection.getConnection(function (error, instconn) {
         if (!!error) {
@@ -20,47 +20,47 @@ api.get('/', function (req, res) {f
             console.log("database connection successful");
             // instconn.query("SELECT * FROM imported_files", function (error, rows, fields) {
             instconn.query("DROP DATABASE `test`", function (error, tables, fields) {
-                    if (!!error) {
-                        console.log('Error connecting to' + table_name);
-                        console.error(error);
-                    } else {
-                        instconn.query("CREATE DATABASE `test`", function (error, tables, fields) {
-                        if(!!error){
+                if (!!error) {
+                    console.log('Error connecting to' + table_name);
+                    console.error(error);
+                } else {
+                    instconn.query("CREATE DATABASE `test`", function (error, tables, fields) {
+                        if (!!error) {
                             console.log('Error creating database');
-                        }else{
-                            createStatusTable(instconn,res);
-                           
+                        } else {
+                            createStatusTable(instconn, res);
+
                         }
                         // res.send(rows);
-                        })
-                    }
-                    console.log("Inside db drop")
+                    })
+                }
+                console.log("Inside db drop")
             })
-             
+
         }
     })
 })
-function createStatusTable(instconn,res) {
-     instconn.query("CREATE TABLE `test`.`upload_status` (`ID` INT(3) NOT NULL AUTO_INCREMENT, `FLAG` VARCHAR(10) NOT NULL , `TIMESTAMP` TIMESTAMP NOT NULL , PRIMARY KEY (`ID`))", function (error, tables, fields) {
-         if (!!error) {
-             console.log('Error creating status table');
-         }else{
-             console.log('create status table');
+function createStatusTable(instconn, res) {
+    instconn.query("CREATE TABLE `test`.`upload_status` (`ID` INT(3) NOT NULL AUTO_INCREMENT, `FLAG` VARCHAR(10) NOT NULL , `TIMESTAMP` TIMESTAMP NOT NULL , PRIMARY KEY (`ID`))", function (error, tables, fields) {
+        if (!!error) {
+            console.log('Error creating status table');
+        } else {
+            console.log('create status table');
             instconn.query("INSERT INTO `test`.`upload_status` (`FLAG`, `TIMESTAMP`) VALUES ('empty', CURRENT_TIMESTAMP);", function (error, tables, fields) {
                 instconn.release();
                 if (!!error) {
                     console.log('Error initiating status table');
                     console.error(error);
-                }else{
+                } else {
                     console.log('insert status table');
-                    
+
                     res.redirect('/')
-                } 
+                }
                 // res.send(rows);
             })
-         }
-         // res.send(rows);
-     })
+        }
+        // res.send(rows);
+    })
 }
 // api.get('/', function (req, res) {
 //     connection.getConnection(function (error, instconn) {

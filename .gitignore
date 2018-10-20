@@ -1,3 +1,4 @@
 src/PHP-App/imported_Files/
 src/PHP-App/libraries/
 src/GDP-Node/node_modules/
+/src/GDP-Node/package-lock.json

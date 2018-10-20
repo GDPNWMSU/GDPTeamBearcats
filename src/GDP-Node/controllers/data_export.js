@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 const express = require('express')
-const api = express.Router()
+const router = express.Router()
 // set up connection with database.
 var connection = mysql.createPool({
     connectionLimit: 50,
@@ -11,7 +11,9 @@ var connection = mysql.createPool({
     dateStrings: 'date'
 });
 console.log("Inside controllers/data_export.js")
-api.get('/:table_name',function (req,res) {
+router.get('/:table_name',function (req,res) {
+    var username   = req.session.user.username;
+    var firstName  = req.session.user.firstName;
     const table_name = req.params.table_name;
     if (typeof table_name !='undefined'&&table_name != 'favicon.ico'&& table_name != ''){
      connection.getConnection(function (error, instconn) {
@@ -25,25 +27,34 @@ api.get('/:table_name',function (req,res) {
                 instconn.query("SELECT * FROM `" + table_name+"`", function (error, rows, fields) {
                 instconn.release();
                     if (!!error) {
+                        if(error.errno == 1146){
+                            res.render('view_database.ejs', {
+                                title: 'Table not found',
+                                message:"Table not found",
+                                tables: tables,
+                                username: username, 
+                                firstName: firstName
+                            });
+                        }
                         console.log('Error connecting to' + table_name);
                         console.error(error);
                     } else {
-                        var username   = req.session.user.username;
-                        var firstName  = req.session.user.firstName;
                         if(rows.length>0){
-                            var username   = req.session.user.username;
-                            var firstName  = req.session.user.firstName;
                         res.render('view_database.ejs', {
                             title: 'View data from '+table_name,
                             message:"success",
                             tables: tables,
                             rows : rows,
+                            username: username, 
+                            firstName: firstName
                         });
                     }else{
                             res.render('view_database.ejs', {
                                 title: 'View data from '+table_name,
                                 message:"success",
                                 tables: tables,
+                                username: username, 
+                                firstName: firstName
                             });
                         }
                         // res.send(rows);
@@ -56,8 +67,10 @@ api.get('/:table_name',function (req,res) {
      })
     }
 })
-api.get('/',function (req,res) {
+router.get('/',function (req,res) {
     connection.getConnection(function (error, instconn) {
+        var username   = req.session.user.username;
+        var firstName  = req.session.user.firstName;
         if (!!error) {
             // instconn.release();
             console.log("Problem in connecting database");
@@ -70,8 +83,6 @@ api.get('/',function (req,res) {
                 if (!!error) {
                     console.log('Error in the query');
                 } else {
-                    var username   = req.session.user.username;
-                    var firstName  = req.session.user.firstName;
                     res.render('view_database.ejs', {
                         title: 'View data from database',
                         tables: tables,
@@ -88,4 +99,4 @@ api.get('/',function (req,res) {
     })
 
 })
-module.exports = api
+module.exports = router

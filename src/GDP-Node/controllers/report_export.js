@@ -58,33 +58,25 @@ api.get('/', (req, res, next) => {
         firstName: req.session.user.firstName
     })
 })
-// api.get('/',function (req,res) {
-//     connection.getConnection(function (error, instconn) {
-//         if (!!error) {
-//             // instconn.release();
-//             console.log("Problem in connecting database");
-//         } else {
-//             console.log("database connection successful");
-//             // instconn.query("SELECT * FROM imported_files", function (error, rows, fields) {
-//             instconn.query("SELECT table_name FROM information_schema.tables where table_schema='test'", function (error, tables, fields) {
-//                 instconn.query("SELECT FLAG FROM `upload_status` ORDER BY ID DESC", function (error, status, fields) {
-//                 instconn.release();
-//                 if (!!error) {
-//                     console.log('Error in the query');
-//                 } else {
-                    
-//                     res.render('view_database.ejs', {
-//                         title: 'View data from database',
-//                         tables: tables,
-//                         status: status,
-//                         message: "success"
-//                     });
-//                 }
-//                     console.log("Inside data renderer")
-//             })
-//         })
-//         }
-//     })
+api.post('/lastUpdated',function (req,res) {
+    // console.log("Inside report_export.js lastUpdated")
+    res.setHeader('Content-Type', 'application/json')
+    connection.getConnection(function (error, instconn) {
+        if (error) {
+            console.log("Problem in connecting database");
+        } else {
+                instconn.query("SELECT FLAG,TIMESTAMP FROM `upload_status` ORDER BY ID DESC LIMIT 1", function (error, data) {
+                instconn.release();
+                if (error) {
+                    console.log('Error in the query');
+                    console.log(error)
+                } else {
+                    res.send(data);
+                    // console.log(data)
+                }
+            })
+        }
+    })
 
-// })
+})
 module.exports = api

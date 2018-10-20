@@ -1,18 +1,30 @@
 <html>
 <h1>Welcome</h1>
-<% if(typeof status != 'undefined'&& message =="success"){ %>
-<h3>File import status:<%= status[0].FLAG %></h3>
+<% if(message=="Table not found"){ %>
+    <div class="alert alert-danger" role="alert">
+        <strong>Whoo.. The table your are searching for is not found!!</strong>
+    </div>
+<% }%>
+<% if(typeof status != 'undefined'&& (message =="success"||message=="Table not found")){ %>
+
 <% 
     } 
 %>
+<h4>
+        <strong>Report details:</strong><br>
+        <h5>
+            <span style="padding-left:30px"></span>Recent updated report status: <span id="lastUpdatedStatus"></span><br>
+            <span style="padding-left:30px"></span>Report last updated on: <span id="lastUpdatedTime"></span><br>
+        </h5>
+</h4>
 <label>Select from imported files</label>:
 <select id="tableSelect">
     <option value="0">Select table:</option>
-<% tables.forEach(table => { %>
-<option value="<%= table.table_name %>">
-<%= table.table_name %>
-</option>
-<% 
+    <% tables.forEach(table => { %>
+    <option value="<%= table.table_name %>">
+        <%= table.table_name %>
+    </option>
+    <% 
     }); 
 %>
 </select>
@@ -28,32 +40,39 @@
 </script>
 <div class="col-md-12" style="overflow-x: scroll;">
     <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
-        <center><h2>No records in table.</h2></center>
+    <center>
+        <h2>No records in table.</h2>
+    </center>
     <% } %>
-<table class="table table-bordered table-striped" id="data">
-    <thead>
-    <tr>    
-<% if(typeof rows != 'undefined' && message == "success"){
+    <table class="table table-bordered table-striped" id="data">
+        <thead>
+            <tr>
+                <% if(typeof rows != 'undefined' && message == "success"){
         var head = Object.keys(rows[0])
         head.forEach(function(headValue){ %>
-             <th><%= headValue %></th>
-    <% }) %>
-    </tr>
-    </thead>
-    <tbody>
-<% rows.forEach(element => {%>
-<tr>
- <% head.forEach(function(headValue){  %>
+                <th>
+                    <%= headValue %>
+                </th>
+                <% }) %>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach(element => {%>
+            <tr>
+                <% head.forEach(function(headValue){  %>
 
-    <td><%= element[headValue] %></td>
+                <td>
+                    <%= element[headValue] %>
+                </td>
 
-<%   }) %>
-</tr>
-<%
+                <%   }) %>
+            </tr>
+            <%
     }); 
    }%>
-</tbody>
+        </tbody>
 
-</table>
+    </table>
 </div>
+
 </html>

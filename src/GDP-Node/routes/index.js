@@ -4,7 +4,7 @@ const XLSX = require('xlsx');
 const formidable = require('formidable');
 console.log('Inside routes/index')
 // app.use('/',require('../controllers/home.js'))
-// router.use('/login',require('../controllers/login.js'))
+app.use('/login',require('../controllers/login.js'))
 app.use('/profile',isAuthenticated,require('../controllers/profile.js'))
 app.use('/import',isAuthenticated, require('../controllers/data_import.js'))
 app.use('/clearDB',isAuthenticated,require('../controllers/database_clear.js'))

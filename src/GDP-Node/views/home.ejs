@@ -3,54 +3,80 @@
 <div class="row navbar-padding-top">
     <div class="col-md-offset-1 col-md-6">
         <div class="row">
-          <div class="col-md-4">
-    <!-- <button class="btn btn-block btn-default"><a href="/profile" style="color:black"><i class="fas fa-user fa-7x"></i></a><br><h4>Profile</h4></button> -->
-       <a href="/profile" style="color:black"><button class="btn btn-block btn-default fas fa-user fa-7x"><h4>Profile</h4></button></a><br>
-      </div>
-      <div class="col-md-4">
-       <a href="/manage" style="color:black"><button class="btn btn-block btn-default fas fa-users fa-7x"><h4>Accounts</h4></button></a><br>
-       </div>
-       <div class="col-md-4">
-          <a href="/view" style="color:black"><button class="btn btn-block btn-default far fa-eye fa-7x"><h4>View database</h4></button></a><br>
-          <!-- <button class="btn btn-block btn-default"><a href="/view" style="color:black"><i class="far fa-eye fa-7x"></i></a><br><h4>View database</h4></button> -->
+            <div class="col-md-4">
+                <!-- <button class="btn btn-block btn-default"><a href="/profile" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-user fa-7x"></i></a><br><h4>Profile</h4></button> -->
+                <!-- <a href="/profile" style="color:black;;font-family: 'Open Sans', sans-serif;" class="homeFont"><button class="btn btn-block btn-default homeFont fas fa-user fa-7x"><h4>Profile</h4></button></a><br> -->
+                <a href="/profile" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-user fa-7x"></i>
+                    <h4>Profile</h4>
+                </a><br>
+            </div>
+            <div class="col-md-4">
+                <a href="/manage" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-users fa-7x"></i>
+                    <h4>Accounts</h4>
+                </a><br>
+            </div>
+            <div class="col-md-4">
+                <a href="/view" style="color:black;" class="btn btn-block btn-default"><i class="far fa-eye fa-7x"></i>
+                    <h4>View database</h4>
+                </a><br>
+                <!-- <button class="btn btn-block btn-default"><a href="/view" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="far fa-eye fa-7x"></i></a><br><h4>View database</h4></button> -->
+            </div>
         </div>
-      </div>
-      <br>
-       <div class="row">
-          <div class="col-md-4">
-              <a href="/import" style="color:black"><button class="btn btn-block btn-default fas fa-file-import fa-7x"><h4>Import</h4></button></a><br>
-              <!-- <button class="btn btn-block btn-default"><a href="/import" style="color:black"><i class="fas fa-file-import fa-7x"></i></a><br><h4>Import</h4></button> -->
-             </div>
-          <div class="col-md-4">
-              <a href="/report" style="color:black"><button class="btn btn-block btn-default fas fa-file-export fa-7x"><h4>Reports</h4></button></a><br>
-              <!-- <button class="btn btn-block btn-default"><a href="/report" style="color:black"><i class="fas fa-file-export fa-7x"></i></a><br><h4>Reports</h4></button> -->
-              </div>
-          <div class="col-md-4">
-              <a href="/clearDB" style="color:black"><button class="btn btn-block btn-default fas fa-trash-alt fa-7x"><h4>Delete Database</h4></button></a><br>
-       <!-- <button class="btn btn-block btn-default"><a href="/clearDB" style="color:red"><i class="fas fa-trash-alt fa-7x"></i></a><h4>Delete Database</h4></button> -->
-      </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/import" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-file-import fa-7x"></i>
+                    <h4>Import</h4>
+                </a><br>
+                <!-- <button class="btn btn-block btn-default"><a href="/import" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-import fa-7x"></i></a><br><h4>Import</h4></button> -->
+            </div>
+            <div class="col-md-4">
+                <a href="/report" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-file-export fa-7x"></i>
+                    <h4>Reports</h4>
+                </a><br>
+                <!-- <button class="btn btn-block btn-default"><a href="/report" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-export fa-7x"></i></a><br><h4>Reports</h4></button> -->
+            </div>
+            <div class="col-md-4">
+                <a href="/clearDB" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-trash-alt fa-7x"
+                        style="color:red"></i>
+                    <h4>Delete Database</h4>
+                </a><br>
+                <!-- <button class="btn btn-block btn-default"><a href="/clearDB" style="color:red"><i class="fas fa-trash-alt fa-7x"></i></a><h4>Delete Database</h4></button> -->
+            </div>
 
-      </div>
-          </div>
-<div class="col-md-4" style="margin-left:50px;position: relative;
+        </div>
+    </div>
+    <div class="col-md-4" style="margin-left:50px;position: relative;
   -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
   -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);">
-<!-- <div class="col-md-offset-6 col-md-6" style="position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);"
+        onload="getStatus()">
+        <!-- <div class="col-md-offset-6 col-md-6" style="position: relative;
 -webkit-box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);
 box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);"> -->
-        <h2 align="center">Welcome <%if(typeof username!= 'undefined' && username!=null){%>
-        <%=firstName%>
-        <%}else{%>
-        User
-        <%}%></h2>
-        <hr/>
+        <h2 align="center">Welcome
+            <%if(typeof username!= 'undefined' && username!=null){%>
+            <%=firstName%>
+            <%}else{%>
+            User
+            <%}%>
+        </h2>
+        <hr />
         <div class="col-md-12" style="padding-bottom:10px">
-        <a class="weatherwidget-io" href="https://forecast7.com/en/40d35n94d87/maryville/" data-label_1="MARYVILLE" data-label_2="WEATHER" data-theme="pure" >MARYVILLE WEATHER</a>
-        <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-        </script>
+            <a class="weatherwidget-io" href="https://forecast7.com/en/40d35n94d87/maryville/" data-label_1="MARYVILLE"
+                data-label_2="WEATHER" data-theme="pure">MARYVILLE WEATHER</a>
+            <script>
+                !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+            </script>
+            <hr>
+            <h5>
+                <strong>Report details:</strong><br>
+                <h6>
+                    <span style="padding-left:30px"></span>Recent updated report status: <span id="lastUpdatedStatus"></span><br>
+                    <span style="padding-left:30px"></span>Report last updated on: <span id="lastUpdatedTime"></span><br>
+                </h6>
+            </h5>
         </div>
-      </div>
+    </div>
 </div>
 </div>

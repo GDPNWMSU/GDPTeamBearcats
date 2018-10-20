@@ -71,7 +71,7 @@
     <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script> -->
     <!-- <script src="../../js/main.js"></script> -->
-    <script src="/js/custom.js"></script>
+    <script src="../../js/custom.js"></script>
 </head>
 
 <body>
@@ -93,11 +93,34 @@
             });
         });
     }
- document.getElementById("tableSelect").onchange = function() {
+ if(document.getElementById("tableSelect")){
+    document.getElementById("tableSelect").onchange = function() {
         if(this.selectedIndex !== 0) 
         {
             window.location.href= "/view/"+this.value;
         } 
     };
+}
+function getStatus(){
+    let url = "/report/lastUpdated";
+        let xhttp = new XMLHttpRequest()
+        xhttp.open("POST", url, true)
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send()
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let resp = JSON.parse(this.responseText)
+                if (document.getElementById("lastUpdatedTime"))
+                    document.getElementById("lastUpdatedTime").innerHTML = resp[0].TIMESTAMP
+                if (document.getElementById("lastUpdatedStatus"))
+                    document.getElementById("lastUpdatedStatus").innerHTML = resp[0].FLAG
+            }else{
+                console.log(this.status)
+            }
+        }
+    
+        setTimeout(getStatus, 5000);
+    }
+    getStatus();
 </script>
 </html>

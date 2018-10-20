@@ -12,6 +12,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
+                    <%if(typeof username!= 'undefined' && username!=null){%> 
+                        <li><a href="#" >Welcome <%=firstName%></a></li>
+                    <%}%>
                     <!-- <li><a href="/Home">Home</a></li> -->
             <%if(typeof username!= 'undefined' && username!=null){%>
                 <li><a href="/">Home</a></li>
