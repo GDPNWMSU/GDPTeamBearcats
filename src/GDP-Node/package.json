@@ -17,7 +17,7 @@
     "formidable": "^1.2.1",
     "http": "latest",
     "memory": "0.0.3",
-    "morgan": "latest",
+    "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "mysql2": "^1.5.3",
     "passport": "^0.4.0",

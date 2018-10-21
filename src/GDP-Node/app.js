@@ -23,6 +23,7 @@ app.use(expressLayouts)
 var server = require('http').createServer(app); // inject app into the server
 // set up routes
 var routes = require('./routes/index.js');
+// app.post('/add_user',add_user);
 //Set default engine
 app.set('view engine', 'ejs')
 // set the root view folder
