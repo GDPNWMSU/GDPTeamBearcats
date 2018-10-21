@@ -5,18 +5,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
+</head>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">&nbsp;&nbsp;&nbsp;
-                <form name="myForm" action="#" method="post" onsubmit="return checkForBlank()">
+                <!-- <form method = "post" action ="/login" role="form"> -->
+                <div class="alert alert-success hidden">
+                    <strong>Success!</strong> User Added Successfully
+                </div>
+                <div class="alert alert-danger hidden">
+                    <strong>Failure!</strong> User Addition failed
+                </div>
+                <form name="myForm" method="post" action="/add_users/add_user">
                     <div class="form-group row">
                         <label for="username" class="col-4 col-form-label">User Name</label>
                         <div class="col-8">
-                            <input id="username" name="username" placeholder="Username" class="form-control here" type="text"
+                            <input id="username" name="username" placeholder="Username" class="form-control here" pattern="[a-zA-Z0-9]+" type="text"
                                 required>
                         </div>
                     </div>
@@ -47,12 +54,17 @@
                         </div>
                     </div>&nbsp;
                     <div alignment="center-right">
-                        <button type="button" class="btn btn-primary">Add User</button>
+                        <button type="submit" class="btn btn-primary" name="add_user">Add User</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    
+    <% if(message === false){ %>
+    <script>  $('.alert-danger').removeClass('hidden') </script>
+    <% } %>
+    <% if(message === true){ %>
+    <script> $('.alert-success').removeClass('hidden')  </script>
+    <% }  %>
 </body>

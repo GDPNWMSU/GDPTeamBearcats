@@ -16,6 +16,7 @@ passport.use('local', new LocalStrategy({
     usernameField: 'username',
     passwordField: 'password',
     passReqToCallback: true, //passback entire req to call back
+    
 }, function callback(req, username, password, done) {
     console.log(username + ' = ' + password);
     if (!username || !password) { return done(null, false, req.flash('message', 'All fields are required.')); }
