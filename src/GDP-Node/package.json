@@ -4,6 +4,7 @@
   "description": "A reporting tool which imports excel data,parses sheets,filter imported data and generete output reports as our client requries. ",
   "main": "app.js",
   "dependencies": {
+    "Router": "^2.1.0",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "consolidate": "latest",
@@ -23,7 +24,8 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "latest",
-    "xlsx": "^0.13.1"
+    "xlsx": "^0.13.1",
+    "mailgun-js": "latest"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

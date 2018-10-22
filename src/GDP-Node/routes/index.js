@@ -4,6 +4,7 @@ const XLSX = require('xlsx');
 const formidable = require('formidable');
 console.log('Inside routes/index')
 // app.use('/',require('../controllers/home.js'))
+
 app.use('/login',require('../controllers/login.js'))
 app.use('/profile',isAuthenticated,require('../controllers/profile.js'))
 app.use('/import',isAuthenticated, require('../controllers/data_import.js'))
@@ -13,6 +14,9 @@ app.use('/export',isAuthenticated,require('../controllers/report_export.js'))
 app.use('/report',isAuthenticated,require('../controllers/report_export.js'))
 app.use('/manage',isAuthenticated,require('../controllers/manage.js'))
 app.use('/add_users',isAuthenticated,require('../controllers/add_users.js'))
+
+
+
 app.get('/logout', function(req, res){
     req.session.destroy();
     req.logout();
