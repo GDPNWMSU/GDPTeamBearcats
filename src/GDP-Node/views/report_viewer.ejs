@@ -8,34 +8,55 @@
         });
     });
 </script>
-<div class="col-md-offset-1 col-md-10" style="padding-top: 60px">
+<div class="row" style="padding-top: 40px">
+    <div class="col-md-offset-5 col-md-3">
+        <h2>
+            <%=title%>
+        </h2>
+    </div>
+</div>
+<div class="col-md-offset-1 col-md-10">
     <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
-        <center><h2>No records in table.</h2></center>
+    <center>
+        <h2>No records in table.</h2>
+    </center>
     <% } %>
-<table class="table table-bordered table-striped" id="data">
-    <thead>
-    <tr>    
-<% if(typeof rows != 'undefined' && message == "success"){
+    <table class="table table-bordered table-striped" id="data">
+        <thead>
+            <tr>
+                <% if(typeof rows != 'undefined' && message == "success"){
         var head = Object.keys(rows[0])
         head.forEach(function(headValue){ %>
-             <th><%= headValue %></th>
-    <% }) %>
-    </tr>
-    </thead>
-    <tbody>
-<% rows.forEach(element => {%>
-<tr>
- <% head.forEach(function(headValue){  %>
+                <th>
+                    <%= headValue %>
+                </th>
+                <% }) %>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach(element => {%>
+            <tr>
+                <% head.forEach(function(headValue){  %>
 
-    <td><%= element[headValue] %></td>
+                <td>
+                    <%= element[headValue] %>
+                </td>
 
-<%   }) %>
-</tr>
-<%
+                <%   }) %>
+            </tr>
+            <%
     }); 
    }%>
-</tbody>
-
-</table>
+        </tbody>
+        <tfoot>
+            <% if(typeof total != 'undefined'&& message == "success"){ %>
+            <tr>
+                <td><%=total.label%></td>
+                <td><%=total.count%></td>
+            </tr>
+            <% } %>
+        </tfoot>
+    </table>
 </div>
+
 </html>
