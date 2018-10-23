@@ -91,13 +91,13 @@ app.post("/resetpswd",function(req, res){
 
 app.post("/forgotpswd", function(req, res){
     let username = req.body.username;
-    connection.query("select * from tbl_users where username = ?", [username], function(err, rows){
+    connection.query("select * from tbl_users where email = ?", [username], function(err, rows){
       console.log(err);
       if(rows.length>0){
         console.log("rows", rows[0].username);
         crypto.randomBytes(20, function(err, buf) {
           var token = buf.toString('hex');
-          connection.query("update tbl_users SET resettoken = ? where username = ?", [token, username] , function(err, rows){
+          connection.query("update tbl_users SET resettoken = ? where email = ?", [token, username] , function(err, rows){
               console.log(err,rows);
               if(!err){
                   mail("Forgot Password Link", username, "http://localhost:8081/resetpswd/"+ token);

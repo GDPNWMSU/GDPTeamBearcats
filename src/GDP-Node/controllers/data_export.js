@@ -12,7 +12,7 @@ var connection = mysql.createPool({
 });
 console.log("Inside controllers/data_export.js")
 router.get('/:table_name',function (req,res) {
-    var username   = req.session.user.username;
+    var username   = req.session.user.email;
     var firstName  = req.session.user.firstName;
     const table_name = req.params.table_name;
     if (typeof table_name !='undefined'&&table_name != 'favicon.ico'&& table_name != ''){
@@ -69,7 +69,7 @@ router.get('/:table_name',function (req,res) {
 })
 router.get('/',function (req,res) {
     connection.getConnection(function (error, instconn) {
-        var username   = req.session.user.username;
+        var username   = req.session.user.email;
         var firstName  = req.session.user.firstName;
         if (!!error) {
             // instconn.release();

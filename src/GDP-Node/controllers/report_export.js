@@ -42,7 +42,7 @@ api.get('/flag', function (req, res) {
                                     }
                                 }
                             }
-                            var username = req.session.user.username;
+                            var username = req.session.user.email;
                             var firstName = req.session.user.firstName;
                             if (rows.length > 0) {
                                 res.render('report_viewer.ejs', {
@@ -101,7 +101,7 @@ api.get('/meetings', function (req, res) {
                                     }
                                 }
                             }
-                            var username = req.session.user.username;
+                            var username = req.session.user.email;
                             var firstName = req.session.user.firstName;
                             if (rows.length > 0) {
                                 res.render('report_viewer.ejs', {
@@ -132,7 +132,7 @@ api.get('/meetings', function (req, res) {
 api.get('/', (req, res, next) => {
     res.render('report.ejs', {
         title: 'Select report',
-        username: req.session.user.username,
+        username: req.session.user.email,
         firstName: req.session.user.firstName
     })
 })

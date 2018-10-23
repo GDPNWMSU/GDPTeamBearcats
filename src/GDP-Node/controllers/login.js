@@ -22,7 +22,7 @@ passport.use('local', new LocalStrategy({
     if (!username || !password) { return done(null, false, req.flash('message', 'All fields are required.')); }
     var salt = '';
     // connection.query("INSERT INTO `tbl_users`(`username`, `password`, `First Name`, `Last Name`) VALUES ('hiah','haha','haha','jka')");
-    connection.query("select * from tbl_users where username = ?", [username], function (err, rows) {
+    connection.query("select * from tbl_users where email = ?", [username], function (err, rows) {
         console.log(err);
 
         if (err) return done(null, false, req.flash('message', 'Invalid username or password.'));

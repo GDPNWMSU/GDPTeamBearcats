@@ -16,7 +16,6 @@ app.use('/manage',isAuthenticated,require('../controllers/manage.js'))
 app.use('/add_users',isAuthenticated,require('../controllers/add_users.js'))
 
 
-
 app.get('/logout', function(req, res){
     req.session.destroy();
     req.logout();
@@ -24,7 +23,7 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/', isAuthenticated, function(req, res, next) { 
-    var username   = req.session.user.username;
+    var username   = req.session.user.email;
     var firstName  = req.session.user.firstName;
     
     res.render('home', {title:'Home',username: username, firstName: firstName });
