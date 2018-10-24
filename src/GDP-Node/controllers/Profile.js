@@ -1,12 +1,36 @@
-const express = require('express')
+var express = require('express')
+var mysql = require("mysql");
+var logger=require('morgan')
+var engines = require('consolidate')
+var connection = require('../config/db_connection');
+var bodyParser = require('body-parser');
 const router = express.Router()
-console.log("Inside controllers/profile.js")
+
+
+let message = ''
 router.get('/', (req, res, next) => {
-    var username   = req.session.user.email;
-    var firstName  = req.session.user.firstName;
     res.render('profile.ejs', {
-        title: 'profile',username: username, firstName: firstName
+        title: 'profile',
+        message: message
     })
 })
+router.use(bodyParser.urlencoded({extended: false}));
+
+router.post('/add_profile', function(request, response){
+    console.log(request.body);      
+        var sql = `INSERT INTO profile VALUES ('${request.body.first_name}','${request.body.last_name}','${request.body.mobile}','${request.body.email}','${request.body.password}','${request.body.password2}');`
+        connection.query(sql, function (err, result) {
+          if (err){
+           message = false
+           response.redirect('/profile/')
+            throw err;
+          } 
+          
+          console.log("1 record inserted");
+          message = true
+          response.redirect('/profile/')
+        });
+        
+  });
 
 module.exports = router

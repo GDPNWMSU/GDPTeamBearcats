@@ -8,7 +8,7 @@
         <div class="col-sm-9">
             <div class="tab-content">
                 <div class="tab-pane active" id="home"></div>
-                <form class="form" action="" method=" " id="registrationForm">
+                <form class="form" action="/profile/add_profile" method="post" id="registrationForm">
                     <div class="form-group">
 
                         <div class="col-xs-6">
@@ -16,7 +16,8 @@
                                 <h4>First name</h4>
                             </label>
                             <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name"
-                                pattern="[a-zA-Z]+" title="enter your first name if any." required>
+                                title="enter your first name if any." required>
+                                <!-- pattern="[a-zA-Z]+" -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -26,7 +27,8 @@
                                 <h4>Last name</h4>
                             </label>
                             <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name"
-                                pattern="[a-zA-Z]+" title="enter your last name if any." required>
+                                 title="enter your last name if any." required>
+                                 <!-- pattern="[a-zA-Z]+" -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -35,7 +37,9 @@
                                 <h4>Mobile</h4>
                             </label>
                             <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number"
-                                pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$" title="enter your mobile number if any."required>
+                                 title="enter your mobile number if any."required>
+                                <!-- pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$" -->
+                                <!-- pattern="^[0-9]$" -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -45,7 +49,8 @@
                                 <h4>Email</h4>
                             </label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
-                                pattern="^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$" title="enter your email.">
+                                title="enter your email.">
+                                <!-- pattern="^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$" -->
                         </div>
                     </div>
 
@@ -56,7 +61,8 @@
                                 <h4>Password</h4>
                             </label>
                             <input type="password" class="form-control" name="password" id="password" placeholder="password"
-                                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$" title="enter your password."required>
+                                 title="enter your password."required>
+                                 <!-- pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$" -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -67,13 +73,15 @@
                             </label>
                             <input type="password" class="form-control" name="password2" id="password2" placeholder="password2"
                                 title="enter your password2."required>
+                            <!-- C2dfeed -->
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <br>
-                            <button class="btn btn-lg btn-success" type="submit"><i class="fas fa-save"></i>Save</button>
-                            <button class="btn btn-lg" type="reset"><i class="fas fa-redo"></i> Reset</button>
+                            <button type=submit class="btn btn-lg btn-success" name="profile"><i></i>Save</button>
+                            <!-- <button type="submit" class="btn btn-primary" name="add_user">Add User</button> -->
+                            <button type=submit class="btn btn-lg" type="reset"><i class="fas fa-redo"></i> Reset</button>
                         </div>
                     </div>
                 </form>
