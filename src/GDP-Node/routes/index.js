@@ -6,6 +6,8 @@ console.log('Inside routes/index')
 // app.use('/',require('../controllers/home.js'))
 
 app.use('/login',require('../controllers/login.js'))
+app.use(require('../controllers/reset_password.js'))
+app.use(require('../controllers/forgot_password.js'))
 app.use('/profile',isAuthenticated,require('../controllers/profile.js'))
 app.use('/import',isAuthenticated, require('../controllers/data_import.js'))
 app.use('/clearDB',isAuthenticated,require('../controllers/database_clear.js'))
