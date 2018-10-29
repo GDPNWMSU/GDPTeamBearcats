@@ -6,7 +6,7 @@ var connection = require('../config/db_connection');
 var bodyParser = require('body-parser');
 const router = express.Router()
 var crypto = require('crypto');
-let mail = require('../mail');
+let mail = require('../config/mail');
 
 router.get('/', (req, res, next) => {
     var username = req.session.user.email;
@@ -44,7 +44,7 @@ router.post('/add_user', function (req, res) {
     console.log(req.body);
     var sql = "INSERT INTO `tbl_users`(`email`, `password`, `firstName`, `lastName`) VALUES ('"+req.body.email+"','','";
     sql+= req.body.firstname+"','"+req.body.lastname+"')";
-    console.log(sql)
+    // console.log(sql)
     connection.query(sql, function (err, result) {
         if (err) {
             message = false
@@ -56,13 +56,23 @@ router.post('/add_user', function (req, res) {
             connection.query("update tbl_users SET resettoken = ? where email = ?", [token, req.body.email] , function(err, rows){
                 console.log(err,rows);
                 if(!err){
-                    mail("Account created link", req.body.email, "http://localhost:8081/resetpswd/"+ token);
+                    // mail("Account created link", req.body.email, "http://localhost:8081/resetpswd/"+ token);
+                    const email = require('../config/mail');
+                    var subject = 'Pending account!'
+                    var html = '<h2>Create new password</h2><a href="http://localhost:8081/resetpswd/' + token + '">Click here</a>'
+                  if(email.sendEmail(req.body.email,subject,html)){
+                    res.render('add_users', { title: 'Add user', 'message': 'Create password link mailed to new user!' });
+                  }
+                  else{
+                    res.render('add_users', { title: 'Add user', 'message': 'Error occured while sending create password link' });
+      
+                  }
                 }
         });
     });
         console.log("1 record inserted");
         message = true
-        res.redirect('/add_users/')
+        // res.redirect('/add_users/')
     });
 
 });

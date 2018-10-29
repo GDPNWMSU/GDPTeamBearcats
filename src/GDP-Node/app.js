@@ -14,9 +14,11 @@ var connection = require('./config/db_connection');
 var sess = require('express-session');
 var Store = require('express-session').Store;
 var BetterMemoryStore = require(__dirname + '/memory');
-let mail = require('./mail');
+let mail = require('./config/mail');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const dotenv = require('dotenv')
+dotenv.load({ path: '.env' })
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: 31557600000
 }))
