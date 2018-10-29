@@ -10,22 +10,26 @@
     "consolidate": "latest",
     "cookie-parser": "^1.4.3",
     "crypto": "^1.0.1",
-    "dotenv": "latest",
+    "dotenv": "^6.1.0",
     "ejs": "latest",
     "express": "^4.16.4",
     "express-ejs-layouts": "latest",
     "express-session": "^1.15.6",
     "formidable": "^1.2.1",
+    "googleapis": "^27.0.0",
     "http": "latest",
+    "mailgun-js": "latest",
     "memory": "0.0.3",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "mysql2": "^1.5.3",
+    "nodemailer": "^4.6.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "latest",
+    "request": "^2.88.0",
     "xlsx": "^0.13.1",
-    "mailgun-js": "latest"
+    "xoauth2": "^1.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
