@@ -44,7 +44,21 @@ router.post('/add_user', function (req, res) {
     console.log(req.body);
     var sql = "INSERT INTO `tbl_users`(`email`, `password`, `firstName`, `lastName`) VALUES ('"+req.body.email+"','','";
     sql+= req.body.firstname+"','"+req.body.lastname+"')";
+    var adduser = "INSERT INTO `add_users`(`username`, `firstName`, `lastName`, `role`) VALUES ('"+req.body.email+"','";
+    adduser+= req.body.firstname+"','"+req.body.lastname+ "','"+ req.body.Role +"')";
+    console.log(adduser)
     // console.log(sql)
+    connection.query(adduser, function (err, result) {
+        if (err) {
+            message = false
+            res.redirect('/add_users/')
+            throw err;
+        }
+        
+        console.log("1 add user record inserted");
+        message = true
+    });
+
     connection.query(sql, function (err, result) {
         if (err) {
             message = false
@@ -74,7 +88,9 @@ router.post('/add_user', function (req, res) {
         message = true
         // res.redirect('/add_users/')
     });
-
+ 
+        // res.redirect('/add_users/')
+ 
 });
 
 

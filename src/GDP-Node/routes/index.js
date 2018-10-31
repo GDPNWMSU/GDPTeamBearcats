@@ -16,13 +16,7 @@ app.use('/export',isAuthenticated,require('../controllers/report_export.js'))
 app.use('/report',isAuthenticated,require('../controllers/report_export.js'))
 app.use('/manage',isAuthenticated,require('../controllers/manage.js'))
 app.use('/add_users',isAuthenticated,require('../controllers/add_users.js'))
-
-
-app.get('/logout', function(req, res){
-    req.session.destroy();
-    req.logout();
-    res.redirect('/login');
-});
+app.use('/edit_users',isAuthenticated,require('../controllers/edit_user.js'))
 
 app.get('/', isAuthenticated, function(req, res, next) { 
     var username   = req.session.user.email;
