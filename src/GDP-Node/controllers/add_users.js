@@ -6,6 +6,7 @@ var connection = require('../config/db_connection');
 var bodyParser = require('body-parser');
 const router = express.Router()
 var crypto = require('crypto');
+var flash = require('connect-flash');
 let mail = require('../config/mail');
 
 router.get('/', (req, res, next) => {
@@ -57,6 +58,7 @@ router.post('/add_user', function (req, res) {
         
         console.log("1 add user record inserted");
         message = true
+        //res.render('add_users', { title: 'Add user', 'message': 'User Added successfully' });
     });
 
     connection.query(sql, function (err, result) {
@@ -86,10 +88,10 @@ router.post('/add_user', function (req, res) {
     });
         console.log("1 record inserted");
         message = true
-        // res.redirect('/add_users/')
+        // res.redirect('/home')
     });
  
-        // res.redirect('/add_users/')
+        //res.redirect('/add_users')
  
 });
 

@@ -34,10 +34,18 @@
                             <%= data[i].lastName %>
                         </td>
                         <td>
-                            <%= data[i].role %>
+                            <%= data[i]['role'] %>
                         </td>
+
                         <td> <a href="/edit_users/<%= data[i].pk %>" class="btn btn-primary">Edit</a></td>
-                        <td> <a  class="btn btn-danger" onclick="deleteuser('<%= data[i].pk %>')" >Delete</a></td>
+                        <td><form action ="/delete_user" method ="POST">
+                       
+                            <!-- <td> <a  class="btn btn-danger" onclick="deleteuser('<%= data[i].pk %>')" >Delete</a></td> -->
+                       
+                        <input type="text" name="delete" value="<%= data[i].pk %>" hidden >
+                       <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </td>
                     </tr>
                     <% } %>
                 </tbody>

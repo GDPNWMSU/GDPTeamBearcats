@@ -56,6 +56,19 @@ app.use(passport.session());
 //All routes
 app.use('/', routes);
 
+
+app.post('/delete_user', function (req, res) {
+  console.log("adsfg");
+  var sql = `delete from add_users where pk = ${req.body.delete};`
+  connection.query(sql, function (err, result) {
+    if (err) {
+      throw err;
+    }
+    res.redirect('/edit_users')
+    console.log("Deleted User");
+  })
+})
+
 // Listen for an application request on port 8081
 server.listen(8081, function () {
   console.log("Server started and currently in /app.js")

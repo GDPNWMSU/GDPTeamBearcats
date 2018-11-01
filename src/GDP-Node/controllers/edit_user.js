@@ -47,5 +47,16 @@ router.post('/:id', function (req, res) {
   })
 })
 
+// router.post('/delete_user', function (req, res) {
+//   console.log("adsfg");
+//   var sql = `delete from add_users where pk = ${req.body.delete};`
+//   connection.query(sql, function (err, result) {
+//     if (err) {
+//       throw err;
+//     }
+//     res.redirect('/edit_users')
+//   })
+// })
+
 module.exports = router
 
