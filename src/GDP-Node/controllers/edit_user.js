@@ -7,9 +7,16 @@ var bodyParser = require('body-parser');
 const router = express.Router()
 
 
+// router.get('/', function (req, res) {
+//     console.log("in edit")
+//     res.render('edit_user')
+// })
+
 router.get('/', function (req, res) {
+  console.log("in edit")
   var sql = `SELECT * from add_users;`
   connection.query(sql, function (err, result) {
+    console.log(result)
     if (err) {
       throw err;
     }
