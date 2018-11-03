@@ -1,0 +1,88 @@
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">&nbsp;&nbsp;&nbsp;
+                <!-- <form method = "post" action ="/login" role="form"> -->
+                <!-- <div class="alert alert-success hidden">
+                    <strong>Success!</strong> User Added Successfully
+                </div>
+                <div class="alert alert-danger hidden">
+                    <strong>Failure!</strong> User Addition failed
+                </div> -->
+                
+                <form name="myForm" method="post" action="/edit_users/<%= data[0].pk %>">
+                    <div class="form-group row">
+                        <label for="email" class="col-4 col-form-label">Email</label>
+                        <div class="col-12">
+                            <input id="email" name="email" placeholder="Email" class="form-control here"  type="email" onchange="checkUser()"
+                                value="<%= data[0].username %>" required/><span id="checkUserResp" class="inline"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-4 col-form-label">First Name</label>
+                        <div class="col-8">
+                            <input id="name" name="firstname" placeholder="First Name" class="form-control here" pattern="[a-zA-Z]+" type="text"
+                            value="<%= data[0].firstName %>" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastname" class="col-4 col-form-label">Last Name</label>
+                        <div class="col-8">
+                            <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" pattern="[a-zA-Z]+" type="text"
+                            value="<%= data[0].lastName %>" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                    <!-- <label for="lastname" class="col-4 col-form-label">Role</label> -->
+                        <div class="col-8">
+                            <!-- <input id="Role" name="Role" placeholder="Role" class="form-control here" type="text"> -->
+                            <!-- <label for="Role"></label> -->
+
+                            <label for ="Role">Role</label><br>
+                            <input type="Radio" name ="Role" value="Admin">Admin<br>
+                            <input type="Radio" name ="Role" value="Staff">Staff<br>
+                        </div>
+                    </div>&nbsp;
+                    <div alignment="center-right">
+                        <button type="submit" class="btn btn-primary" name="save_user">save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+   
+    <script>
+    function checkUser(){
+    let url = "/add_users/checkUser";
+        let xhttp = new XMLHttpRequest()
+        xhttp.open("POST", url, true)
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send('email='+document.getElementById('email').value)
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let resp = JSON.parse(this.responseText)
+                console.log(resp)
+                console.log( )
+                if(resp.doesUserExist){
+                    document.getElementById('checkUserResp').innerHTML='<i class="fas fa-times"></i>User already exists'
+                }else{
+                    document.getElementById('checkUserResp').innerHTML='<i class="fas fa-check"></i>'
+                }
+
+            }else{
+                console.log(this.status)
+            }
+        }
+    }
+</script>

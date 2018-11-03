@@ -1,0 +1,75 @@
+<head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    
+    <body>
+        <div class="container">
+    
+            <!-- starte -->
+            <div class="mt-5" style="margin-top: 20px; border: 2px solid black">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col">Username</th>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < data.length;i++ ) { %>
+                        <tr>
+                            <td>
+                                <%= data[i].username %>
+                            </td>
+                            <td>
+                                <%= data[i].firstName %>
+                            </td>
+                            <td>
+                                <%= data[i].lastName %>
+                            </td>
+                            <td>
+                                <%= data[i].role %>
+                            </td>
+                            <td> <a href="/edit_users/<%= data[i].pk %>" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Edit</a></td>
+                            <td> <a  class="btn btn-danger" onclick="deleteuser('<%= data[i].pk %>')" >Delete</a></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <!-- ended -->
+            </div>
+            <div style="width: 1000px" class="modal fade" id="myModal" role="dialog" >
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+            <script>
+            function deleteuser(id){
+                console.log(id)
+            }
+            
+            </script>
+    
+        </div>
+    </body>
+    <% include footer %>
