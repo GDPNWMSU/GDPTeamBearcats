@@ -1,26 +1,381 @@
-
-<div>
 <div class="row">
-    <div class="jumbotron" style="margin-top:0px;padding-top:10px;padding-bottom:10px;">
-        <h2 style="margin-left:42%">Manage Users</h2>
+    <!-- <div class="jumbotron" style="margin-top:0px;padding-top:10px;padding-bottom:10px;"> -->
+    <h2 style="margin-left:42%">Manage Users</h2>
+    <!-- </div> -->
+    <hr>
+</div>
+<div class="row">
+    <div class="col-md-offset-4 col-md-4">&nbsp;&nbsp;&nbsp;
+        <div class="alert alert-success" id="responseSuccess" style="display:none;">
+        </div>
+        <div class="alert alert-danger" id="responseFailure" style="display:none;">
+        </div>
     </div>
 </div>
-<!-- console.log("I am in the manage.ejs page") -->
 <div class="row">
-    <div class="col-md-offset-3 col-md-6">
+    <div class="col-md-offset-1 col-md-4">
         <div class="row">
-          <div class="col-md-6">
-             <a href="add_users" style="color:black"><button class="btn btn-block btn-default fas fa-user-plus fa-7x"><h4>Add Users</h4></button></a><br>
-       <!-- <button class="btn btn-block btn-default"><a href="#" style="color:black"><i class="fas fa-user-plus fa-7x"></i></a><br><h3>Add Users</h3></button> -->
-       <!-- <a href="add_users">add</a> -->
-      </div>
-      <div class="col-md-6">
-            <a href="#" style="color:black"><button class="btn btn-block btn-default fas fa-user-plus fa-7x"><h4>Delete Users</h4></button></a><br>
-       <!-- <button class="btn btn-block btn-default"><a href="" style="color:black"><i class="far fa-calendar-alt fa-7x" ></i></a><br><h3>Appointments</h3></button> -->
-       </div>
-      </div>
-      <br>
-    
-          </div>
+            <div class="col-md-6">
+                <button class="btn btn-success btn-md btn-block" data-toggle="modal" data-toggle="tooltip" title="Add"
+                    data-target="#addUserModal">
+                    <p style="margin:0%"><i class="fas fa-user-plus"></i>&nbsp;Add new user</p>
+                </button>
+            </div>
+        </div>
+        <br>
+
+    </div>
 </div>
+<div class="col-md-offset-1 col-md-10">
+    <table class="table table-bordered table-striped" id="usersList">
+        <thead id="listHead">
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="listBody">
+
+        </tbody>
+        <!-- <tfoot id="listFooter">
+
+        </tfoot> -->
+    </table>
 </div>
+<div id="addUserModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add user</h4>
+            </div>
+
+            <div class="modal-body">
+                <form name="addUserForm" id="addUserForm" method="post" action="/manage/add_users">
+                    <div class="form-group">
+                        <label for="email" class="col-4 col-form-label">Email</label>
+                        <div class="col-12">
+                            <input id="email" name="email" placeholder="Email" class="form-control" type="email"
+                                onchange="checkUser();validateForm();" required /><span id="checkUserResp" class="inline"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-4 col-form-label">First Name</label>
+                        <div class="col-8">
+                            <input name="firstname" id="firstname" placeholder="First Name" class="form-control"
+                                pattern="^[a-zA-Z ]*$" type="text" onchange="validateForm()" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-4 col-form-label">Last Name</label>
+                        <div class="col-8">
+                            <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here"
+                                pattern="^[a-zA-Z ]*$" onchange="validateForm()" type="text" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="col-4 col-form-label">Role</label>
+                        <div class="col-8">
+                            <select name="role" class="form-control" id="inpRole">
+                                <% typeof roles != 'undefined' && roles.forEach(role => { %>
+                                <option value="<%= role.ROLES  %>""><%= role.ROLES %></option>
+                                <% });%>
+                            </select>
+                        </div>
+                    </div>
+                    </form>
+            </div>
+                <div class="
+                                    modal-footer">
+                                    <input type="button" id="submitForm" onclick="submitForm()" class="btn btn-primary"
+                                        name="submit" value="Add User" disabled="true">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div id="editUserModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit user</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form name="editUserForm" id="editUserForm" method="post" action="/manage/edit_users">
+                            <div class="form-group">
+                                <label for="email" class="col-4 col-form-label">Email</label>
+                                <div class="col-12">
+                                    <input id="editEmail" name="email" placeholder="Email" class="form-control" type="email"
+                                        disabled="true" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-4 col-form-label">First Name</label>
+                                <div class="col-8">
+                                    <input name="firstname" id="editFirstname" placeholder="First Name" class="form-control"
+                                        pattern="^[a-zA-Z ]*$" type="text" onchange="validateEditForm();" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-4 col-form-label">Last Name</label>
+                                <div class="col-8">
+                                    <input name="lastname" id="editLastname" placeholder="Last Name" class="form-control"
+                                        pattern="^[a-zA-Z ]*$" onchange="validateEditForm();" type="text" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="role" class="col-4 col-form-label">Role</label>
+                                <div class="col-8">
+                                    <select name="role" class="form-control" id="editInpRole" onchange="validateEditForm()">
+                                        <% typeof roles != 'undefined' && roles.forEach(role => { %>
+                                        <option value="<%= role.ROLES  %>""><%= role.ROLES %></option>
+                                            <% });%>
+                                        </select>
+                                    </div>
+                                </div>
+                                </form>
+                        </div>
+                            <div class="
+                                            modal-footer">
+                                            <input type="button" id="submitEditForm" onclick="submitEditForm()" class="btn btn-success"
+                                                name="submit" value="Edit User" disabled="true">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <input type="text" id="const" value="" hidden />
+                <script>
+                    var onLoad = true;
+                    $(document).ready(function () {
+                        $('[data-toggle="tooltip"]').tooltip();
+                        getUsers();
+                        if(!onLoad){const table = $("#usersList").DataTable({
+                                        dom: 'Bfrtip',
+                                        buttons: [
+                                            'copy', 'csv', 'excel', 'pdf', 'print'
+                                        ]
+                                    });
+                                }
+                    });
+                    function editUser(email, firstName, lastName, role) {
+                        $('#editUserModal').modal('toggle');
+                        document.getElementById('const').value = email;
+                        document.getElementById('editEmail').value = email;
+                        document.getElementById('editFirstname').value = firstName;
+                        document.getElementById('editLastname').value = lastName;
+                        document.getElementById('editInpRole').value = role;
+                        validateEditForm();
+                        document.getElementById('submitEditForm').disabled = true;
+                    }
+                    function deleteUser(userEmail) {
+                        let url = "/manage/delete_user";
+                        let xhttp = new XMLHttpRequest()
+                        xhttp.open("POST", url, true)
+                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        // console.log(userEmail);
+                        xhttp.send("email=" + userEmail)
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                let resp = JSON.parse(this.responseText)
+                                console.log(resp)
+                                if (resp.deleteStatus) {
+                                    getUsers();
+                                    document.getElementById('responseFailure').innerHTML = "User account deleted successfully!"
+                                    $('#responseFailure').show();
+                                    $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                                        $("#responseFailure").alert('close');
+                                    });
+                                } else {
+                                    document.getElementById('responseFailure').innerHTML = "User doesn't exist!"
+                                    $('#responseFailure').show();
+                                    $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                                        $("#responseFailure").alert('close');
+                                    });
+                                }
+                            } else {
+                                console.log(this.status)
+                            }
+                        }
+                    }
+                    function getUsers() {
+                        let url = "/manage/get_users";
+                        let xhttp = new XMLHttpRequest()
+                        xhttp.open("POST", url, true)
+                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhttp.send()
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                let resp = JSON.parse(this.responseText)
+                                if (resp.length > 0) {
+                                    if (!onLoad) { $("#usersList").DataTable().destroy(); }
+                                    var userListTable = "";
+                                    document.getElementById('usersList').hidden = false;
+                                    for (var i = 0; i < resp.length; i++) {
+                                        userListTable += "<tr><td>" + resp[i].firstName + "</td><td>" + resp[i].lastName + "</td><td>" + resp[i].email + "</td><td>" + resp[i].role + "</td><td>";
+                                        userListTable += '<center><button class="btn btn-info btn-sm" data-toggle="tooltip" title="Edit" onClick="editUser(\'' + resp[i].email + '\',\'' + resp[i].firstName + '\',\'' + resp[i].lastName + '\',\'' + resp[i].role + '\')" value=""><i class="fa fa-edit"></i></button>&emsp;'
+                                        userListTable += '<button class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onClick="deleteUser(\'' + resp[i].email + '\')" value="' + resp[i].email + '"><i class="far fa-trash-alt"></i></button></center>' + "</td></tr>";
+                                    }
+                                    document.getElementById('listBody').innerHTML = userListTable;
+                                    if(onLoad){const table = $("#usersList").DataTable({
+                                        dom: 'Bfrtip',
+                                        buttons: [
+                                            'copy', 'csv', 'excel', 'pdf', 'print'
+                                        ]
+                                    });
+                                    onLoad = false;}else{
+                                        table = $("#usersList").DataTable({
+                                        dom: 'Bfrtip',
+                                        buttons: [
+                                            'copy', 'csv', 'excel', 'pdf', 'print'
+                                        ]
+                                    });
+                                    }
+                                } else {
+                                    document.getElementById('usersList').hidden = true;
+                                    document.getElementById('listBody').innerHTML = "";
+                                }
+                            } else {
+                                console.log(this.status)
+                            }
+                        }
+                    }
+                    function validateForm() {
+                        console.log(checkUser())
+                        if (document.getElementById('email').value != undefined &&
+                            document.getElementById('firstname').value != undefined &&
+                            document.getElementById('lastname').value != undefined &&
+                            document.getElementById('email').value != "" &&
+                            document.getElementById('firstname').value != "" &&
+                            document.getElementById('lastname').value != "" && checkUser()) {
+                            document.getElementById('submitForm').disabled = false;
+                            return true;
+                        } else {
+                            document.getElementById('submitForm').disabled = true;
+                            return false;
+                        }
+                    }
+                    function validateEditForm() {
+                        if (document.getElementById('editEmail').value != undefined &&
+                            document.getElementById('editFirstname').value != undefined &&
+                            document.getElementById('editLastname').value != undefined &&
+                            document.getElementById('editEmail').value != "" &&
+                            document.getElementById('editFirstname').value != "" &&
+                            document.getElementById('editLastname').value != "") {
+                            document.getElementById('submitEditForm').disabled = false;
+                            return true;
+                        } else {
+                            document.getElementById('submitEditForm').disabled = true;
+                            return false;
+                        }
+                    }
+                    function submitForm() {
+                        if (validateForm() && checkUser()) {
+                            let url = "/manage/add_users";
+                            let xhttp = new XMLHttpRequest()
+                            xhttp.open("POST", url, true)
+                            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            var args = '';
+                            var e = document.getElementById("inpRole");
+                            var selectedRole = e.options[e.selectedIndex].value;
+                            args += 'email=' + document.getElementById('email').value;
+                            args += '&firstname=' + document.getElementById('firstname').value;
+                            args += '&lastname=' + document.getElementById('lastname').value;
+                            args += '&role=' + selectedRole;
+                            xhttp.send(args)
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    let resp = JSON.parse(this.responseText)
+                                    if (resp.status) {
+                                        getUsers();
+                                        $('#addUserModal').modal('toggle');
+                                        document.getElementById('responseSuccess').innerHTML = resp.message
+                                        $('#responseSuccess').show();
+                                        $("#responseSuccess").fadeTo(5000, 500).slideUp(500, function () {
+                                            $("#responseSuccess").alert('close');
+                                        });
+                                    }
+                                    else {
+                                        document.getElementById('responseFailure').innerHTML = resp.message
+                                        $('#responseFailure').show();
+                                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                                            $("#responseFailure").alert('close');
+                                        });
+                                    }
+                                } else {
+                                    console.log(this.status)
+                                }
+                            }
+                        }
+                    }
+                    function submitEditForm() {
+                        if (validateEditForm()) {
+                            let url = "/manage/edit_user";
+                            let xhttp = new XMLHttpRequest()
+                            xhttp.open("POST", url, true)
+                            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            var args = '';
+                            var e = document.getElementById("editInpRole");
+                            var selectedRole = e.options[e.selectedIndex].value;
+                            args += 'email=' + document.getElementById('const').value;
+                            args += '&firstname=' + document.getElementById('editFirstname').value;
+                            args += '&lastname=' + document.getElementById('editLastname').value;
+                            args += '&role=' + selectedRole;
+                            xhttp.send(args)
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    let resp = JSON.parse(this.responseText)
+                                    if (resp.updateStatus) {
+                                        getUsers();
+                                        $('#editUserModal').modal('toggle');
+                                        document.getElementById('responseSuccess').innerHTML = 'User profile updated successfully'
+                                        $('#responseSuccess').show();
+                                        $("#responseSuccess").fadeTo(5000, 500).slideUp(500, function () {
+                                            $("#responseSuccess").alert('close');
+                                        });
+                                    }
+                                    else {
+                                        document.getElementById('responseFailure').innerHTML = 'Error occured while updating user profile!'
+                                        $('#responseFailure').show();
+                                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                                            $("#responseFailure").alert('close');
+                                        });
+                                    }
+                                } else {
+                                    console.log(this.status)
+                                }
+                            }
+                        }
+                    }
+                    function checkUser() {
+                        if (document.getElementById('email').value != '') {
+                            var userExists = true;
+                            let url = "/manage/checkUser";
+                            let xhttp = new XMLHttpRequest()
+                            xhttp.open("POST", url, true)
+                            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            xhttp.send('email=' + document.getElementById('email').value)
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    let resp = JSON.parse(this.responseText)
+                                    console.log(resp)
+                                    console.log()
+                                    if (resp.doesUserExist) {
+                                        document.getElementById('checkUserResp').innerHTML = '<i class="fas fa-times"></i>User already exists'
+                                    } else {
+                                        document.getElementById('checkUserResp').innerHTML = '<i class="fas fa-check"></i>'
+                                        userExists = false;
+                                    }
+                                } else {
+                                    console.log(this.status)
+                                }
+                            }
+                            return userExists;
+                        }
+                    }
+                </script>

@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <!-- add links to local vendor css installed locally -->
     <!-- add links to icons see ref app -->
     <!-- add local vendor script sources -->
@@ -24,15 +26,15 @@
             z-index: 1032;
         }
     </style>
-    <link rel="icon" type="image/png" href="../../img/logo.jpg"/>
+    <link rel="icon" type="image/png" href="../../img/logo.jpg" />
     <link rel="stylesheet" href="../../css/pace.css" />
     <!-- <link rel="stylesheet" href="../../css/404.css"> -->
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" />
     <link rel="stylesheet" href="/fontawesome/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-    <link rel="stylesheet" href="../../css/custom.css"/>
+    <link rel="stylesheet" href="../../css/custom.css" />
     <!-- <link rel="stylesheet" href="../../css/bootstrap-theme.min.css"> -->
     <!-- <link rel="stylesheet" href="../../css/main.css"> -->
     <!-- add links to icons see ref app 
@@ -75,14 +77,14 @@
 </head>
 
 <body>
-<div class="overlay"></div>
+    <div class="overlay"></div>
     <% include header.ejs %>
-        <div class="container">
-            <div class="body">
-                <%- body %>
-            </div>
+    <div class="container">
+        <div class="body">
+            <%- body %>
         </div>
-        <% include footer.ejs %>
+    </div>
+    <% include footer.ejs %>
 
 </body>
 <script type="text/javascript">
@@ -93,17 +95,16 @@
             });
         });
     }
- if(document.getElementById("tableSelect")){
-    document.getElementById("tableSelect").onchange = function() {
-        if(this.selectedIndex !== 0) 
-        {
-            window.location.href= "/view/"+this.value;
-        } 
-    };
-}
+    if (document.getElementById("tableSelect")) {
+        document.getElementById("tableSelect").onchange = function () {
+            if (this.selectedIndex !== 0) {
+                window.location.href = "/view/" + this.value;
+            }
+        };
+    }
 
-function getStatus(){
-    let url = "/report/lastUpdated";
+    function getStatus() {
+        let url = "/report/lastUpdated";
         let xhttp = new XMLHttpRequest()
         xhttp.open("POST", url, true)
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -115,13 +116,14 @@ function getStatus(){
                     document.getElementById("lastUpdatedTime").innerHTML = resp[0].TIMESTAMP
                 if (document.getElementById("lastUpdatedStatus"))
                     document.getElementById("lastUpdatedStatus").innerHTML = resp[0].FLAG
-            }else{
+            } else {
                 // console.log(this.status)
             }
         }
-    
+
         setTimeout(getStatus, 5000);
     }
     getStatus();
 </script>
+
 </html>

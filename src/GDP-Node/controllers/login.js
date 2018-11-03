@@ -36,8 +36,9 @@ passport.use('local', new LocalStrategy({
         if (!(dbPassword == encPassword)) {
             return done(null, false, req.flash('message', 'Invalid username or password.'));
         }
-
-        req.session.user = rows[0];
+        rows[0].password=null;
+        rows[0].resettoken = null;
+        req.session.user = rows[0]
         return done(null, rows[0]);
     });
 }

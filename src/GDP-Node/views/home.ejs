@@ -10,6 +10,7 @@
                     <h4>Profile</h4>
                 </a><br>
             </div>
+            <%if(typeof role!= 'undefined' && role=='admin'){%> 
             <div class="col-md-4">
                 <a href="/manage" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-users fa-7x"></i>
                     <h4>Accounts</h4>
@@ -30,12 +31,14 @@
                 </a><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/import" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-import fa-7x"></i></a><br><h4>Import</h4></button> -->
             </div>
+            <% } %>
             <div class="col-md-4">
                 <a href="/report" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-file-export fa-7x"></i>
                     <h4>Reports</h4>
                 </a><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/report" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-export fa-7x"></i></a><br><h4>Reports</h4></button> -->
             </div>
+            <%if(typeof role!= 'undefined' && role=='admin'){%> 
             <div class="col-md-4">
                 <a href="/clearDB" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-trash-alt fa-7x"
                         style="color:red"></i>
@@ -43,6 +46,7 @@
                 </a><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/clearDB" style="color:red"><i class="fas fa-trash-alt fa-7x"></i></a><h4>Delete Database</h4></button> -->
             </div>
+            <% } %>
 
         </div>
     </div>
