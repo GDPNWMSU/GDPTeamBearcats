@@ -2,22 +2,21 @@
     <div class="container bootstrap snippet">
         <div class="row" style="text-align:right">
 
-            <h5>User name</h5>
+            <h5><%= username %></h5>
         </div>
 
         <div class="col-sm-9">
             <div class="tab-content">
                 <div class="tab-pane active" id="home"></div>
-                <form class="form" action="/profile/add_profile" method="post" id="registrationForm">
+                <form class="form" id="profileupdate" action="/profile/add_profile" method="post" id="registrationForm">
                     <div class="form-group">
-
                         <div class="col-xs-6">
                             <label for="first_name">
                                 <h4>First name</h4>
                             </label>
-                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name"
+                            <input type="text" class="form-control" name="first_name" id="first_name" value=<%= user.firstName %> placeholder="first name"
                                 title="enter your first name if any." required>
-                                <!-- pattern="[a-zA-Z]+" -->
+                            <!-- pattern="[a-zA-Z]+" -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -26,10 +25,11 @@
                             <label for="last_name">
                                 <h4>Last name</h4>
                             </label>
-                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name"
-                                 title="enter your last name if any." required>
-                                 <!-- pattern="[a-zA-Z]+" -->
+                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" value=<%= user.lastName %>
+                                title="enter your last name if any." required>
+                            <!-- pattern="[a-zA-Z]+" -->
                         </div>
+                        <div class="clearfix"></div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-6">
@@ -37,9 +37,12 @@
                                 <h4>Mobile</h4>
                             </label>
                             <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number"
-                                 title="enter your mobile number if any."required>
-                                <!-- pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$" -->
-                                <!-- pattern="^[0-9]$" -->
+                                title="enter your mobile number if any." data-parsley-trigger="change"
+                                data-parsley-length="[10,10]" data-parsley-length-message="Phone number length should be equal to 10 digits"
+                                data-parsley-pattern="^[0-9]*$" data-parsley-pattern-message="only numbers are allowed"
+                                required>
+                            <!-- pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$" -->
+                            <!-- pattern="^[0-9]$" -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,20 +52,21 @@
                                 <h4>Email</h4>
                             </label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
-                                title="enter your email.">
-                                <!-- pattern="^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$" -->
+                                title="enter your email." value=<%= user.email %> >
+                            <!-- pattern="^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$" -->
                         </div>
+                    <div class="clearfix"></div>
                     </div>
-
                     <div class="form-group">
 
                         <div class="col-xs-6">
                             <label for="password">
                                 <h4>Password</h4>
                             </label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="password"
-                                 title="enter your password."required>
-                                 <!-- pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$" -->
+                            <input type="password" class="form-control" name="password" id="password"
+                                data-parsley-trigger="change" placeholder="password" title="enter your password."
+                                required>
+                            <!-- pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$" -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -71,17 +75,20 @@
                             <label for="password2">
                                 <h4>Verify</h4>
                             </label>
-                            <input type="password" class="form-control" name="password2" id="password2" placeholder="password2"
-                                title="enter your password2."required>
+                            <input type="password" class="form-control" name="password2" id="password2"
+                                data-parsley-trigger="change" data-parsley-equalto="#password"
+                                data-parsley-equalto-message="password and confirm password should be same" placeholder="password2"
+                                title="enter your password2." required>
                             <!-- C2dfeed -->
                         </div>
                     </div>
+                    <div class="clearfix"></div>    
                     <div class="form-group">
                         <div class="col-xs-12">
                             <br>
                             <button type=submit class="btn btn-lg btn-success" name="profile"><i></i>Save</button>
                             <!-- <button type="submit" class="btn btn-primary" name="add_user">Add User</button> -->
-                            <button type=submit class="btn btn-lg" type="reset"><i class="fas fa-redo"></i> Reset</button>
+                            <button class="btn btn-lg" type="reset"><i class="fas fa-redo"></i> Reset</button>
                         </div>
                     </div>
                 </form>
@@ -89,3 +96,12 @@
                 <hr>
 
             </div>
+            <script>
+                $('#profileupdate').parsley().on('field:validated', function () {
+                    var ok = $('.parsley-error').length === 0;
+                    $('.bs-callout-info').toggleClass('hidden', !ok);
+                    $('.bs-callout-warning').toggleClass('hidden', ok);
+                }).on('form:submit', function () {
+                    return true; // Don't submit form for this demo
+                });
+            </script>
