@@ -11,8 +11,8 @@ _This is a GDP-1 &amp; 2 project repository with team of five people._
 ***
 ## Installation:
 Step : 1
-Download Xampp from https://www.apachefriends.org/index.html and install the Xampp in your machine
-Download Node.js from https://nodejs.org/en/
+* Download Xampp from https://www.apachefriends.org/index.html and install the Xampp in your machine
+* Download Node.js from https://nodejs.org/en/
 
 Step : 2
 * Clone the project to your local desktop.
