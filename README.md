@@ -10,6 +10,16 @@ _This is a GDP-1 &amp; 2 project repository with team of five people._
 ![Bearcats](https://github.com/crskarthik/TeamBearcats/blob/master/Images/bearcat.jpg)
 ***
 ## Installation:
+Step : 1
+Download Xampp from https://www.apachefriends.org/index.html and install the Xampp in your machine
+Download Node.js from https://nodejs.org/en/
+
+Step : 2
+* Clone the project to your local desktop.
+* Open the Xampp and run the MYSQL and Apache.
+
+
+
 ### Download Composer at https://getcomposer.org/download/
 ### OR Use command line to make things really complex!
 ```CLI
