@@ -14,29 +14,19 @@ Step : 1
 * Download Xampp from https://www.apachefriends.org/index.html and install the Xampp in your machine
 * Download Node.js from https://nodejs.org/en/
 
-Step : 2
-* Clone the project to your local desktop.
-* Open the Xampp and run the MYSQL and Apache.
+Step : 2 (Install local packages)
+* Download and install the Node package.
+* Run the NPM install to install of the packages.
 
-
-
-### Download Composer at https://getcomposer.org/download/
-### OR Use command line to make things really complex!
-```CLI
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-```
-### Install local packages:
-* Open command prompt in ```/src/libraries/PhpSpreadsheet-develop/```
-* Execute composer command (```composer install ```) to download and install required packages for project.
-### Setting up database:
+Step : 3 (Setting up database)
 * Open http://localhost/phpmyadmin/
 * Create new database with name "GDP"
 * Navigate to IMPORT inside "GDP" database.
-* Select and Import gdp.sql from /Database/ folder.
+* Select and Import Seeder Zip file,add_users.zip,db_users.zip from /Database/ folder.
 * You are set to go!
-### Accessing Application
-* Clone repo in C:\xampp\htdocs\
+
+Step : 4 (Accessing Application)
+* Clone the project to your local desktop.
+* Open the Xampp and start the MYSQL and Apache services.
+* Run the application "Node app.js"
 * Open http://localhost/GDPTeamBearcats/src/
