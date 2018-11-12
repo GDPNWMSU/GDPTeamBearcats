@@ -10,21 +10,17 @@ const crypto = require('crypto');
 
 let message = ''
 router.get('/', (req, res, next) => {
-    res.render('profile.ejs', {
-        title: 'profile',
+    res.render('profile_password.ejs', {
+        title: 'passwordupdate',
         message: message,
-        username: req.session.user.email,
-        firstName: req.session.user.firstName,
-        user: req.session.user
     })
 })
 router.use(bodyParser.urlencoded({ extended: false }));
 
-router.post('/add_profile', function (request, response) {
+router.post('/update_password', function (request, response) {
     console.log(request.body);
     let cryptoPwd = crypto.createHash('sha1').update('' + request.body.password).digest('hex');
-    //var sql = `INSERT INTO profile VALUES ('${request.body.first_name}','${request.body.last_name}','${request.body.mobile}','${request.body.email}','${request.body.password}','${request.body.password2}');`
-    connection.query("update tbl_users SET email=?,password=?, firstName=?, lastName=? where id=?", [request.body.email, cryptoPwd, request.body.first_name, request.body.last_name, request.session.user.id], function (err, result) {
+    connection.query("update tbl_users SET password=? where id=?", [cryptoPwd, request.session.user.id], function (err, result) {
         if (err) {
             message = false
             response.redirect('/profile/')
@@ -33,8 +29,6 @@ router.post('/add_profile', function (request, response) {
 
         console.log("1 record inserted");
         message = true
-        request.session.user.firstName = request.body.first_name;
-        request.session.user.lastName = request.body.last_name;
         response.redirect('/profile/')
     });
 
