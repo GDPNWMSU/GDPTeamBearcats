@@ -81,7 +81,7 @@ router.post('/add_users', function (req, res) {
                         var subject = 'Pending account!'
                         var html = '<h2>Create new password</h2><a href="http://localhost:8081/resetpswd/' + token + '">Click here</a>'
                         // if (email.sendEmail(req.body.email, subject, html)) {
-                        email.sendEmail(req.body.email, subject, html)
+                        email.sendEmail("addUsers",req.body.email, subject, html)
                         var sql = "SELECT `ROLES` FROM tbl_user_roles"
                         connection.query(sql, function (err, roles) {
                             if (err) {

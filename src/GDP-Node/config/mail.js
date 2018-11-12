@@ -2,22 +2,16 @@ var xoauth2 = require('xoauth2');
 var nodemailer = require('nodemailer');
 var request = require('request');
 var sendmailer = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
   secure: true, // use SSL
   auth: {
-    type: 'OAuth2',
-    user: 'noreply.northwest@gmail.com',
-    clientId: '885674907192-ldp4850vdd1s6m3l1m3ne71vpb4jka7g.apps.googleusercontent.com',
-    clientSecret: 'V9V-WDu4oQf_6SjjMq7KtJoq',
-    refreshToken: '1/_AilrKdxd5jTlCN0RIxu_AFPujtxDxgwqUHGBYomzAw',
-    accessToken: 'ya29.GltFBhwDfQOfwyyB5OjkBZ9caWERDuj9FHrQiUBfbu4p0_jBEMr7BWQyErDraHmkBBxHcYtfyHsKQXAve1wyPKDvw0nd8W2NTtBigB692LfXDbph23g75cfwlOuz',
-    // type: 'OAuth2',
-    // user: process.env.MAIL_USER,
-    // clientId: process.env.MAIL_CLIENTID,
-    // clientSecret: process.env.MAIL_CLIENTSECRET,
-    // refreshToken: process.env.MAIL_REFRESHTOKEN,
-    // accessToken: process.env.MAIL_ACCESSTOKEN,
+    type: process.env.MAIL_AUTH_TYPE,
+    user: process.env.MAIL_USER,
+    clientId: process.env.MAIL_CLIENTID,
+    clientSecret: process.env.MAIL_CLIENTSECRET,
+    refreshToken: process.env.MAIL_REFRESHTOKEN,
+    accessToken: process.env.MAIL_ACCESSTOKEN,
   }
 })
 
@@ -26,7 +20,7 @@ sendmailer.on('token', function (token) {
 });
 
 module.exports = {
-  sendEmail: function (toEmail, subjectEmail, htmlEmail) {
+  sendEmail: function (callingClass, toEmail, subjectEmail, htmlEmail, res) {
     var mailOptions = {
       from: 'Northwest reporter <noreply.northwest@gmail.com>',
       to: toEmail,
@@ -41,13 +35,32 @@ module.exports = {
         console.log(error)
         console.log(JSON.stringify(error))
         checksSentMail = false;
+        if (callingClass == "addUsers") {
+          return res.render('manage', {
+            title: 'Internal error',
+            status: false,
+            message: 'Error occured while adding user!',
+            username: req.session.user.email,
+            firstName: req.session.user.firstName,
+          })
+        }
+        return res.render('forgot_password', { title: 'Forgot Password', 'message': 'Error occured while sending email' });
       }
-        console.log('Mail sent successfully');
-        console.log(response['response'])
-        sendmailer.close();
-        checksSentMail = true
+      console.log('Mail sent successfully');
+      console.log(response['response'])
+      // res.send(true);
+      if (callingClass == "forgotPass") {
+        return res.render('forgot_password', { title: 'Forgot Password', 'message': 'Reset Password link sent to your mail' });
+      } else if(callingClass=="addUsers"){
+        return res.send({
+          status: true,
+          message: 'User account created and password link mailed to new user!'
+        })
+      }
+      sendmailer.close();
+      checksSentMail = true
     });
-    var check = checksSentMail;
-    return check
+    // var check = checksSentMail;
+    // return check
   }
 };

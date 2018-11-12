@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
 })
 router.use(bodyParser.urlencoded({ extended: false }));
 
-router.post('/add_profile', function (request, response) {
+router.post('/udpate_profile', function (request, response) {
     console.log(request.body);
     let cryptoPwd = crypto.createHash('sha1').update('' + request.body.password).digest('hex');
     //var sql = `INSERT INTO profile VALUES ('${request.body.first_name}','${request.body.last_name}','${request.body.mobile}','${request.body.email}','${request.body.password}','${request.body.password2}');`
@@ -33,7 +33,7 @@ router.post('/add_profile', function (request, response) {
 
         console.log("1 record inserted");
         message = true
-        response.redirect('/profile/')
+        response.redirect('/profile')
     });
 
 });

@@ -3,6 +3,7 @@ var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 const http = require('http')
+require('dotenv').config();
 const engines = require('consolidate')
 const expressLayouts = require('express-ejs-layouts')
 var app = express();  // make express app
@@ -17,8 +18,12 @@ var BetterMemoryStore = require(__dirname + '/memory');
 let mail = require('./config/mail');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-const dotenv = require('dotenv')
-dotenv.load({ path: '.env' })
+// dotenv.load({ path: '.env' })
+// const result = dotenv.config()
+//  console.log(result)
+// if (result.error) {
+//   throw result.error
+// }
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: 31557600000
 }))

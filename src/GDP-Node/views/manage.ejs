@@ -5,7 +5,7 @@
     <hr>
 </div>
 <div class="row">
-    <div class="col-md-offset-4 col-md-4">&nbsp;&nbsp;&nbsp;
+    <div class="col-md-offset-4 col-md-4" id="alerts">&nbsp;&nbsp;&nbsp;
         <div class="alert alert-success" id="responseSuccess" style="display:none;">
         </div>
         <div class="alert alert-danger" id="responseFailure" style="display:none;">
@@ -155,13 +155,14 @@
                     $(document).ready(function () {
                         $('[data-toggle="tooltip"]').tooltip();
                         getUsers();
-                        if(!onLoad){const table = $("#usersList").DataTable({
-                                        dom: 'Bfrtip',
-                                        buttons: [
-                                            'copy', 'csv', 'excel', 'pdf', 'print'
-                                        ]
-                                    });
-                                }
+                        if (!onLoad) {
+                            const table = $("#usersList").DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    'copy', 'csv', 'excel', 'pdf', 'print'
+                                ]
+                            });
+                        }
                     });
                     function editUser(email, firstName, lastName, role) {
                         $('#editUserModal').modal('toggle');
@@ -174,32 +175,34 @@
                         document.getElementById('submitEditForm').disabled = true;
                     }
                     function deleteUser(userEmail) {
-                        let url = "/manage/delete_user";
-                        let xhttp = new XMLHttpRequest()
-                        xhttp.open("POST", url, true)
-                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        // console.log(userEmail);
-                        xhttp.send("email=" + userEmail)
-                        xhttp.onreadystatechange = function () {
-                            if (this.readyState == 4 && this.status == 200) {
-                                let resp = JSON.parse(this.responseText)
-                                console.log(resp)
-                                if (resp.deleteStatus) {
-                                    getUsers();
-                                    document.getElementById('responseFailure').innerHTML = "User account deleted successfully!"
-                                    $('#responseFailure').show();
-                                    $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
-                                        $("#responseFailure").alert('close');
-                                    });
+                        if (confirm("Are you sure you want to permenantly delete this user?")) {
+                            let url = "/manage/delete_user";
+                            let xhttp = new XMLHttpRequest()
+                            xhttp.open("POST", url, true)
+                            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            // console.log(userEmail);
+                            xhttp.send("email=" + userEmail)
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    let resp = JSON.parse(this.responseText)
+                                    console.log(resp)
+                                    if (resp.deleteStatus) {
+                                        getUsers();
+                                        document.getElementById('responseFailure').innerHTML = "User account deleted successfully!"
+                                        $('#responseFailure').show();
+                                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                                            $("#responseFailure").alert('close');
+                                        });
+                                    } else {
+                                        document.getElementById('responseFailure').innerHTML = "User doesn't exist!"
+                                        $('#responseFailure').show();
+                                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                                            $("#responseFailure").alert('close');
+                                        });
+                                    }
                                 } else {
-                                    document.getElementById('responseFailure').innerHTML = "User doesn't exist!"
-                                    $('#responseFailure').show();
-                                    $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
-                                        $("#responseFailure").alert('close');
-                                    });
+                                    console.log(this.status)
                                 }
-                            } else {
-                                console.log(this.status)
                             }
                         }
                     }
@@ -222,19 +225,21 @@
                                         userListTable += '<button class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onClick="deleteUser(\'' + resp[i].email + '\')" value="' + resp[i].email + '"><i class="far fa-trash-alt"></i></button></center>' + "</td></tr>";
                                     }
                                     document.getElementById('listBody').innerHTML = userListTable;
-                                    if(onLoad){const table = $("#usersList").DataTable({
-                                        dom: 'Bfrtip',
-                                        buttons: [
-                                            'copy', 'csv', 'excel', 'pdf', 'print'
-                                        ]
-                                    });
-                                    onLoad = false;}else{
+                                    if (onLoad) {
+                                        const table = $("#usersList").DataTable({
+                                            dom: 'Bfrtip',
+                                            buttons: [
+                                                'copy', 'csv', 'excel', 'pdf', 'print'
+                                            ]
+                                        });
+                                        onLoad = false;
+                                    } else {
                                         table = $("#usersList").DataTable({
-                                        dom: 'Bfrtip',
-                                        buttons: [
-                                            'copy', 'csv', 'excel', 'pdf', 'print'
-                                        ]
-                                    });
+                                            dom: 'Bfrtip',
+                                            buttons: [
+                                                'copy', 'csv', 'excel', 'pdf', 'print'
+                                            ]
+                                        });
                                     }
                                 } else {
                                     document.getElementById('usersList').hidden = true;
@@ -335,9 +340,12 @@
                                         $('#editUserModal').modal('toggle');
                                         document.getElementById('responseSuccess').innerHTML = 'User profile updated successfully'
                                         $('#responseSuccess').show();
+                                        $('#responseSuccess').fadeIn();
                                         $("#responseSuccess").fadeTo(5000, 500).slideUp(500, function () {
                                             $("#responseSuccess").alert('close');
                                         });
+                                        // document.getElementById('alerts').innerHTML="";
+                                        // document.getElementById('alerts').innerHTML='<div class="alert alert-success" id="responseSuccess" style="display:none;"></div><div class="alert alert-danger" id="responseFailure" style="display:none;"></div>';
                                     }
                                     else {
                                         document.getElementById('responseFailure').innerHTML = 'Error occured while updating user profile!'
@@ -345,6 +353,8 @@
                                         $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
                                             $("#responseFailure").alert('close');
                                         });
+                                        document.getElementById('alerts').innerHTML = "";
+                                        document.getElementById('alerts').innerHTML = '<div class="alert alert-success" id="responseSuccess" style="display:none;"></div><div class="alert alert-danger" id="responseFailure" style="display:none;"></div>';
                                     }
                                 } else {
                                     console.log(this.status)
