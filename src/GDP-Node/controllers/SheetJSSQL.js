@@ -88,7 +88,7 @@ var SheetJSSQL = (function () {
         var BT = mode == "PGSQL" ? "" : "`";
         var Q = mode == "PGSQL" ? "'" : '"';
         var J = mode == "PGSQL" ? /'/g : /"/g;
-        out.push("DROP TABLE IF EXISTS " + BT + sname + BT);
+        out.push("DROP TABLE IF EXISTS " + BT + sname + BT+";");
         out.push("CREATE TABLE " + BT + sname + BT + " (" + names.map(function (n, i) {
             return BT + n + BT + " " + (types[i] || "TEXT");
         }).join(", ") + ");");

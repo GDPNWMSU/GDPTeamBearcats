@@ -2,29 +2,16 @@ var mysql = require("mysql");
 const express = require('express')
 const api = express.Router()
 // set up connection with database.
-var connection = mysql.createPool({
-    connectionLimit: 50,
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'test',
-    dateStrings: 'date'
-});
+var connection = require("../config/db_connection").testConnection;
 console.log("Inside controllers/report_export.js");
 api.get('/flag', function (req, res) {
-    connection.getConnection(function (error, instconn) {
-        if (!!error) {
-            instconn.release();
-            console.log("Problem in connecting database");
-        } else {
             console.log("database connection successful");
-            instconn.query("SELECT `Raiser/Clearer` AS `NAME`, COUNT(Flag) AS `Number of Flags created` FROM `flags` WHERE EVENT='RAISED' GROUP BY `Raiser/Clearer`", function (error, raisedCount, fields) {
+            connection.query("SELECT `Raiser/Clearer` AS `NAME`, COUNT(Flag) AS `Number of Flags created` FROM `flags` WHERE EVENT='RAISED' GROUP BY `Raiser/Clearer`", function (error, raisedCount, fields) {
                 if (!!error) {
                     console.log('Error connecting to' + table_name);
                     console.error(error);
                 } else {
-                    instconn.query("SELECT `Raiser/Clearer` AS `NAME`, COUNT(Flag) AS `Number of Flags created` FROM `flags` WHERE EVENT='CLEARED' GROUP BY `Raiser/Clearer`", function (error, clearedCleared, fields) {
-                        instconn.release();
+                    connection.query("SELECT `Raiser/Clearer` AS `NAME`, COUNT(Flag) AS `Number of Flags created` FROM `flags` WHERE EVENT='CLEARED' GROUP BY `Raiser/Clearer`", function (error, clearedCleared, fields) {
                         if (!!error) {
                             console.log('Error connecting to' + table_name);
                             console.error(error);
@@ -67,23 +54,17 @@ api.get('/flag', function (req, res) {
                     }
                 console.log("Inside Flag report SQL function")
             })
-        }
-    })
+
 })
 api.get('/meetings', function (req, res) {
-    connection.getConnection(function (error, instconn) {
-        if (!!error) {
-            instconn.release();
-            console.log("Problem in connecting database");
-        } else {
+
             console.log("database connection successful");
-            instconn.query("SELECT `Schedule Owner` AS `NAME`,COUNT(`Event`) AS `Number of Meetings` FROM `appointments` WHERE `Event` = 'CREATED' GROUP BY `Schedule Owner`", function (error, createdCount, fields) {
+            connection.query("SELECT `Schedule Owner` AS `NAME`,COUNT(`Event`) AS `Number of Meetings` FROM `appointments` WHERE `Event` = 'CREATED' GROUP BY `Schedule Owner`", function (error, createdCount, fields) {
                 if (!!error) {
                     console.log('Error connecting to' + table_name);
                     console.error(error);
                 } else {
-                    instconn.query("SELECT `Schedule Owner` AS `NAME`,COUNT(`Event`) AS `Number of Meetings` FROM `appointments` WHERE `Event` = 'CANCELLED' GROUP BY `Schedule Owner`", function (error, cancelledCount, fields) {
-                        instconn.release();
+                    connection.query("SELECT `Schedule Owner` AS `NAME`,COUNT(`Event`) AS `Number of Meetings` FROM `appointments` WHERE `Event` = 'CANCELLED' GROUP BY `Schedule Owner`", function (error, cancelledCount, fields) {
                         if (!!error) {
                             console.log('Error connecting to' + table_name);
                             console.error(error);
@@ -126,8 +107,7 @@ api.get('/meetings', function (req, res) {
                     }
                 console.log("Inside Flag report SQL function")
             })
-        }
-    })
+
 })
 api.get('/', (req, res, next) => {
     res.render('report.ejs', {
@@ -139,22 +119,13 @@ api.get('/', (req, res, next) => {
 api.post('/lastUpdated', function (req, res) {
     // console.log("Inside report_export.js lastUpdated")
     res.setHeader('Content-Type', 'application/json')
-    connection.getConnection(function (error, instconn) {
-        if (error) {
-            console.log("Problem in connecting database");
-        } else {
-            instconn.query("SELECT FLAG,TIMESTAMP FROM `upload_status` ORDER BY ID DESC LIMIT 1", function (error, data) {
-                instconn.release();
+            connection.query("SELECT `FLAG`,`LAST_UPDATED` FROM `upload_status` WHERE `TABLE_NAME` = 'File Upload' ORDER BY ID DESC LIMIT 1", function (error, data) {
                 if (error) {
                     console.log('Error in the query');
                     console.log(error)
                 } else {
                     res.send(data);
-                    // console.log(data)
                 }
             })
-        }
-    })
-
 })
 module.exports = api

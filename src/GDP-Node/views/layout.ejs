@@ -115,7 +115,7 @@
             if (this.readyState == 4 && this.status == 200) {
                 let resp = JSON.parse(this.responseText)
                 if (document.getElementById("lastUpdatedTime"))
-                    document.getElementById("lastUpdatedTime").innerHTML = resp[0].TIMESTAMP
+                    document.getElementById("lastUpdatedTime").innerHTML = resp[0].LAST_UPDATED
                 if (document.getElementById("lastUpdatedStatus"))
                     document.getElementById("lastUpdatedStatus").innerHTML = resp[0].FLAG
             } else {

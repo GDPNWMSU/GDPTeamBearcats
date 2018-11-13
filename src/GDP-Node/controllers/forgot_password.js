@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const connection = require('../config/db_connection');
+const connection = require('../config/db_connection').usersConnection;
 const crypto = require('crypto');
 
 // Reset Password
@@ -29,13 +29,6 @@ router.post("/forgotpswd", function (req, res) {
               var html = '<h2>Password reset</h2><a href="http://localhost:8081/resetpswd/' + token + '">Click here</a>'
               var isMailSent = email.sendEmail("forgotPass",username,subject,html,res);
               console.log('isMailSent'+isMailSent);
-            // if(isMailSent){
-            //   res.render('forgot_password', { title: 'Forgot Password', 'message': 'Reset Password link sent to your mail' });
-            // }
-            // else{
-            //   res.render('forgot_password', { title: 'Forgot Password', 'message': 'Error occured while sending email' });
-
-            // }
             }
         });
       });

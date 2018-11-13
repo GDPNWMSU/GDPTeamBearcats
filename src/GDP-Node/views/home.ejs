@@ -4,13 +4,17 @@
     <div class="col-md-offset-1 col-md-6">
         <div class="row">
             <div class="col-md-4">
-                <!-- <button class="btn btn-block btn-default"><a href="/profile" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-user fa-7x"></i></a><br><h4>Profile</h4></button> -->
-                <!-- <a href="/profile" style="color:black;;font-family: 'Open Sans', sans-serif;" class="homeFont"><button class="btn btn-block btn-default homeFont fas fa-user fa-7x"><h4>Profile</h4></button></a><br> -->
-                <a href="/profile" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-user fa-7x"></i>
+                <!-- <a href="/profile"  class="btn btn-block btn-default">
                     <h4>Profile</h4>
-                </a><br>
+                </a> -->
+                <button class="btn btn-block btn-default" style="color:black;" data-toggle="modal" data-toggle="tooltip"
+                    title="profile" data-target="#myProfileModal"><i class="fas fa-user fa-7x"></i>
+                    <h4>Profile</h4>
+                </button>
+                <br>
+
             </div>
-            <%if(typeof role!= 'undefined' && role=='admin'){%> 
+            <%if(typeof role!= 'undefined' && role=='admin'){%>
             <div class="col-md-4">
                 <a href="/manage" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-users fa-7x"></i>
                     <h4>Accounts</h4>
@@ -38,7 +42,7 @@
                 </a><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/report" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-export fa-7x"></i></a><br><h4>Reports</h4></button> -->
             </div>
-            <%if(typeof role!= 'undefined' && role=='admin'){%> 
+            <%if(typeof role!= 'undefined' && role=='admin'){%>
             <div class="col-md-4">
                 <a href="/clearDB" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-trash-alt fa-7x"
                         style="color:red"></i>
@@ -67,8 +71,8 @@ box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);"> -->
         </h2>
         <hr />
         <div class="col-md-12" style="padding-bottom:10px">
-            <a class="weatherwidget-io" id="mustBeRemoved" href="https://forecast7.com/en/40d35n94d87/maryville/" data-label_1="MARYVILLE"
-                data-label_2="WEATHER" data-theme="pure">MARYVILLE WEATHER</a>
+            <a class="weatherwidget-io" id="mustBeRemoved" href="https://forecast7.com/en/40d35n94d87/maryville/"
+                data-label_1="MARYVILLE" data-label_2="WEATHER" data-theme="pure">MARYVILLE WEATHER</a>
             <script>
                 !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
             </script>
@@ -84,3 +88,114 @@ box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);"> -->
     </div>
 </div>
 </div>
+<div id="myProfileModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit user</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form" id="profileupdate" action="/profile/udpate_profile" method="post" id="registrationForm">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="first_name">
+                                <h4>First name</h4>
+                            </label>
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="<%= firstName%>"
+                                placeholder="first name" title="enter your first name if any." required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-xs-6">
+                            <label for="last_name">
+                                <h4>Last name</h4>
+                            </label>
+                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name"
+                                value="<%= lastName%>" title="enter your last name if any." required>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-xs-6">
+                            <label for="email">
+                                <h4>Email</h4>
+                            </label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
+                                title="enter your email." value="<%= username%>">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="submitEditForm" onclick="submitEditForm()" class="btn btn-success" name="submit"
+                    value="Edit User" disabled="true">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function validateEditForm() {
+        if (document.getElementById('editEmail').value != undefined &&
+            document.getElementById('editFirstname').value != undefined &&
+            document.getElementById('editLastname').value != undefined &&
+            document.getElementById('editEmail').value != "" &&
+            document.getElementById('editFirstname').value != "" &&
+            document.getElementById('editLastname').value != "") {
+            document.getElementById('submitEditForm').disabled = false;
+            return true;
+        } else {
+            document.getElementById('submitEditForm').disabled = true;
+            return false;
+        }
+    }
+    function submitEditForm() {
+        if (validateEditForm()) {
+            let url = "/manage/edit_user";
+            let xhttp = new XMLHttpRequest()
+            xhttp.open("POST", url, true)
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            var args = '';
+            var e = document.getElementById("editInpRole");
+            var selectedRole = e.options[e.selectedIndex].value;
+            args += 'email=' + document.getElementById('const').value;
+            args += '&firstname=' + document.getElementById('editFirstname').value;
+            args += '&lastname=' + document.getElementById('editLastname').value;
+            args += '&role=' + selectedRole;
+            xhttp.send(args)
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let resp = JSON.parse(this.responseText)
+                    if (resp.updateStatus) {
+                        getUsers();
+                        $('#editUserModal').modal('toggle');
+                        document.getElementById('responseSuccess').innerHTML = 'User profile updated successfully'
+                        $('#responseSuccess').show();
+                        $('#responseSuccess').fadeIn();
+                        $("#responseSuccess").fadeTo(5000, 500).slideUp(500, function () {
+                            $("#responseSuccess").alert('close');
+                        });
+                        // document.getElementById('alerts').innerHTML="";
+                        // document.getElementById('alerts').innerHTML='<div class="alert alert-success" id="responseSuccess" style="display:none;"></div><div class="alert alert-danger" id="responseFailure" style="display:none;"></div>';
+                    }
+                    else {
+                        document.getElementById('responseFailure').innerHTML = 'Error occured while updating user profile!'
+                        $('#responseFailure').show();
+                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                            $("#responseFailure").alert('close');
+                        });
+                        document.getElementById('alerts').innerHTML = "";
+                        document.getElementById('alerts').innerHTML = '<div class="alert alert-success" id="responseSuccess" style="display:none;"></div><div class="alert alert-danger" id="responseFailure" style="display:none;"></div>';
+                    }
+                } else {
+                    console.log(this.status)
+                }
+            }
+        }
+    }
+</script>

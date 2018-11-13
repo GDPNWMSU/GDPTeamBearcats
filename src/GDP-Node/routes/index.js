@@ -26,8 +26,9 @@ app.get('/logout', function (req, res) {
 app.get('/', isAuthenticated, function (req, res, next) {
     var username = req.session.user.email;
     var firstName = req.session.user.firstName;
+    var lastName  = req.session.user.lastName;
     var role = req.session.user.role;
-    res.render('home', { title: 'Home', username: username, firstName: firstName, role: role });
+    res.render('home', { title: 'Home', username: username, firstName: firstName, role: role , lastName: lastName});
 })
 
 function isAuthenticated(req, res, next) {

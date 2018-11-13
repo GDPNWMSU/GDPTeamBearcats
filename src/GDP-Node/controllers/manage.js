@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const connection = require('../config/db_connection');
+const connection = require('../config/db_connection').usersConnection;
 var logger = require('morgan')
 var bodyParser = require('body-parser');
 var crypto = require('crypto');
