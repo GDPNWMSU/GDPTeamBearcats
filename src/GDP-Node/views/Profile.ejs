@@ -4,15 +4,14 @@
             <div class="col-sm-9">
                 <div class="tab-content">
                    <div class="tab-pane active" id="home"></div>
-                   <form class="form" id="profileupdate" action="/profile/add_profile" method="post" id="registrationForm">
+                   <form class="form" id="updatepassword" action="/profile/add_profile" method="post" id="registrationForm">
                        <div class="form-group">
                            <div class="row">
                            <div class="col-xs-6">
                                <label for="first_name">
                                    <h4>First name</h4>
                                </label>
-                               <input type="text" class="form-control" name="first_name" id="first_name" value=<%= user.firstName %> placeholder="first name"
-                               <input type="text" class="form-control" name="first_name" id="first_name" value="<%= user.firstName %>" placeholder="first name"
+                               <input type="text" class="form-control" name="first_name" id="first_name" value="<%= user.firstName %>" data-parsley-trigger="change" placeholder="first name"
                                    title="enter your first name if any." required>
                               
                            </div>
@@ -24,7 +23,7 @@
                                <label for="last_name">
                                    <h4>Last name</h4>
                                </label>
-                               <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" value="<%= user.lastName %>"
+                               <input type="text" class="form-control" name="last_name" id="last_name" data-parsley-trigger="change" placeholder="last name" value="<%= user.lastName %>"
                                    title="enter your last name if any." required>
                               
                            </div>
@@ -37,7 +36,7 @@
                             <label for="email">
                                 <h4>Email</h4>
                             </label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
+                            <input type="email" class="form-control" name="email" id="email" data-parsley-trigger="change" placeholder="you@email.com"
                                 title="enter your email." value="<%= user.email %>" >
                                 <span> <a href="/updatepswd">Change Password?</a></span>           
                         </div>
@@ -48,10 +47,21 @@
                             <div class="col-xs-12">
                                 <br>
                                  <button type=submit class="btn btn-lg btn-success" name="profile"><i></i>Save</button>
-                             </div>
+                                 <button class="btn btn-lg" type="reset"><i class="fas fa-redo"></i> Reset</button>
+                                </div>
                          </div>
                      </form>
      
                      <hr>
      
                  </div>
+
+                 <script>
+                    $('#updatepassword').parsley().on('field:validated', function () {
+                        var ok = $('.parsley-error').length === 0;
+                        $('.bs-callout-info').toggleClass('hidden', !ok);
+                        $('.bs-callout-warning').toggleClass('hidden', ok);
+                    }).on('form:submit', function () {
+                        return true; 
+                    });
+                </script>

@@ -11,7 +11,7 @@ const crypto = require('crypto');
 let message = ''
 router.get('/', (req, res, next) => {
     res.render('profile_password.ejs', {
-        title: 'passwordupdate',
+        title: 'updatepassword',
         message: message,
     })
 })
