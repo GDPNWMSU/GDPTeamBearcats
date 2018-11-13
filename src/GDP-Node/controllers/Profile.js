@@ -23,7 +23,6 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.post('/add_profile', function (request, response) {
     console.log(request.body);
     let cryptoPwd = crypto.createHash('sha1').update('' + request.body.password).digest('hex');
-    //var sql = `INSERT INTO profile VALUES ('${request.body.first_name}','${request.body.last_name}','${request.body.mobile}','${request.body.email}','${request.body.password}','${request.body.password2}');`
     connection.query("update tbl_users SET email=?,password=?, firstName=?, lastName=? where id=?", [request.body.email, cryptoPwd, request.body.first_name, request.body.last_name, request.session.user.id], function (err, result) {
         if (err) {
             message = false
