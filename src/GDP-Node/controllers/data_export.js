@@ -9,7 +9,13 @@ router.get('/:table_name', function (req, res) {
     const table_name = req.params.table_name;
     if (typeof table_name != 'undefined' && table_name != 'favicon.ico' && table_name != '') {
         connection.query("SELECT table_name FROM information_schema.tables where table_schema='test'", function (error, tables, fields) {
-            connection.query("SELECT * FROM `" + table_name + "`", function (error, rows, fields) {
+            var sqlQuery = "SELECT * FROM `" + table_name + "`"
+            if(table_name=='upload_status'){
+                sqlQuery+="ORDER BY `ID` DESC"
+                console.log("Inside descorder");
+                
+            }
+            connection.query(sqlQuery, function (error, rows, fields) {
                 if (!!error) {
                     if (error.errno == 1146) {
                         res.render('view_database.ejs', {
