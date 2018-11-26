@@ -6,7 +6,7 @@ var connection = require("../config/db_connection").testConnection;
 console.log("Inside controllers/report_export.js");
 api.get('/flag', function (req, res) {
             console.log("database connection successful");
-            connection.query("SELECT `Raiser/Clearer` AS `NAME`, COUNT(Flag) AS `Number of Flags created` FROM `flags` WHERE EVENT='RAISED' GROUP BY `Raiser/Clearer`", function (error, raisedCount, fields) {
+            connection.query("SELECT `Raiser/Clearer` AS `NAME`, COUNT(Flag) AS `Number of Flags created` FROM `flags` WHERE EVENT='RAISED' OR EVENT='CLEARED' GROUP BY `Raiser/Clearer`", function (error, raisedCount, fields) {
                 if (!!error) {
                     console.log('Error connecting to' + table_name);
                     console.error(error);
@@ -17,18 +17,19 @@ api.get('/flag', function (req, res) {
                             console.error(error);
                         } else {
                             var rows = raisedCount;
-                            var totalCount = 0;
-                            for (var i = 0; i < raisedCount.length; i++) {
-                                for (var j = 0; j < clearedCleared.length; j++) {
-                                    if(raisedCount[i].NAME == clearedCleared[j].NAME&&clearedCleared[j]['Number of Flags created']>0){
-                                        rows[i]['Number of Flags created']-=clearedCleared[j]['Number of Flags created']
-                                        if(rows[i]['Number of Flags created']<0){
-                                            rows[i]['Number of Flags created']=0
-                                        }
-                                        totalCount+=rows[i]['Number of Flags created']
-                                    }
-                                }
-                            }
+                            // var totalCount = 0;
+                            var totalCount = rows.length;
+                            // for (var i = 0; i < raisedCount.length; i++) {
+                            //     for (var j = 0; j < clearedCleared.length; j++) {
+                            //         if(raisedCount[i].NAME == clearedCleared[j].NAME&&clearedCleared[j]['Number of Flags created']>0){
+                            //             rows[i]['Number of Flags created']-=clearedCleared[j]['Number of Flags created']
+                            //             if(rows[i]['Number of Flags created']<0){
+                            //                 rows[i]['Number of Flags created']=0
+                            //             }
+                            //             totalCount+=rows[i]['Number of Flags created']
+                            //         }
+                            //     }
+                            // }
                             var username = req.session.user.email;
                             var firstName = req.session.user.firstName;
                             if (rows.length > 0) {
@@ -36,7 +37,7 @@ api.get('/flag', function (req, res) {
                                     title: 'Flags report',
                                     rows: rows,
                                     message: "success",
-                                    total:{"label":"Total meetings count:","count":totalCount},
+                                    total:{"label":"Total flags count:","count":totalCount},
                                     username: username,
                                     firstName: firstName
                                 });
