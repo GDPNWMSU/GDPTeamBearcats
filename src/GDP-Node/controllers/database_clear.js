@@ -9,8 +9,8 @@ var connection = mysql.createPool({
     user: 'root',
     password: '',
     database: 'test',
-    dateStrings:true,
-    timezone : 'utc'
+    dateStrings: true,
+    timezone: 'utc'
 });
 api.get('/', function (req, res) {
     const table_name = req.params.table_name;
@@ -20,25 +20,31 @@ api.get('/', function (req, res) {
             console.log("Problem in connecting database");
         } else {
             console.log("database connection successful");
-            // instconn.query("SELECT * FROM imported_files", function (error, rows, fields) {
-            instconn.query("DROP DATABASE `test`", function (error, tables, fields) {
+            instconn.query("SELECT concat('DROP TABLE IF EXISTS `', table_name, '`;') AS QUERY FROM information_schema.tables WHERE table_schema = 'test';", function (error, tableQueries) {
                 if (!!error) {
-                    console.log('Error connecting to' + table_name);
                     console.error(error);
                 } else {
-                    instconn.query("CREATE DATABASE `test`", function (error, tables, fields) {
-                        if (!!error) {
-                            console.log('Error creating database');
-                        } else {
-                            createStatusTable(instconn, res);
-
+                    var ackFlag = true;
+                    tableQueries.forEach(queries => {
+                        if (queries.QUERY != '' && queries.QUERY != null && queries.QUERY != "DROP TABLE IF EXISTS `upload_status`;") {
+                            instconn.query(queries.QUERY, function (error, fields) {
+                                if (!!error) {
+                                    console.log('Error creating database');
+                                    ackFlag = false;
+                                } 
+                            })
                         }
-                        // res.send(rows);
-                    })
-                }
-                console.log("Inside db drop")
-            })
+                    });
+                    if (ackFlag) {
+                        instconn.query("INSERT INTO `upload_status`  (`TABLE_NAME`,`FLAG`,`START_TIMESTAMP`) VALUES ('File Upload','empty', CURRENT_TIMESTAMP)", (error) => {
+                            if (error)
+                                console.log("Error while inserting a record in upload_status database");
 
+                        })
+                    }
+                    res.redirect('/')
+                }
+            })
         }
     })
 })
