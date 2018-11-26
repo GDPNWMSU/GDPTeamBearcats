@@ -29,8 +29,8 @@ var connection = mysql.createPool({
     user: 'root',
     password: '',
     database: 'test',
-    dateStrings:true,
-    timezone : 'utc'
+    dateStrings: true,
+    timezone: 'utc'
 });
 // const getConnection = () => connection.getConnection();
 console.log("Inside controllers/data_import.js")
@@ -60,30 +60,40 @@ router.post('/', (req, res, next) => {
         })
         sheetNames = wb2.SheetNames
         for (var i = 0; i < wb2.SheetNames.length; i++) {
+            SheetJSSQL
             queries.push(SheetJSSQL.sheet_to_sql(wb2.Sheets[wb2.SheetNames[i]], wb2.SheetNames[i], "MYSQL"));
         }
-        (async () => {
-            await connection.query("INSERT INTO `upload_status`  (`TABLE_NAME`,`FLAG`,`START_TIMESTAMP`) VALUES ('File Upload','pending', CURRENT_TIMESTAMP)")
-            for(var i = 0; i< queries.length; i++){
-            // var conn2 = await getConnection();
-            await connection.query("INSERT INTO `upload_status`  (`TABLE_NAME`,`FLAG`,`START_TIMESTAMP`) VALUES ('" + sheetNames[i] + "','pending', CURRENT_TIMESTAMP)")
-            if(queries[i].length>2){
-                for (var j = 0; j < queries[i].length; j++) {
-                    await connection.query(queries[i][j]);
-                }
-            }
-            await connection.query("UPDATE `upload_status`  SET `FLAG`='success' ,  `END_TIMESTAMP` = CURRENT_TIMESTAMP WHERE `TABLE_NAME` = '" + sheetNames[i] + "' AND `FLAG` = 'pending' ORDER BY ID DESC LIMIT 1")
-            if(i==queries.length-1){
-                await connection.query("UPDATE `upload_status` SET `flag` = 'success', `END_TIMESTAMP` = CURRENT_TIMESTAMP WHERE ID = (SELECT ID FROM (SELECT * FROM `upload_status`) AS ph WHERE FLAG='pending' AND `TABLE_NAME` = 'File Upload'  ORDER BY ID DESC LIMIT 1)")
-            }
+        console.log("0th query length"+queries[0].length)
+        for (var i = 0; i < queries.length; i++) {
+            var len = queries[i].length;
+            var last = i==queries.length-1;
+            var first = i==0;
+            (async () => { await util(len,queries[i],sheetNames[i],first,last,i)})();
         }
-            
-        })();
+
     });
 
 
-            
+
 
     res.redirect('/')
 })
+function util(len,queries,sheetName,first,last,i){
+    (async () => {
+
+        if(first){
+        await connection.query("INSERT INTO `upload_status`  (`TABLE_NAME`,`FLAG`,`START_TIMESTAMP`) VALUES ('File Upload','pending', CURRENT_TIMESTAMP)")
+        }
+        await connection.query("INSERT INTO `upload_status`  (`TABLE_NAME`,`FLAG`,`START_TIMESTAMP`) VALUES ('" + sheetName + "','pending', CURRENT_TIMESTAMP)")
+        // if (queries[i].length > 2) {
+            for (var j = 0; j < len; j++) {
+                await connection.query(queries[j]);
+            }
+        // }
+        await connection.query("UPDATE `upload_status`  SET `FLAG`='success' ,  `END_TIMESTAMP` = CURRENT_TIMESTAMP WHERE `TABLE_NAME` = '" + sheetName + "' AND `FLAG` = 'pending' ORDER BY ID DESC LIMIT 1")
+        if (last) {
+        await connection.query("UPDATE `upload_status` SET `flag` = 'success', `END_TIMESTAMP` = CURRENT_TIMESTAMP WHERE ID = (SELECT ID FROM (SELECT * FROM `upload_status`) AS ph WHERE FLAG='pending' AND `TABLE_NAME` = 'File Upload'  ORDER BY ID DESC LIMIT 1)")
+        }
+    })();
+}
 module.exports = router
