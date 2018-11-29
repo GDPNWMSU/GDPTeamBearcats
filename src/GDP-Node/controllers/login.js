@@ -38,7 +38,12 @@ passport.use('local', new LocalStrategy({
         }
         rows[0].password=null;
         rows[0].resettoken = null;
-        req.session.user = rows[0]
+        req.session.user = rows[0];
+        if(req.body.remember=="rememberMe"){
+            req.session.cookie.expires=false
+        }else{
+            req.session.cookie.maxAge = 1000* 60 * 60;
+        }
         return done(null, rows[0]);
     });
 }

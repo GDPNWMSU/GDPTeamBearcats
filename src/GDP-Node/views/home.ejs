@@ -37,15 +37,16 @@
             </div>
             <% } %>
             <div class="col-md-4">
-                <a href="/report" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-file-export fa-7x"></i>
+                <button style="color:black;" class="btn btn-block btn-default"data-toggle="modal" data-toggle="tooltip"
+                title="reports" data-target="#reportsModal"><i class="fas fa-file-export fa-7x"></i>
                     <h4>Reports</h4>
-                </a><br>
+                </button><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/report" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-export fa-7x"></i></a><br><h4>Reports</h4></button> -->
             </div>
             <%if(typeof role!= 'undefined' && role=='admin'){%>
             <div class="col-md-4">
-                <a href="/clearDB" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-trash-alt fa-7x"
-                        style="color:red"></i>
+                <a href="/clearDB" style="color:black;" class="btn btn-block btn-default" onclick="return confirm('Are you sure you want to delete database?');"><i
+                        class="fas fa-trash-alt fa-7x" style="color:rgba(255, 6, 6, 0.644)"></i>
                     <h4>Delete Database</h4>
                 </a><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/clearDB" style="color:red"><i class="fas fa-trash-alt fa-7x"></i></a><h4>Delete Database</h4></button> -->
@@ -93,48 +94,51 @@ box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);"> -->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit user</h4>
+                <h4 class="modal-title">
+                    <center>Profile</center>
+                </h4>
             </div>
             <div class="modal-body">
-                <form class="form" id="profileupdate" action="/profile/udpate_profile" method="post" id="registrationForm">
-                    <div class="form-group">
-                        <div class="col-xs-6">
-                            <label for="first_name">
-                                <h4>First name</h4>
-                            </label>
-                            <input type="text" class="form-control" name="first_name" id="first_name" value="<%= firstName%>"
-                                placeholder="first name" title="enter your first name if any." required>
-                        </div>
-                    </div>
-                    <div class="form-group">
+                <form class="form-horizontal">
+                    <fieldset>
 
-                        <div class="col-xs-6">
-                            <label for="last_name">
-                                <h4>Last name</h4>
-                            </label>
-                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name"
-                                value="<%= lastName%>" title="enter your last name if any." required>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="form-group">
+                        <!-- Form Name -->
+                        <!-- <legend>Form Name</legend> -->
 
-                        <div class="col-xs-6">
-                            <label for="email">
-                                <h4>Email</h4>
-                            </label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
-                                title="enter your email." value="<%= username%>">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="textinput">First name:</label>
+                            <div class="col-md-6">
+                                <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md"
+                                    value="<%= firstName%>">
+                            </div>
                         </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="clearfix"></div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="textinput">Last name:</label>
+                            <div class="col-md-6">
+                                <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md"
+                                    value="<%= lastName%>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="appendedtext">Email:</label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input id="appendedtext" name="appendedtext" class="form-control" placeholder="placeholder"
+                                        type="text" value="<%= username.substr(0,username.indexOf("@"))%>">
+                                    <span class="input-group-addon">
+                                        <%=username.substr(username.indexOf("@"))%></span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="button" id="submitEditForm" onclick="submitEditForm()" class="btn btn-success" name="submit"
-                    value="Edit User" disabled="true">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!-- <input type="button" id="submitEditForm" onclick="submitEditForm()" class="btn btn-success" name="submit"
+                    value="Edit User" disabled="true"> -->
+                <button type="button" class="btn btn-default col-md-offset-8 col-md-4" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
             </div>
         </div>
     </div>

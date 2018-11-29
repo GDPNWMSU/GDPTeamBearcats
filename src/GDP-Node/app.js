@@ -62,7 +62,7 @@ app.use(passport.session());
 app.use('/', routes);
 
 // Listen for an application request on port 8081
-server.listen(8081, function () {
+server.listen(process.env.PORT, function () {
   console.log("Server started and currently in /app.js")
-  console.log('GDP-Node app listening on http://127.0.0.1:8081/');
+  console.log('GDP-Node app listening on http://'+process.env.IP+":"+process.env.PORT);
 });

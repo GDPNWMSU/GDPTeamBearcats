@@ -1,26 +1,33 @@
 <style>
-[hidden] {
+    [hidden] {
   display: none !important;
 }
 </style>
 <div class="row navbar-padding-top">
-  <h2>Import Excel report </h2>
-<div class="col-md-offset-3 col-md-5">
-    <div class="jumbotron">
-        <form action="/import" class="form-inline" method="post" enctype="multipart/form-data">
-            <label for="file" class="form-label">Filename:</label><br>
-            <div class="input-group">
-                    <label class="input-group-btn"style="width: 1%">
-                        <span class="btn btn-primary">
-                            Browse&hellip; <input type="file" name="Filename" id="Filename" style="display: none;" multiple>
-                        </span>
-                    </label>
-                    <input type="text" class="form-control" style="width:100%" readonly>
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title" style="font-size:24px;">Import report</h2>
+            </div>
+            <div class="panel-body">
+                <div class="jumbotron">
+                    <form action="/import" class="form-inline" method="post" enctype="multipart/form-data">
+                        <label for="file" class="form-label"><h2>Select file</h2></label><br>
+                        <div class="input-group">
+                            <label class="input-group-btn" style="width: 1%">
+                                <span class="btn btn-info">
+                                    Browse&hellip; <input type="file" name="Filename" id="Filename" style="display: none;"
+                                        multiple>
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" style="width:100%" readonly>
+                        </div>
+                        <br>
+                        <br>
+                        <input type="submit" class="btn btn-lg btn-success btn-block" name="submit" value="Upload">
+                    </form>
                 </div>
-            <br>
-            <br>
-            <input type="submit" class="btn btn-lg btn-success btn-block" name="submit" value="Submit">
-        </form>  
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>

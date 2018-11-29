@@ -18,6 +18,8 @@
                     <!-- <li><a href="/Home">Home</a></li> -->
             <%if(typeof username!= 'undefined' && username!=null){%>
                 <li><a href="/">Home</a></li>
+                <li><a href="#" data-toggle="modal" data-toggle="tooltip"
+                    title="reports" data-target="#reportsModal">Reports</a></li>
                 <li><a href="/logout">Logout</a></li>
             <%} else {%>
                <li><a href="/login">Login</a></li>

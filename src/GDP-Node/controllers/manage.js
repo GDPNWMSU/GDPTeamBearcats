@@ -56,6 +56,14 @@ router.post('/checkUser', function (req, res) {
         res.status(404);
     }
 })
+function camelize(str) {
+    var names = str.split(" ");
+    var finalName = "";
+    names.forEach(name => {
+        finalName+=name.charAt(0).toUpperCase()+name.substr(1).toLowerCase()+" ";
+    });
+    return finalName.substr(0,finalName.length-1);
+  }
 router.post('/add_users', function (req, res) {
     var username = req.session.user.email;
     var firstName = req.session.user.firstName;
@@ -63,7 +71,9 @@ router.post('/add_users', function (req, res) {
         var salt = 'newAdd' + Date.now()
         var encPassword = crypto.createHash('sha1').update(salt).digest('hex');
         var sql = "INSERT INTO `tbl_users`(`email`, `password`, `firstName`, `lastName`,`role`) VALUES ('" + req.body.email.toLowerCase() + "','" + encPassword + "','";
-        sql += req.body.firstname + "','" + req.body.lastname + "','" + req.body.role + "')";
+        sql += camelize(req.body.firstname) + "','" + camelize(req.body.lastname) + "','" + req.body.role + "')";
+        var fullName = req.body.firstname+" "+req.body.lastname;
+        console.log(camelize(fullName))
         // console.log(sql)
         connection.query(sql, function (err, result) {
             if (err) {
@@ -79,7 +89,8 @@ router.post('/add_users', function (req, res) {
                         console.log("1 user account created in database");
                         const email = require('../config/mail');
                         var subject = 'Pending account!'
-                        var html = '<h2>Create new password</h2><a href="http://localhost:8081/resetpswd/' + token + '">Click here</a>'
+                       var html = '<html><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width"> <title>Account pending!</title> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></head><body style="font-family:\'Open Sans\', sans-serif;"> <div class="container"> <div class="row"> <center> <img src="http://'+process.env.IP+":"+process.env.PORT+'/img/mail_logo.jpg" height="120px" width="95px"/> </center> </div><div class="row"> <div class="col-xs-offset-1 col-md-offset-1" style="padding-top:30px;"><br/> <p>Hello '+camelize(fullName)+',<br/> <br/> Welcome to Student Success Center reporting application. A new account has been created for you by SSCRA Admin. To complete your profile please click the button below and create a new password. <br/> <br/> This is an automated mail and replies to this mail will not be monitored. In case of any issues or queries please contact us using the Contact Us page from the application. <br/> <center> <h3><a class="btn btn-success btn-lg" href="http://'+process.env.IP+":"+process.env.PORT+"/resetpswd/" + token + '"> Click here! </a> </h3> </center> <br/> Thanks and Regards,<br/> SSCRA Northwest </p></div></div></div></body></html>'
+                        // var html = '<h2>Create new password</h2><a href="http://localhost:8081/resetpswd/' + token + '">Click here</a>'
                         // if (email.sendEmail(req.body.email, subject, html)) {
                         email.sendEmail("addUsers",req.body.email, subject, html)
                         var sql = "SELECT `ROLES` FROM tbl_user_roles"

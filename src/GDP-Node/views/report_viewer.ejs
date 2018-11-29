@@ -8,55 +8,65 @@
         });
     });
 </script>
-<div class="row" style="padding-top: 40px">
-    <div class="col-md-offset-5 col-md-3">
-        <h2>
-            <%=title%>
+<div class="col-md-12">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h2 class="panel-title" style="font-size:24px;">
+
+            <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
+                <h2>No records in table.</h2>
+            <% } else{%>
+                <h2><%=title%></h2>
+            <%} %>
         </h2>
-    </div>
-</div>
-<div class="col-md-offset-1 col-md-10">
-    <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
-    <center>
-        <h2>No records in table.</h2>
-    </center>
-    <% } %>
-    <table class="table table-bordered table-striped" id="data">
-        <thead>
-            <tr>
-                <% if(typeof rows != 'undefined' && message == "success"){
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped" id="data">
+                <thead>
+                    <tr>
+                        <% if(typeof rows != 'undefined' && message == "success"){
         var head = Object.keys(rows[0])
         head.forEach(function(headValue){ %>
-                <th>
-                    <%= headValue %>
-                </th>
-                <% }) %>
-            </tr>
-        </thead>
-        <tbody>
-            <% rows.forEach(element => {%>
-            <tr>
-                <% head.forEach(function(headValue){  %>
+                        <th>
+                            <%= headValue %>
+                        </th>
+                        <% }) %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rows.forEach(element => {%>
+                    <tr>
+                        <% head.forEach(function(headValue){  %>
 
-                <td>
-                    <%= element[headValue] %>
-                </td>
-
-                <%   }) %>
-            </tr>
-            <%
+                        <td>
+                            <%= element[headValue] %>
+                        </td>
+                        <%}) %>
+                    </tr>
+                    <%
     }); 
    }%>
-        </tbody>
-        <tfoot>
-            <% if(typeof total != 'undefined'&& message == "success"){ %>
-            <tr>
-                <td><%=total.label%></td>
-                <td><%=total.count%></td>
-            </tr>
-            <% } %>
-        </tfoot>
-    </table>
+                </tbody>
+                <tfoot>
+                    <% if(typeof total != 'undefined'&& message == "success"){ %>
+                    <tr>
+                        <td>
+                            <%=total.label%>
+                        </td>
+                        <td id="footerColspan">
+                            <%=total.count%>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </div>
 
-</html>
+<script>
+    $(document).ready(function () {
+        var colspanCount = '<%=head.length-1%>'
+        document.getElementById("footerColspan").colSpan = colspanCount;
+    });
+</script>

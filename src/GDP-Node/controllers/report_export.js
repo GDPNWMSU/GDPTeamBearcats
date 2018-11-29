@@ -60,35 +60,34 @@ api.get('/flag', function (req, res) {
 api.get('/meetings', function (req, res) {
 
             console.log("database connection successful");
-            connection.query("SELECT `Schedule Owner` AS `NAME`,COUNT(`Event`) AS `Number of Meetings` FROM `appointments` WHERE `Event` = 'CREATED' GROUP BY `Schedule Owner`", function (error, createdCount, fields) {
+
+            connection.query("select `Schedule Owner`,count(*) as Cancelled, 0 as Created,0 as `Total appointments` from appointments where event = 'CANCELLED' and `Student ID` is not null and `Student ID` != '------' group by `Schedule Owner` ", function (error, cancelledRows) {
                 if (!!error) {
                     console.log('Error connecting to' + table_name);
                     console.error(error);
                 } else {
-                    connection.query("SELECT `Schedule Owner` AS `NAME`,COUNT(`Event`) AS `Number of Meetings` FROM `appointments` WHERE `Event` = 'CANCELLED' GROUP BY `Schedule Owner`", function (error, cancelledCount, fields) {
+                    connection.query("select `Schedule Owner`,count(*) as Created from appointments where event != 'CANCELLED' and `Student ID` is not null and `Student ID` != '------' and `Student ID` is not null and `Student ID` != '------' group by `Schedule Owner` ", function (error, createdRows) {
                         if (!!error) {
                             console.log('Error connecting to' + table_name);
                             console.error(error);
                         } else {
-                            var rows = createdCount;
-                            var totalCount=0;
-                            for (var i = 0; i < createdCount.length; i++) {
-                                for (var j = 0; j < cancelledCount.length; j++) {
-                                    if(createdCount[i].NAME == cancelledCount[j].NAME&&cancelledCount[j]['Number of Meetings']>0){
-                                        rows[i]['Number of Meetings']-=cancelledCount[j]['Number of Meetings']
-                                        if(rows[i]['Number of Meetings']<0){
-                                            rows[i]['Number of Meetings']=0
-                                        }
-                                        totalCount+=rows[i]['Number of Meetings']
+                            var totalCount = 0;
+                            cancelledRows.forEach(cancelledRow => {
+                                createdRows.forEach(createdRow=>{
+                                    if(cancelledRow['Schedule Owner']==createdRow['Schedule Owner']){
+                                    cancelledRow['Created']=createdRow['Created']
+                                    cancelledRow['Total appointments']=parseInt(cancelledRow['Created'])+parseInt(cancelledRow['Cancelled']);
+                                    totalCount+=cancelledRow['Total appointments'];
                                     }
-                                }
-                            }
+                                })
+                            });
+                            var fields = cancelledRows;
                             var username = req.session.user.email;
                             var firstName = req.session.user.firstName;
-                            if (rows.length > 0) {
+                            if (fields.length > 0) {
                                 res.render('report_viewer.ejs', {
                                     title: 'Meeting report',
-                                    rows: rows,
+                                    rows: fields,
                                     message: "success",
                                     total:{"label":"Total meetings count:","count":totalCount},
                                     username: username,
@@ -102,11 +101,10 @@ api.get('/meetings', function (req, res) {
                                     firstName: firstName
                                 });
                             }
-                            // res.send(rows);
                         }
+                        console.log("Inside Flag report SQL function")
                     })
-                    }
-                console.log("Inside Flag report SQL function")
+                }
             })
 
 })

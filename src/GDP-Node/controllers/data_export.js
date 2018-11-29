@@ -13,7 +13,6 @@ router.get('/:table_name', function (req, res) {
             if(table_name=='upload_status'){
                 sqlQuery+="ORDER BY `ID` DESC"
                 console.log("Inside descorder");
-                
             }
             connection.query(sqlQuery, function (error, rows, fields) {
                 if (!!error) {
