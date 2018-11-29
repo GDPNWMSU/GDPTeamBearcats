@@ -13,8 +13,16 @@ api.get('/flag', function (req, res) {
                 } else {
                     connection.query("SELECT `Raiser/Clearer` AS `NAME`, COUNT(Flag) AS `Number of Flags created` FROM `flags` WHERE EVENT='CLEARED' GROUP BY `Raiser/Clearer`", function (error, clearedCleared, fields) {
                         if (!!error) {
-                            console.log('Error connecting to' + table_name);
-                            console.error(error);
+                            if (error.errno == 1146) {
+                                res.render('500.ejs', {
+                                    status: 500,
+                                    title: 'Table not found',
+                                    message: "Table not found",
+                                    username: username,
+                                    firstName: firstName
+                                });
+                            }
+                            console.log(error);
                         } else {
                             var rows = raisedCount;
                             // var totalCount = 0;
@@ -60,16 +68,33 @@ api.get('/flag', function (req, res) {
 api.get('/meetings', function (req, res) {
 
             console.log("database connection successful");
-
+            var username = req.session.user.email;
+            var firstName = req.session.user.firstName;
             connection.query("select `Schedule Owner`,count(*) as Cancelled, 0 as Created,0 as `Total appointments` from appointments where event = 'CANCELLED' and `Student ID` is not null and `Student ID` != '------' group by `Schedule Owner` ", function (error, cancelledRows) {
                 if (!!error) {
-                    console.log('Error connecting to' + table_name);
-                    console.error(error);
+                    if (error.errno == 1146) {
+                        res.render('500.ejs', {
+                            status: 500,
+                            title: 'Table not found',
+                            message: "Table not found",
+                            username: username,
+                            firstName: firstName
+                        });
+                    }
+                    console.log(error);
                 } else {
                     connection.query("select `Schedule Owner`,count(*) as Created from appointments where event != 'CANCELLED' and `Student ID` is not null and `Student ID` != '------' and `Student ID` is not null and `Student ID` != '------' group by `Schedule Owner` ", function (error, createdRows) {
                         if (!!error) {
-                            console.log('Error connecting to' + table_name);
-                            console.error(error);
+                            if (error.errno == 1146) {
+                                res.render('500.ejs', {
+                                    status: 500,
+                                    title: 'Table not found',
+                                    message: "Table not found",
+                                    username: username,
+                                    firstName: firstName
+                                });
+                            }
+                            console.log(error);
                         } else {
                             var totalCount = 0;
                             cancelledRows.forEach(cancelledRow => {
@@ -82,8 +107,7 @@ api.get('/meetings', function (req, res) {
                                 })
                             });
                             var fields = cancelledRows;
-                            var username = req.session.user.email;
-                            var firstName = req.session.user.firstName;
+
                             if (fields.length > 0) {
                                 res.render('report_viewer.ejs', {
                                     title: 'Meeting report',

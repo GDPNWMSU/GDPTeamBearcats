@@ -18,6 +18,7 @@ router.get('/:table_name', function (req, res) {
                 if (!!error) {
                     if (error.errno == 1146) {
                         res.render('view_database.ejs', {
+                            status:500,
                             title: 'Table not found',
                             message: "Table not found",
                             tables: tables,
@@ -25,8 +26,6 @@ router.get('/:table_name', function (req, res) {
                             firstName: firstName
                         });
                     }
-                    console.log('Error connecting to' + table_name);
-                    console.error(error);
                 } else {
                     if (rows.length > 0) {
                         res.render('view_database.ejs', {

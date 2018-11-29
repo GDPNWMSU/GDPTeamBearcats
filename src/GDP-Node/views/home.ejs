@@ -30,15 +30,16 @@
         <br>
         <div class="row">
             <div class="col-md-4">
-                <a href="/import" style="color:black;" class="btn btn-block btn-default"><i class="fas fa-file-import fa-7x"></i>
+                <button style="color:black;" class="btn btn-block btn-default" data-toggle="modal" data-toggle="tooltip"
+                    title="reports" data-target="#fileImportModal"><i class="fas fa-file-import fa-7x"></i>
                     <h4>Import</h4>
-                </a><br>
+                </button><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/import" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-import fa-7x"></i></a><br><h4>Import</h4></button> -->
             </div>
             <% } %>
             <div class="col-md-4">
-                <button style="color:black;" class="btn btn-block btn-default"data-toggle="modal" data-toggle="tooltip"
-                title="reports" data-target="#reportsModal"><i class="fas fa-file-export fa-7x"></i>
+                <button style="color:black;" class="btn btn-block btn-default" data-toggle="modal" data-toggle="tooltip"
+                    title="reports" data-target="#reportsModal"><i class="fas fa-file-export fa-7x"></i>
                     <h4>Reports</h4>
                 </button><br>
                 <!-- <button class="btn btn-block btn-default"><a href="/report" style="color:black;font-family: 'Open Sans', sans-serif;"><i class="fas fa-file-export fa-7x"></i></a><br><h4>Reports</h4></button> -->
@@ -89,6 +90,50 @@ box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);"> -->
     </div>
 </div>
 </div>
+<%if(typeof role!= 'undefined' && role=='admin'){%>
+<div id="fileImportModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <center>Import report</center>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
+                        <!-- <div class="jumbotron"> -->
+                        <form action="/import" class="form-inline" method="post" enctype="multipart/form-data" style="padding-left:20px;padding-right:20px;">
+                            <label for="file" class="form-label">
+                                <h2>Select file</h2>
+                            </label><br>
+                            <div class="input-group">
+                                <label class="input-group-btn" style="width: 1%">
+                                    <span class="btn btn-info">
+                                        Browse&hellip; <input type="file" name="Filename" id="Filename" style="display: none;"
+                                            multiple>
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" style="width:100%" readonly>
+                            </div>
+                            <br>
+                            <br>
+                            <input type="submit" class="btn btn-lg btn-success btn-block" name="submit" value="Upload">
+                        </form>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <input type="button" id="submitEditForm" onclick="submitEditForm()" class="btn btn-success" name="submit"
+                        value="Edit User" disabled="true"> -->
+                <button type="button" class="btn btn-default col-md-offset-8 col-md-4" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%}%>
 <div id="myProfileModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -126,7 +171,7 @@ box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);"> -->
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <input id="appendedtext" name="appendedtext" class="form-control" placeholder="placeholder"
-                                        type="text" value="<%= username.substr(0,username.indexOf("@"))%>">
+                                        type="text" value="<%= username.substr(0,username.indexOf(" @"))%>">
                                     <span class="input-group-addon">
                                         <%=username.substr(username.indexOf("@"))%></span>
                                 </div>
