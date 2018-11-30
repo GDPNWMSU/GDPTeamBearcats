@@ -6,6 +6,7 @@
   "dependencies": {
     "Router": "^2.1.0",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
     "consolidate": "latest",
     "cookie-parser": "^1.4.3",
@@ -16,24 +17,31 @@
     "express-ejs-layouts": "latest",
     "express-session": "^1.15.6",
     "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
     "googleapis": "^27.0.0",
     "http": "latest",
     "mailgun-js": "latest",
     "memory": "0.0.3",
     "mocha": "^5.2.0",
+    "mochawesome": "^3.1.1",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "mysql2": "^1.5.3",
+    "network": "^0.4.1",
+    "node-mocks-http": "^1.7.3",
     "nodemailer": "^4.6.8",
+    "os": "^0.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "path": "latest",
+    "path": "^0.12.7",
     "request": "^2.88.0",
+    "winston": "^3.1.0",
     "xlsx": "^0.13.1",
     "xoauth2": "^1.2.0"
   },
   "scripts": {
-    "test": "nyc mocha"
+    "start": "nodemon app.js",
+    "test": "nyc mocha test/ --timeout 5000 --recursive --reporter mochawesome --recursive --exit"
   },
   "repository": {
     "type": "git",
@@ -44,5 +52,9 @@
     "tool"
   ],
   "author": "Chinta,Raja Srikar Karthik",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai-http": "^4.2.0",
+    "nyc": "^13.1.0"
+  }
 }

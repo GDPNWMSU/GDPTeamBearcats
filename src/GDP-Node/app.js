@@ -66,3 +66,4 @@ server.listen(process.env.PORT, function () {
   console.log("Server started and currently in /app.js")
   console.log('GDP-Node app listening on http://'+process.env.IP+":"+process.env.PORT);
 });
+module.exports=app

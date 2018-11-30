@@ -45,13 +45,13 @@ app.get('/500', function (req, res) {
     if (req.session.user) {
         var username = req.session.user.email != undefined ? req.session.user.email : null;
         var firstName = req.session.user.firstName != undefined ? req.session.user.firstName : null;
-        res.render('500', {
+        res.status(500).render('500', {
             title: 'Internal error occured',
             username: username,
             firstName: firstName
         });
     } else {
-        res.render('500', {
+        res.status(500).render('500', {
             title: 'Internal error occured'
         });
     }

@@ -19,15 +19,15 @@ passport.use('local', new LocalStrategy({
     
 }, function callback(req, username, password, done) {
     console.log(username + ' = ' + password);
-    if (!username || !password) { return done(null, false, req.flash('message', 'All fields are required.')); }
+    if (!username || !password) { return done(true, false, req.flash('message', 'All fields are required.')); }
     var salt = '';
     // connection.query("INSERT INTO `tbl_users`(`username`, `password`, `First Name`, `Last Name`) VALUES ('hiah','haha','haha','jka')");
     connection.query("select * from tbl_users where email = ?", [username], function (err, rows) {
         console.log(err);
 
-        if (err) return done(null, false, req.flash('message', 'Invalid username or password.'));
+        if (err) return done(403, false, req.flash('message', 'Invalid username or password.'));
         // console.log("-----?????---------"+rows[0].username);  
-        if (!rows.length) { return done(null, false, req.flash('message', 'Invalid username or password.')); }
+        if (!rows.length) { return done(true, false, req.flash('message', 'Invalid username or password.')); }
         salt = salt + '' + password;
         var encPassword = crypto.createHash('sha1').update(salt).digest('hex');
         var dbPassword = rows[0].password;
@@ -69,7 +69,8 @@ router.post("/", passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: "Failed"
 }), function (req, res, info) {
-    res.render('login', { title: 'Login', 'message': req.flash('message') });
+    // res.error('Unauthorized');
+    res.render('login', {title: 'Login', 'message': req.flash('message') });
 });
 
 module.exports = router

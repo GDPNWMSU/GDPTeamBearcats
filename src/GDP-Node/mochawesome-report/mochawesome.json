@@ -1,0 +1,329 @@
+{
+  "stats": {
+    "suites": 4,
+    "tests": 8,
+    "passes": 8,
+    "pending": 0,
+    "failures": 0,
+    "start": "2018-11-30T19:18:31.782Z",
+    "end": "2018-11-30T19:18:32.017Z",
+    "duration": 235,
+    "testsRegistered": 8,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "passPercentClass": "success",
+    "pendingPercentClass": "danger"
+  },
+  "suites": {
+    "uuid": "3d64478f-5323-4e5b-946f-77479bb08c42",
+    "title": "",
+    "fullFile": "",
+    "file": "",
+    "beforeHooks": [],
+    "afterHooks": [],
+    "tests": [],
+    "suites": [
+      {
+        "uuid": "201745d3-3415-4a8c-914f-cdc66cc9985f",
+        "title": "Login Controller Tests",
+        "fullFile": "C:\\Users\\s530460\\Documents\\NWMSU\\GDP II\\Project\\src\\GDP-Node\\test\\test.js",
+        "file": "\\test\\test.js",
+        "beforeHooks": [
+          {
+            "title": "\"before each\" hook",
+            "fullTitle": "Login Controller Tests \"before each\" hook",
+            "timedOut": false,
+            "duration": 0,
+            "pass": false,
+            "fail": false,
+            "pending": false,
+            "code": "this.response = mocks.createResponse({\n  eventEmitter: require('events').EventEmitter\n})\ndone()",
+            "err": {},
+            "isRoot": false,
+            "uuid": "df96e23d-97cc-4578-b8a9-de7332bec861",
+            "isHook": true,
+            "skipped": false
+          }
+        ],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "GET: login/",
+            "fullTitle": "Login Controller Tests GET: login/",
+            "timedOut": false,
+            "duration": 45,
+            "state": "passed",
+            "speed": "medium",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "chai.request(server).get('/login').send().end(function (error, response) {\n  console.log('Testing default login GET controller:')\n  console.log('Expected Result: 200')\n  // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received\n  console.log('Results:')\n  response.should.have.status(200);\n  done()\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "acd08bc9-b808-4809-88a7-149f633d9f0d",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "POST: login/",
+            "fullTitle": "Login Controller Tests POST: login/",
+            "timedOut": false,
+            "duration": 15,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "let userLogin = {\n  email: \"abc@admin.com\",\n  password: \"testing\"\n}\nchai.request(server).post('/login').send(userLogin).end(function (error, response) {\n  console.log('Testing default login POST controller:')\n  console.log('Expected Result: 200')\n  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received\n  console.log('Results:')\n  response.should.have.status(200);\n  done()\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "82f0d4bb-8cdd-44c0-929f-94efc5a6201d",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "acd08bc9-b808-4809-88a7-149f633d9f0d",
+          "82f0d4bb-8cdd-44c0-929f-94efc5a6201d"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 60,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 5000
+      },
+      {
+        "uuid": "ea822f8b-384d-4501-a77a-c181312a09fd",
+        "title": "Home Controller Tests",
+        "fullFile": "C:\\Users\\s530460\\Documents\\NWMSU\\GDP II\\Project\\src\\GDP-Node\\test\\test.js",
+        "file": "\\test\\test.js",
+        "beforeHooks": [
+          {
+            "title": "\"before each\" hook",
+            "fullTitle": "Home Controller Tests \"before each\" hook",
+            "timedOut": false,
+            "duration": 0,
+            "pass": false,
+            "fail": false,
+            "pending": false,
+            "code": "this.response = mocks.createResponse({\n  eventEmitter: require('events').EventEmitter\n})\ndone()",
+            "err": {},
+            "isRoot": false,
+            "uuid": "82ff65ae-7f05-4802-8e87-4eef177b72a2",
+            "isHook": true,
+            "skipped": false
+          }
+        ],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "GET: /",
+            "fullTitle": "Home Controller Tests GET: /",
+            "timedOut": false,
+            "duration": 23,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "chai.request(server).get('/').send().end(function (error, response) {\n  console.log('Testing default server GET controller:')\n  console.log('Expected Result: 200')\n  // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received\n  console.log('Results:')\n  response.should.have.status(200);\n  done()\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "624711f2-6698-4556-8e2b-bf7df2f8c736",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "POST: login/",
+            "fullTitle": "Home Controller Tests POST: login/",
+            "timedOut": false,
+            "duration": 14,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "chai.request(server).post('/').send().end(function (error, response) {\n  console.log('Testing default server POST controller:')\n  console.log('Expected Result: 404')\n  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received\n  console.log('Results:')\n  response.should.have.status(404);\n  done()\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "537492b3-3c56-4200-8827-a0f2b804b0d9",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "624711f2-6698-4556-8e2b-bf7df2f8c736",
+          "537492b3-3c56-4200-8827-a0f2b804b0d9"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 37,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 5000
+      },
+      {
+        "uuid": "e1add665-f1e7-4dec-94ac-cfb7f90a3810",
+        "title": "View database Controller Tests",
+        "fullFile": "C:\\Users\\s530460\\Documents\\NWMSU\\GDP II\\Project\\src\\GDP-Node\\test\\test.js",
+        "file": "\\test\\test.js",
+        "beforeHooks": [
+          {
+            "title": "\"before each\" hook",
+            "fullTitle": "View database Controller Tests \"before each\" hook",
+            "timedOut": false,
+            "duration": 0,
+            "pass": false,
+            "fail": false,
+            "pending": false,
+            "code": "this.response = mocks.createResponse({\n  eventEmitter: require('events').EventEmitter\n})\ndone()",
+            "err": {},
+            "isRoot": false,
+            "uuid": "4778b604-6703-4377-84c7-55efbe1e7054",
+            "isHook": true,
+            "skipped": false
+          }
+        ],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "GET: /view/",
+            "fullTitle": "View database Controller Tests GET: /view/",
+            "timedOut": false,
+            "duration": 10,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "chai.request(server).get('/view').send().end(function (error, response) {\n  console.log('Testing GET view database controller:')\n  console.log('Expected Result: 200')\n  // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received\n  console.log('Results:')\n  response.should.have.status(200);\n  done()\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "e2bc3425-4cd3-4bb5-9476-f55bfd1f7278",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "GET: /view/testing",
+            "fullTitle": "View database Controller Tests GET: /view/testing",
+            "timedOut": false,
+            "duration": 7,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "chai.request(server).get('/view').send().end(function (error, response) {\n  console.log('Testing GET view database for testing table from controller:')\n  console.log('Expected Result: 200')\n  // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received\n  console.log('Results:')\n  response.should.have.status(200);\n  done()\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "677a4fd7-d116-494f-9efc-ba15153a41de",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "e2bc3425-4cd3-4bb5-9476-f55bfd1f7278",
+          "677a4fd7-d116-494f-9efc-ba15153a41de"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 17,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 5000
+      },
+      {
+        "uuid": "5bb8832c-f34c-468a-b60b-7b22d725ac85",
+        "title": "Manage Users database Controller Tests",
+        "fullFile": "C:\\Users\\s530460\\Documents\\NWMSU\\GDP II\\Project\\src\\GDP-Node\\test\\test.js",
+        "file": "\\test\\test.js",
+        "beforeHooks": [
+          {
+            "title": "\"before each\" hook",
+            "fullTitle": "Manage Users database Controller Tests \"before each\" hook",
+            "timedOut": false,
+            "duration": 0,
+            "pass": false,
+            "fail": false,
+            "pending": false,
+            "code": "this.response = mocks.createResponse({\n  eventEmitter: require('events').EventEmitter\n})\ndone()",
+            "err": {},
+            "isRoot": false,
+            "uuid": "9a5e1492-919e-444c-816c-dee335dcd90b",
+            "isHook": true,
+            "skipped": false
+          }
+        ],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "GET: /manage/",
+            "fullTitle": "Manage Users database Controller Tests GET: /manage/",
+            "timedOut": false,
+            "duration": 12,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "chai.request(server).get('/manage').send().end(function (error, response) {\n  console.log('Testing GET manage users controller:')\n  console.log('Expected Result: 200')\n  // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received\n  console.log('Results:')\n  response.should.have.status(200);\n  done()\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "ab55bb59-6415-4b0b-83c1-11eae90e2e28",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "GET: /manage/",
+            "fullTitle": "Manage Users database Controller Tests GET: /manage/",
+            "timedOut": false,
+            "duration": 3,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var checkUserController = require('../controllers/manage').checkUser\nvar isValid = checkUserController('rajasrikar2010@gmail.com')\nconsole.log(isValid)\nexpect(isValid).to.be.true;\ndone();",
+            "err": {},
+            "isRoot": false,
+            "uuid": "5f5f707a-cbfd-431c-9d91-529b5e825823",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "ab55bb59-6415-4b0b-83c1-11eae90e2e28",
+          "5f5f707a-cbfd-431c-9d91-529b5e825823"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 15,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 5000
+      }
+    ],
+    "passes": [],
+    "failures": [],
+    "pending": [],
+    "skipped": [],
+    "duration": 0,
+    "root": true,
+    "rootEmpty": true,
+    "_timeout": 5000
+  },
+  "copyrightYear": 2018
+}
