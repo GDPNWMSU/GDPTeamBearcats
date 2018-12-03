@@ -200,17 +200,15 @@
                                     if (resp.deleteStatus) {
                                         getUsers();
                                         document.getElementById('responseFailure').innerHTML = "User account deleted successfully!"
-                                        $('#responseFailure').show();
-                                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
-                                            $("#responseFailure").alert('close');
-                                        });
+
                                     } else {
                                         document.getElementById('responseFailure').innerHTML = "User doesn't exist!"
-                                        $('#responseFailure').show();
-                                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
-                                            $("#responseFailure").alert('close');
-                                        });
                                     }
+                                    $('#responseFailure').show();
+                                        $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
+                                            $('#responseFailure').html('');
+                                            $("#responseFailure").hide();
+                                        });
                                 } else {
                                     console.log(this.status)
                                 }
@@ -314,17 +312,19 @@
                                         document.getElementById('responseSuccess').innerHTML = resp.message
                                         $('#responseSuccess').show();
                                         $("#responseSuccess").fadeTo(5000, 500).slideUp(500, function () {
-                                            $("#responseSuccess").alert('close');
+                                            $('#responseSuccess').html('');
+                                            $("#responseSuccess").hide();
                                         });
-                                        document.getElementById('responseSuccessdiv').innerHTML='<div class="alert alert-success" id="responseSuccess" style="display:none;"></div>'
+                                        // document.getElementById('responseSuccessdiv').innerHTML='<div class="alert alert-success" id="responseSuccess" style="display:none;"></div>'
                                     }
                                     else {
                                         document.getElementById('responseFailure').innerHTML = resp.message
                                         $('#responseFailure').show();
                                         $("#responseFailure").fadeTo(5000, 500).slideUp(500, function () {
-                                            $("#responseFailure").alert('close');
+                                            $('#responseFailure').html('');
+                                            $("#responseFailure").hide();
                                         });
-                                        document.getElementById('responseFailurediv').innerHTML='<div class="alert alert-danger" id="responseFailure" style="display:none;"></div>'
+                                        // document.getElementById('responseFailurediv').innerHTML='<div class="alert alert-danger" id="responseFailure" style="display:none;"></div>'
 
                                     }
                                 } else {

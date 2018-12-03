@@ -92,13 +92,14 @@ router.post('/add_users', function (req, res) {
                     console.log(err, rows);
                     if (!err) {
                         console.log("1 user account created in database");
-                        // network.get_active_interface(function (err, obj) {
+                        network.get_active_interface(function (err, obj) {
                             var getHostAddress = "http://"
                             getHostAddress += process.env.hostname ||os.hostname()
                             getHostAddress += ":"+process.env.PORT
+                            var alternateIP = obj.ip_address+":"+process.env.PORT
                             const email = require('../config/mail');
                             var subject = 'Pending account!'
-                            var html = '<html><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width"> <title>Password reset!</title> </head><body style="font-family:\'Open Sans\', sans-serif;"> <div class="container"> <div class="row"> <center> <img src="' + getHostAddress + '/img/mail_logo.jpg" height="120px" width="95px"/> </center> </div><div class="row"> <div class="col-xs-offset-1 col-md-offset-1" style="padding-top:30px;"><br/> <p>Hello ' + camelize(fullName) + ',<br/> <br/> Welcome to Student Success Center reporting application. A new account has been created for you by SSCRA Admin. To complete your profile please click the button below and create a new password. <br/> <br/> This is an automated mail and replies to this mail will not be monitored. In case of any issues or queries please contact us using the Contact Us page from the application. <br/> <center> <h3> <a href="' + getHostAddress + "/resetpswd/" + token + '" style=" color:white;text-decoration:none; height:50px; background-color:#eb0028; line-height:50px; border-radius:2px; font-size:18px; text-align:center; color:#ffffff !important;display: block;width: 100%;border: none;margin: 0;" target="_blank">Click here!</a></h3></center> <br/> Thanks and Regards,<br/> SSCRA Northwest </p></div></div></div></body></html>'
+                            var html = '<html><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width"> <title>Password reset!</title> </head><body style="font-family:\'Open Sans\', sans-serif;"> <div class="container"> <div class="row"> <center> <img src="' + getHostAddress + '/img/mail_logo.jpg" height="120px" width="95px"/> </center> </div><div class="row"> <div class="col-xs-offset-1 col-md-offset-1" style="padding-top:30px;"><br/> <p>Hello ' + camelize(fullName) + ',<br/> <br/> Welcome to Student Success Center reporting application. A new account has been created for you by SSCRA Admin. To complete your profile please click the button below and create a new password. <br/> <br/> This is an automated mail and replies to this mail will not be monitored. In case of any issues or queries please contact us using the Contact Us page from the application. <br/> <center> <h3> <a href="' + getHostAddress + "/resetpswd/" + token + '" style=" color:white;text-decoration:none; height:50px; background-color:#eb0028; line-height:50px; border-radius:2px; font-size:18px; text-align:center; color:#ffffff !important;display: block;width: 100%;border: none;margin: 0;" target="_blank">Click here!</a></h3></center><br/>Having problem with the link?<a href="'+alternateIP+ "/resetpswd/" + token + '" target=\"_blank\"> Click here</a><br/> <br/> Thanks and Regards,<br/> SSCRA Northwest </p></div></div></div></body></html>'
                             email.sendEmail("addUsers", req.body.email, subject, html)
                             var sql = "SELECT `ROLES` FROM tbl_user_roles"
                             connection.query(sql, function (err, roles) {
@@ -136,7 +137,7 @@ router.post('/add_users', function (req, res) {
                                     })
                                 }
                             })
-                        // })
+                        })
                     }
                 });
             });

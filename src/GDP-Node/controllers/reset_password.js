@@ -4,7 +4,7 @@ const connection = require('../config/db_connection').usersConnection;
 const crypto = require('crypto');
 
 
-router.get("/resetpswd/:token", function(req, res) {
+router.get("/:token", function(req, res) {
     connection.query("select * from tbl_users where resettoken = ?", [req.params.token], function(err, rows){
       if(rows.length>0){
         console.log("rows", rows[0].username);
@@ -18,7 +18,7 @@ router.get("/resetpswd/:token", function(req, res) {
     });
     
     
-router.post("/resetpswd",function(req, res){
+router.post("/",function(req, res){
         let pwd = req.body.password;
         let confpwd = req.body.confirm_password;
         let token = req.body.token;

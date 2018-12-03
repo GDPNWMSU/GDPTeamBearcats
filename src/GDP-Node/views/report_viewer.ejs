@@ -1,24 +1,77 @@
+<% if(typeof rows != 'undefined' && message == "success"){%>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#data").DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        });
+        // $("#data").DataTable({
+        //     dom: 'Bfrtip',
+        //     buttons: [
+        //         'copy', 'csv', 'excel', 'pdf', 'print'
+        //     ]
+        // });
+        $('#data').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copy',
+                messageTop: 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>'
+            },
+            {
+                extend: 'csv',
+                messageTop: 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>'
+            },
+            {
+                extend: 'excel',
+                messageTop: 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>'
+            },
+            {
+                extend: 'pdf',
+                messageTop: 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>'
+            },
+            {
+                extend: 'print',
+                messageTop: function () {
+                    printCounter++;
+ 
+                    if ( printCounter === 1 ) {
+                        return 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>';
+                    }
+                    else {
+                        return 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>';
+                    }
+                }
+            }
+        ]
+    } );
+// } );
     });
 </script>
+<% } %>
 <div class="col-md-12">
     <div class="panel panel-success">
         <div class="panel-heading">
             <h2 class="panel-title" style="font-size:24px;">
 
-            <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
+                <% if(typeof rows == 'undefined'&& message == "dataNotFound"){ %>
                 <h2>No records in table.</h2>
-            <% } else{%>
-                <h2><%=title%></h2>
-            <%} %>
-        </h2>
+                <% } else{%>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h2>
+                            <%=title%>
+                        </h2>
+                        <h4>
+                            Date-Range:&nbsp;<%=rangeStartDate%> - <%=rangeEndDate%>
+                        </h4>
+                    </div>
+                    <div class="col-md-offset-3 col-md-4">
+                        <br/>
+                        <button class="btn btn-md btn-info btn-block" style="margin-top:10px;" data-toggle="modal" data-toggle="tooltip"
+                            title="reports" data-target="#datesFilter"><i class="far fa-calendar-alt"></i>&nbsp;Select date range</a>
+                    </div>
+
+                </div>
+
+                <%} %>
+            </h2>
         </div>
         <div class="panel-body">
             <table class="table table-bordered table-striped" id="data">
@@ -63,10 +116,89 @@
         </div>
     </div>
 </div>
-
+<% if(typeof rows != 'undefined' && message == "success"){%>
+<div id="datesFilter" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <center>Select date range</center>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <!-- <div class="col-md-offset-2 col-md-10"> -->
+                        <form action="/report/<%=currentReport%>" id="dateFilterForm" class="col-md-offset-1 form-inline" method="post"
+                            autocomplete="off">
+                            <div class="form-group">
+                                <div class="input-group input-daterange">
+                                        <div class="input-group-addon">from</div>
+                                    <input type="text" class="input form-control" name="fromDate" value="<%=rangeStartDate%>"
+                                        id="fromDate" required>
+                                    <div class="input-group-addon">to</div>
+                                    <input type="text" class="input form-control" name="toDate" value="<%=rangeEndDate%>"
+                                        id="toDate" required>
+                                </div>
+                            
+                            <br/>
+                            <br/>
+                            <button class="btn btn-md btn-info btn-block" type="submit"><i class="fas fa-search"></i> &nbsp;Filter</button>
+                        </div>
+                        </form>
+                <!-- </div> -->
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-4">
+                        <%if(isMeetingsReport){%>
+                        <button type="checkbox" class="btn btn-xs btn-success btn-block" id="datefilterinput" onclick="dateFilter()"
+                            name="Date filter">Get report till date</button>
+                            <%}%>
+                    </div>
+                    <div class="col-md-offset-4 col-md-4">
+                        <button type="button" class="btn btn-xs btn-block" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         var colspanCount = '<%=head.length-1%>'
         document.getElementById("footerColspan").colSpan = colspanCount;
+        if (window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1) == "tillDate") {
+            document.getElementById('datefilterinput').checked = true;
+        }
     });
+</script>
+<%}%>
+<script>
+    $('.input-daterange').datepicker();
+    // $('.input-daterange input').each(function () {
+    //     $(this).datepicker('clearDates');
+    // });
+    function dateRangeFilter() {
+        if (document.getElementById('fromDate').value != '' && document.getElementById('toDate').value != '') {
+            let url = "/report/meetings";
+            let xhttp = new XMLHttpRequest()
+            xhttp.open("POST", url, true)
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            var args = '';
+            args += 'fromDate=' + document.getElementById('fromDate').value;
+            args += '&toDate=' + document.getElementById('toDate').value;
+            xhttp.send(args)
+        }
+    }
+    function dateFilter() {
+        var url = "#"
+        if (window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1) != "tillDate") {
+
+            url = window.location.pathname + "/tillDate"
+        } else {
+            url = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1)
+        }
+        console.log(url)
+        window.location.assign(url)
+    }
 </script>

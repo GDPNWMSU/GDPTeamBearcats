@@ -17,7 +17,7 @@ var SheetJSSQL = (function () {
         "MYSQL": {
             t: "TEXT",
             n: "REAL",
-            d: "DATE",
+            d: "DATETIME",
             b: "TINYINT"
         },
         "SQLITE": {
@@ -27,7 +27,24 @@ var SheetJSSQL = (function () {
             b: "REAL"
         }
     }
+    /**
+     * You first need to create a formatting function to pad numbers to two digits…
+     **/
+    function twoDigits(d) {
+        if (0 <= d && d < 10) return "0" + d.toString();
+        if (-10 < d && d < 0) return "-0" + (-1 * d).toString();
+        return d.toString();
+    }
 
+    /**
+     * …and then create the method to output the date string as desired.
+     * Some people hate using prototypes this way, but if you are going
+     * to apply this to more than one Date object, having it as a prototype
+     * makes sense.
+     **/
+    Date.prototype.toMysqlFormat = function () {
+        return this.getFullYear() + "-" + twoDigits(1 + this.getMonth()) + "-" + twoDigits(this.getDate()) + " " + twoDigits(this.getHours()) + ":" + twoDigits(this.getMinutes()) + ":" + twoDigits(this.getSeconds());
+    };
     function sheet_to_sql(ws, sname, mode) {
         var TYPES = _TYPES[mode || "SQLITE"]
         if (!ws || !ws['!ref']) return;
@@ -62,8 +79,8 @@ var SheetJSSQL = (function () {
                     c: C,
                     r: R
                 })] || {
-                    t: "z"
-                }).t] = true;
+                        t: "z"
+                    }).t] = true;
             if (seen.s || seen.str) _type = TYPES.t;
             else if (seen.n + seen.b + seen.d + seen.e > 1) _type = TYPES.t;
             else switch (true) {
@@ -88,11 +105,20 @@ var SheetJSSQL = (function () {
         var BT = mode == "PGSQL" ? "" : "`";
         var Q = mode == "PGSQL" ? "'" : '"';
         var J = mode == "PGSQL" ? /'/g : /"/g;
-        out.push("DROP TABLE IF EXISTS " + BT + sname + BT+";");
-        out.push("CREATE TABLE " + BT + sname + BT + " (" + names.map(function (n, i) {
-            return BT + n + BT + " " + (types[i] || "TEXT");
-        }).join(", ") + ");");
-
+        out.push("DROP TABLE IF EXISTS " + BT + sname + BT + ";");
+        if (sname.toLowerCase().trim() == 'student report') {
+            out.push("CREATE TABLE " + BT + sname + BT + " (" + names.map(function (n, i) {
+                if (n.toLowerCase().trim() == 'note date') {
+                    return BT + n + BT + " " + ("DATETIME");
+                } else {
+                    return BT + n + BT + " " + (types[i] || "TEXT");
+                }
+            }).join(", ") + ");");
+        } else {
+            out.push("CREATE TABLE " + BT + sname + BT + " (" + names.map(function (n, i) {
+                return BT + n + BT + " " + (types[i] || "TEXT");
+            }).join(", ") + ");");
+        }
         for (R = range.s.r + 1; R <= range.e.r; ++R) {
             var fields = [],
                 values = [];
@@ -104,13 +130,23 @@ var SheetJSSQL = (function () {
                 if (!cell) continue;
                 fields.push(BT + names[C - range.s.c] + BT);
                 var val = cell.w;
+                if(names[C - range.s.c]=='Note Date'){
+                switch (types[C - range.s.c]) {
+                    default:
+                        val = Q + new Date(val).toMysqlFormat() + Q;
+                }
+            }else{
                 switch (types[C - range.s.c]) {
                     case TYPES.n:
                         if (cell.t == 'b' || typeof val == 'boolean') val = +val;
                         break;
+                    case TYPES.d:
+                        val = Q + new Date(val).toMysqlFormat() + Q;
+                        break;
                     default:
                         val = Q + val.toString().replace(J, Q + Q) + Q;
                 }
+            }
                 values.push(val);
             }
             out.push("INSERT INTO " + BT + sname + BT + " (" + fields.join(", ") + ") VALUES (" + values.join(",") + ");");
