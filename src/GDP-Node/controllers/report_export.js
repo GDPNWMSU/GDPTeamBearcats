@@ -97,6 +97,7 @@ function handleFlagsReport(req, res, isDateFilterSet) {
                     username: username,
                     firstName: firstName,
                     isMeetingsReport: false,
+                    role:req.session.user.role,
                     currentReport: 'flag/faculty',
                     rangeStartDate:rangeStartDate,
                     rangeEndDate:rangeEndDate
@@ -146,6 +147,7 @@ function handleFlagsReportWithDateRange(req, res, isDateFilterSet) {
                     username: username,
                     firstName: firstName,
                     isMeetingsReport: false,
+                    role:req.session.user.role,
                     currentReport: 'flag/faculty',
                     rangeStartDate:req.body.fromDate,
                     rangeEndDate:req.body.toDate
@@ -197,6 +199,7 @@ function handleStudentFlagsReport(req, res) {
                     username: username,
                     firstName: firstName,
                     isMeetingsReport: false,
+                    role:req.session.user.role,
                     currentReport: 'flag/student',
                     rangeStartDate:rangeStartDate,
                     rangeEndDate:rangeEndDate
@@ -247,6 +250,7 @@ function handleStudentFlagsReportWithRange(req, res) {
                     firstName: firstName,
                     isMeetingsReport: false,
                     currentReport: 'flag/student',
+                    role:req.session.user.role,
                     rangeStartDate:req.body.fromDate,
                     rangeEndDate:req.body.toDate
                 });
@@ -310,6 +314,7 @@ function handleMeetingsReport(req, res, isDateFilterSet) {
                             total: { "label": "Total meetings count:", "count": totalCount },
                             username: username,
                             firstName: firstName,
+                            role:req.session.user.role,
                             currentReport: 'meetings',
                             isMeetingsReport: true,
                             rangeStartDate:rangeStartDate,
@@ -392,6 +397,7 @@ function handleMeetingsReportWithRange(req, res) {
                             firstName: firstName,
                             isMeetingsReport: true,
                             currentReport: 'meetings',
+                            role:req.session.user.role,
                             rangeStartDate: req.body.fromDate,
                             rangeEndDate: req.body.toDate
                         });
@@ -443,6 +449,7 @@ function handleNotesReport(req, res) {
                     total: { "label": "Total notes count:", "count": totalCount },
                     username: username,
                     firstName: firstName,
+                    role:req.session.user.role,
                     currentReport: 'notes',
                     isMeetingsReport: false,
                     rangeStartDate:rangeStartDate,
@@ -495,7 +502,8 @@ function handleNotesReportWithRange(req, res) {
                     currentReport: 'notes',
                     isMeetingsReport: false,
                     rangeStartDate:req.body.fromDate,
-                    rangeEndDate:req.body.toDate
+                    rangeEndDate:req.body.toDate,
+                    role:req.session.user.role
                 });
             } else {
                 res.render('report_viewer.ejs', {

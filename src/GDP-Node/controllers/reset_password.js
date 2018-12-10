@@ -22,8 +22,10 @@ router.post("/",function(req, res){
         let pwd = req.body.password;
         let confpwd = req.body.confirm_password;
         let token = req.body.token;
+        var salt = '+DT=$Uk)6Q64Y*"$=J)$!Hwzg$(w"JuuQ}FrcGN^.s]KmX53x&^?tB$s>b"V#A';
         if(pwd === confpwd){
-          cryptoPwd = crypto.createHash('sha1').update(''+pwd).digest('hex');
+          salt = salt + '' + pwd;
+          cryptoPwd = crypto.createHash('sha1').update(salt).digest('hex');
           connection.query("update tbl_users SET password = ? , resettoken = ? where resettoken = ?", [cryptoPwd, "", token] , function(err, rows){
             console.log(err,rows);
             if(!err){

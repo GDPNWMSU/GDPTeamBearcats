@@ -43,7 +43,7 @@ app.engine('ejs', engines.ejs)
 var store = new BetterMemoryStore({ expires: 60 * 60 * 1000, debug: true });
 app.use(sess({
   name: 'JSESSION',
-  secret: 'MYSECRETISVERYSECRET',
+  secret: '(r*E}]FH4<?t.Ep?zAJK{=wSe*2Ls\+:M(@=U,7j~Z?g3jgf_A\.B{4-M?}Yqa',
   store: store,
   resave: true,
   saveUninitialized: true

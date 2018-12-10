@@ -1,12 +1,6 @@
 <% if(typeof rows != 'undefined' && message == "success"){%>
 <script type="text/javascript">
     $(document).ready(function () {
-        // $("#data").DataTable({
-        //     dom: 'Bfrtip',
-        //     buttons: [
-        //         'copy', 'csv', 'excel', 'pdf', 'print'
-        //     ]
-        // });
         $('#data').DataTable( {
         dom: 'Bfrtip',
         buttons: [
@@ -28,16 +22,7 @@
             },
             {
                 extend: 'print',
-                messageTop: function () {
-                    printCounter++;
- 
-                    if ( printCounter === 1 ) {
-                        return 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>';
-                    }
-                    else {
-                        return 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>';
-                    }
-                }
+                messageTop: 'Date-Range: <%=rangeStartDate%> - <%=rangeEndDate%>'
             }
         ]
     } );

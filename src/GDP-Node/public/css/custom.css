@@ -1,6 +1,14 @@
 body{
     font-family: 'Open Sans', sans-serif !important;
 }
+.loginBG{
+  font-family: 'Open Sans', sans-serif !important;
+  background: url(../img/northwestmissouri-top_2x.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 .navbar-padding-top{
   margin-top:20px;
 }

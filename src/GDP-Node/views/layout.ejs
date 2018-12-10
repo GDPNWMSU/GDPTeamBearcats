@@ -79,8 +79,11 @@
     <!-- <script src="../../js/main.js"></script> -->
     <script src="../../js/custom.js"></script>
 </head>
-
+<%if (title=="Login"||title=="Forgot password"||title=="Reset password") {%>
+<body class="loginBG">
+    <%}else{%>
 <body>
+    <%}%>
     <div class="overlay"></div>
     <% include header.ejs %>
     <div class="container">

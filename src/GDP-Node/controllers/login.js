@@ -18,24 +18,20 @@ passport.use('local', new LocalStrategy({
     passReqToCallback: true, //passback entire req to call back
     
 }, function callback(req, username, password, done) {
-    console.log(username + ' = ' + password);
+    console.log(username+" "+password)
     if (!username || !password) { return done(true, false, req.flash('message', 'All fields are required.')); }
-    var salt = '';
-    // connection.query("INSERT INTO `tbl_users`(`username`, `password`, `First Name`, `Last Name`) VALUES ('hiah','haha','haha','jka')");
+    var salt = '+DT=$Uk)6Q64Y*"$=J)$!Hwzg$(w"JuuQ}FrcGN^.s]KmX53x&^?tB$s>b"V#A';
+    // var salt=''
     connection.query("select * from tbl_users where email = ?", [username], function (err, rows) {
-        console.log(err);
-
         if (err) return done(403, false, req.flash('message', 'Invalid username or password.'));
-        // console.log("-----?????---------"+rows[0].username);  
         if (!rows.length) { return done(true, false, req.flash('message', 'Invalid username or password.')); }
         salt = salt + '' + password;
         var encPassword = crypto.createHash('sha1').update(salt).digest('hex');
         var dbPassword = rows[0].password;
-        console.log("-------ency----", encPassword)
-        console.log("=======decry=====", dbPassword)
         if (!(dbPassword == encPassword)) {
             return done(null, false, req.flash('message', 'Invalid username or password.'));
         }
+        console.log(username + ' -- Logged in');
         rows[0].password=null;
         rows[0].resettoken = null;
         req.session.user = rows[0];

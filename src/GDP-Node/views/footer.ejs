@@ -8,36 +8,61 @@
                     <center>Select report category</center>
                 </h4>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-5">
-                        <a href="/report/meetings" style="color:black" class="btn btn-block btn-default"><i class="far fa-calendar-alt fa-7x"></i>
-                            <h4>Appointments report</h4>
-                        </a><br>
-                        <!-- <button class="btn btn-block btn-default"><a href="/report/appointments" style="color:black"><i class="far fa-calendar-alt fa-7x" ></i></a><br><h3>Appointments</h3></button> -->
+            <%if(typeof role!= 'undefined' && role=='admin'){%>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <a href="/report/meetings" style="color:black" class="btn btn-block btn-default"><i class="far fa-calendar-alt fa-7x"></i>
+                                <h4>Appointments report</h4>
+                            </a><br>
+                            <!-- <button class="btn btn-block btn-default"><a href="/report/appointments" style="color:black"><i class="far fa-calendar-alt fa-7x" ></i></a><br><h3>Appointments</h3></button> -->
+                        </div>
+                        <div class="col-md-5">
+                            <a href="/report/notes" style="color:black" class="btn btn-block btn-default"><i class="fas fa-edit fa-7x"></i>
+                                <h4>Notes report</h4>
+                            </a><br>
+                            <!-- <button class="btn btn-block btn-default"><a href="/report/flag" style="color:black"><i class="fas fa-flag fa-7x"></i></a><br><h3>Flags</h3></button> -->
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <a href="/report/notes" style="color:black" class="btn btn-block btn-default"><i class="fas fa-edit fa-7x"></i>
-                            <h4>Notes report</h4>
-                        </a><br>
-                        <!-- <button class="btn btn-block btn-default"><a href="/report/flag" style="color:black"><i class="fas fa-flag fa-7x"></i></a><br><h3>Flags</h3></button> -->
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <a href="/report/flag/faculty" style="color:black" class="btn btn-block btn-default"><i class="fas fa-flag fa-7x"></i>
+                                <h4>Faculty Flags report</h4>
+                            </a><br>
+                            <!-- <button class="btn btn-block btn-default"><a href="/report/flag" style="color:black"><i class="fas fa-flag fa-7x"></i></a><br><h3>Flags</h3></button> -->
+                        </div>
+                        <div class="col-md-5">
+                            <a href="/report/flag/student" style="color:black" class="btn btn-block btn-default"><i class="fas fa-user-graduate fa-7x"></i>
+                                <h4>Student Flags report</h4>
+                            </a><br>
+                            <!-- <button class="btn btn-block btn-default"><a href="/report/notes" style="color:black"><i class="far fa-edit fa-7x"></i></a><br><h3>Notes</h3></button> -->
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-5">
-                        <a href="/report/flag/faculty" style="color:black" class="btn btn-block btn-default"><i class="fas fa-flag fa-7x"></i>
-                            <h4>Faculty Flags report</h4>
-                        </a><br>
-                        <!-- <button class="btn btn-block btn-default"><a href="/report/flag" style="color:black"><i class="fas fa-flag fa-7x"></i></a><br><h3>Flags</h3></button> -->
+                </div>   
+            <%}else{%>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="/report/meetings" style="color:black" class="btn btn-block btn-default"><i class="far fa-calendar-alt fa-7x"></i>
+                                <h5>Appointments report</h5>
+                            </a><br>
+                            <!-- <button class="btn btn-block btn-default"><a href="/report/appointments" style="color:black"><i class="far fa-calendar-alt fa-7x" ></i></a><br><h3>Appointments</h3></button> -->
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/report/notes" style="color:black" class="btn btn-block btn-default"><i class="fas fa-edit fa-7x"></i>
+                                <h5>Notes report</h5>
+                            </a><br>
+                            <!-- <button class="btn btn-block btn-default"><a href="/report/flag" style="color:black"><i class="fas fa-flag fa-7x"></i></a><br><h3>Flags</h3></button> -->
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/report/flag/faculty" style="color:black" class="btn btn-block btn-default"><i class="fas fa-flag fa-7x"></i>
+                                <h5>Faculty Flags report</h5>
+                            </a><br>
+                            <!-- <button class="btn btn-block btn-default"><a href="/report/flag" style="color:black"><i class="fas fa-flag fa-7x"></i></a><br><h3>Flags</h3></button> -->
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <a href="/report/flag/student" style="color:black" class="btn btn-block btn-default"><i class="fas fa-user-graduate fa-7x"></i>
-                            <h4>Student Flags report</h4>
-                        </a><br>
-                        <!-- <button class="btn btn-block btn-default"><a href="/report/notes" style="color:black"><i class="far fa-edit fa-7x"></i></a><br><h3>Notes</h3></button> -->
-                    </div>
-                </div>
-            </div>
+                </div>   
+                <%}%>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default col-md-offset-8 col-md-4" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
             </div>
