@@ -34,3 +34,4 @@ Step : 4 (Accessing & Running the Application)
 * After previous step set path to client (cd ..\src\GDP-Node)and open the visual code here,go to the terminal and hit <b>npm install</b> command to install all the dependency modules in the project which is used in package.json. 
 * Run the application at GDP-Node location and enter <b>node app.js</b> run the project.
 * Now, Open project in the <b> GDP-Node app listening on http://127.0.0.1:8081/</b>
+### Yet to be deployed on cloud server
